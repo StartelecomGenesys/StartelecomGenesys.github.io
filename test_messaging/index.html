@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Star Genesys Cloud WebChat Demo</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body  class="startelecom-custom">
+
+  <!--Create a Widgets configuration object-->
+  <script type="text/javascript">
+
+    window._genesys = {
+      widgets: {
+        "main": {
+          // Set theme to provided Genesys light theme
+          "theme": "light"
+        
+        },
+        webchat: {
+             autoInvite: {
+
+                    enabled: true,
+                    timeToInviteSeconds: 10,
+                    inviteTimeoutSeconds: 30
+              },
+                    // not supported in Genesys Cloud
+            //uploadsEnabled: true,
+            charCountEnabled: true,
+            transport: {
+            type: 'purecloud-v2-sockets',
+            dataURL: 'https://api.mypurecloud.com',
+            deploymentKey: "8b4c517d-fa22-454c-9dab-1ca7d2fdbec5",
+            orgGuid: "b969b710-80cf-4689-9bcf-e9f3befa8e05",
+            interactionData: {
+              routing: {
+                targetType: "QUEUE",
+                targetAddress: "Demo_CHAT With Callback",
+                priority: 2
+              }
+            }
+          },
+          userData: {
+            addressStreet: '690 Glencairn Av',
+            addressCity: 'Toronto',
+            addressPostalCode: 'M6B 1Z7',
+            addressState: 'ON',
+            phoneNumber: '1 416-720-5737',
+            phoneType: 'Cell',
+            customerId: '59606',
+
+          }
+        }
+      }
+    };
+
+   </script>
+
+   <!-- Load CXBus and the widgets-core plugin -->
+   <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js" onload="javascript:CXBus.configure({debug:false,pluginsPath:'https://apps.mypurecloud.com/widgets/9.0/plugins/'}); CXBus.loadPlugin('widgets-core');"></script>
+
+   <!-- Optional: Use CXBus to create plugins, subscribe to events, or call commands -->
+   <script type="text/javascript">
+
+    const customPlugin = CXBus.registerPlugin('Custom');
+
+    customPlugin.subscribe('WebChatService.started', function (e) {
+      console.log('Chat started', e);
+    });
+
+    customPlugin.subscribe('WebChatService.ended', function (e) {
+      console.log('Chat ended', e);
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+		function getAdvancedConfig() {
+			return {
+				form: {
+					autoSubmit: false,
+					//firstname: 'Tatjana',
+					//lastname: 'Knezevic',
+				//	email: 'overthe rainbow@startelecom.ca',
+					//phone: '4167205737'
+				},
+				formJSON: {
+					wrapper: '<table></table>',
+					inputs: [
+						// Default fields
+						{
+							id: 'cx_webchat_form_firstname',
+							name: 'firstname',
+							maxlength: '100',
+							placeholder: 'Optional',
+							label: 'Firstname'
+						},
+						//{
+							//id: 'cx_webchat_form_lastname',
+							//name: 'lastname',
+							//maxlength: '100',
+							//placeholder: 'Optional',
+							//label: 'Lastname'
+						//},
+						{
+							id: 'cx_webchat_form_email',
+							name: 'postalcode',
+							maxlength: '100',
+							placeholder: 'Optional',
+							label: 'Postal Code'
+						},
+            {
+            id:"cx_webchat_form_enquirytype",
+            name:"reason",
+            type:"select",
+            label:"Reason",
+            options:[
+                {
+                    text:"Known Outage",
+                    value:"Known Outage"
+                },
+                {
+                    text:"Unknown Outage",
+                    value:"Unknown Outage",
+                    selected:true
+                },
+                {
+                    text:"Other",
+                    value:"Other"
+                }
+                
+              ]
+            },
+            {
+            id:"cx_webchat_form_notice",
+            name:"notice",
+            type:"textarea",
+            //placeholder:"@i18n:webchat.ChatFormPlaceholderFirstName",
+            label:"Notice",
+            value:"If people or property are at risk, always call 911 first. \nFor electrical emergencies, such as downed lines,\ncall us immediately at 416-542-8000 and press 1."
+        }
+						//{
+							//id: 'cx_webchat_form_email',
+						//	name: 'email',
+						//	maxlength: '100',
+						//	placeholder: 'Optional',
+						//	label: 'Email'
+					//	},
+						// Custom Fields
+            
+				//		{
+					//		id: 'custom_field_1',
+          //               type: "checkbox",
+					//	    name: 'customField1',
+					//		maxlength: '100',
+					//		placeholder: 'Custom Data',
+					//		label: 'Send Transcript',
+					//		value: 'My Custom Value'
+				//	}
+					]
+				}
+			};
+		}
+	</script>
+	<button type="button" id="chat-button" onclick="customPlugin.command('WebChat.open', getAdvancedConfig());">Start Chat (with data)</button>
+</body>
+</html>
