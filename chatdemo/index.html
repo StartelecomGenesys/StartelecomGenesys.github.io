@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat </title>
+		<script type="text/javascript" charset="utf-8">
+		//TODO add a deployment for general demo(when done) in case there are no params
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const client = urlParams.get('client');
+			console.log(client);
+			
+			var request = new XMLHttpRequest();
+			request.open("GET","./clients.json", false);
+			request.send(null);
+			var jsonData = JSON.parse(request.responseText);
+			//console.log(jsonData);
+			
+			let clientFound = false
+			for(key in jsonData['clients'])
+			{				
+				if(client===key){
+					clientFound=true;
+				}			  
+			}
+			//console.log(clientFound);
+			if (clientFound){
+												
+				(function (g, e, n, es, ys) {
+				g['_genesysJs'] = e;
+				g[e] = g[e] || function () {
+				  (g[e].q = g[e].q || []).push(arguments)
+				};
+				g[e].t = 1 * new Date();
+				g[e].c = es;
+				ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+			  })(window, 'Genesys', jsonData['clients'][client].link, {
+				environment: jsonData['clients'][client].environment,
+				deploymentId: jsonData['clients'][client].deploymentID
+			  });
+			  console.log(jsonData["clients"][client].title)
+			  window.onload = function(){
+					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
+				}
+				
+			}else{
+				alert('Client ' + client + ' not found!');
+			}	
+			
+			
+		  
+		</script>
+	</head>
+	<body>
+	<h3 id="demo">Page for presenting demos</h3>
+
+	</body>
+</html>
