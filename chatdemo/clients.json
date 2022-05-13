@@ -1,10 +1,16 @@
 {
     "clients": {
+		"null": {
+            "title":"Demo web messaging",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
+        },
         "EssexDemo": {
             "title":"Demo chat for Essex Powerlines Corporation",
 			"environment": "use1",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
-			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
+			"deploymentID":"13054925-2913-4b19-950a-c3fa1e2f04ec"
         },
 		"EssexProd": {
 			"title":"Demo chat for Essex Powerlines Corporation",
