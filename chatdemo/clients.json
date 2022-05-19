@@ -6,6 +6,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
 		},
+		"Rapiscan": {
+			"title":"Demo for Rapiscan Systems",
+			"environment": "usw2",
+			"link":"https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"f5ac6bee-a3da-41fa-996c-4976ec252373"
+		},
 		"EssexDemo": {
 			"title":"Demo chat for Essex Powerlines Corporation",
 			"environment": "use1",
