@@ -13,14 +13,28 @@ window._genesys = {
 			  name:'Name',
 			  maxlenght: '100',
 			  placeholder:'Required',
-			  label:'name'
+			  label:'Name',
+			  validate:function (event, form, input, label, $, CXBus, Common) {
+                if (input && input.val() && (input.val()).length >= 2) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 		  },
 		  {
 			  id:'email',
 			  name:'Email',
 			  maxlenght:'255',
-			  placeholder:'Optional',
-			  label:'Email'
+			  placeholder:'Required',
+			  label:'Email',
+			  validate:function (event, form, input, label, $, CXBus, Common) {
+                if (input && input.val() && (input.val()).length >= 4 && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.val())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 		  },
 		  {
 			  id:'serial_number',
@@ -28,6 +42,33 @@ window._genesys = {
 			  maxlenght:'255',
 			  placeholder:'Optional',
 			  label:'Serial Number'
+		  },
+		  {
+			  id:'dropdown',
+			  name:'Dropdown',
+			  placeholder:'Optional',
+			  label:'Dropdown',
+			  type:'select',
+			  options:[
+			    {
+                    disabled: "disabled",
+                    selected: "selected",
+                    hidden: "hidden"
+                },
+                {
+                    text: "Value A",
+                    value: "Value A"
+                },
+                {
+                    text: "Value B",
+                    value: "Value B"
+                },
+				{
+					text: "Value C",
+                    value: "Value C"
+				}
+			  ],
+			  wrapper:"<tr><th>{label}</th><td>{input}</td></tr>"
 		  }
         ]		  
 	  },
