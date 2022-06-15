@@ -12,6 +12,12 @@
 			"link":"https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"f5ac6bee-a3da-41fa-996c-4976ec252373"
 		},
+		"Blackboard": {
+			"title":"Demo for Blackboard",
+			"environment": "usw2",
+			"link":"https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"4ef39d1c-b29f-4c20-a945-9640f3146be8"
+		},
 		"EssexDemo": {
 			"title":"Demo chat for Essex Powerlines Corporation",
 			"environment": "use1",
