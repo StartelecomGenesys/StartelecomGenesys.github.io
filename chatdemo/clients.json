@@ -6,6 +6,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
 		},
+		"KFF": {
+			"title":"Demo for Knowledge Firts Financials",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"44fd1b25-0712-4f89-85fb-39ebc4160499"
+		},
 		"Rapiscan": {
 			"title":"Demo for Rapiscan Systems",
 			"environment": "usw2",
