@@ -58,11 +58,12 @@
 				}else{
 					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 				}
-			}			
-			if (client==='demo'){
-					document.querySelector('[aria-label="Message Us"]').innerHTML="Custom Content";
+				if (client==='demo'){
+					//document.querySelector('[aria-label="Message Us"]').innerHTML="Custom Content";
 					document.getElementByClass('Cx-MuiTypography-h1').innerHTML='Class custom';
-			}
+				}
+			}			
+			
 			
 		  
 		</script>
