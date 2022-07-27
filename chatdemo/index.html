@@ -54,7 +54,7 @@
 				console.log(client_img);
 				var img_http = check_file(client_img);
 				if(img_http.status!=404){
-					document.body.style.backgroundImage = "url('"+client_img+"') no-repeat auto";
+					document.body.style.backgroundImage = "url('"+client_img+"')";
 				}else{
 					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 				}
