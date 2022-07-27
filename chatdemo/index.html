@@ -54,9 +54,7 @@
 				console.log(client_img);
 				var img_http = check_file(client_img);
 				if(img_http.status!=404){
-					document.body.style.backgroundImage = "url('"+client_img+"')";
-					document.body.style.background-repeat = "no-repeat";
-					document.body.style.background-size = "auto";
+					document.body.style.backgroundImage = "url('"+client_img+"') no-repeat auto";
 				}else{
 					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 				}
