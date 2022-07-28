@@ -54,7 +54,8 @@
 				console.log(client_img);
 				var img_http = check_file(client_img);
 				if(img_http.status!=404){
-					document.body.style.backgroundImage = "url('"+client_img+"')";
+					//document.body.style.backgroundImage = "url('"+client_img+"')";
+					document.getElementById("background-img").style.backgroundImage = "url('"+client_img+"')";
 				}else{
 					document.getElementById("demo").innerHTML = jsonData["clients"][client].title;
 				}
@@ -65,7 +66,22 @@
 		</script>
 	</head>
 	<body>
-	<h3 id="demo"></h3>
+	<div id="background-img">
+		<h3 id="demo"></h3>
+	</div>
 
 	</body>
+	<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	#background-img{
+		
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		height:100vh;
+	}
+	</style>
 </html>
