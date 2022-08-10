@@ -27,7 +27,7 @@
 	  function toggleMessenger(){
 		Genesys("command", "Messenger.open", {},
 		function(o){
-			toggleVisibility();
+			
 			Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
@@ -40,6 +40,7 @@
 			console.log(document.getElementById('fname').value);
 			console.log(document.getElementById('lname').value);
 			console.log(document.getElementById('email').value);
+			toggleVisibility();
 		},  // if resolved
 		function(o){    // if rejected
 		toggleVisibility();
