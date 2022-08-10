@@ -40,21 +40,14 @@
 			console.log(document.getElementById('fname').value);
 			console.log(document.getElementById('lname').value);
 			console.log(document.getElementById('email').value);
-			toggleVisibility();
+			//toggleVisibility();
 		},  // if resolved
 		function(o){    // if rejected
-			console.log(Genesys("subscribe", "Messenger.close"));
-			console.log(Genesys("command", "Messenger.close"));
-
-
         Genesys("command", "Messenger.close");
       }
     );
-  }
-
-	function testclose(){
-		document.addEventListener(Genesys("subscribe", "Messenger.closed"),toggleVisibility());
-	}  
+  } 
+	
 </script>
 		
 	</head>
