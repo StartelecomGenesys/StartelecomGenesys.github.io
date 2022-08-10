@@ -14,12 +14,22 @@
 		environment:'use1',
 		debug: true
 	  });
+	  
+	  function toggleMessenger(){
+		Genesys("command", "Messenger.open", {},
+		function(o){},  // if resolved
+		function(o){    // if rejected
+        Genesys("command", "Messenger.close");
+      }
+    );
+  }
+	  
 </script>
 		
 	</head>
 	<body>
 	
-		<form name="webchat_form">
+		<form name="webchat_form" onsubmit="toggleMessenger()">
 		  <label for="fname">First name:</label><br>
 		  <input type="text" id="fname" name="fname"><br>
 		  <label for="lname">Last name:</label><br>
