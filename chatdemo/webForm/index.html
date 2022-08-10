@@ -43,6 +43,10 @@
 			toggleVisibility();
 		},  // if resolved
 		function(o){    // if rejected
+			console.log(Genesys("subscribe", "Messenger.close"));
+			console.log(Genesys("command", "Messenger.close"));
+
+
         Genesys("command", "Messenger.close");
       }
     );
