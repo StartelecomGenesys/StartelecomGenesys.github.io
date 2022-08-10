@@ -43,12 +43,14 @@
 			toggleVisibility();
 		},  // if resolved
 		function(o){    // if rejected
-		toggleVisibility();
         Genesys("command", "Messenger.close");
       }
     );
   }
-	  
+
+	function testclose(){
+		document.addEventListener(Genesys("subscribe", "Messenger.closed"),toggleVisibility());
+	}  
 </script>
 		
 	</head>
