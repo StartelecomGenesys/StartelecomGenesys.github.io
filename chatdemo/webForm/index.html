@@ -17,7 +17,17 @@
 	  
 	  function toggleMessenger(){
 		Genesys("command", "Messenger.open", {},
-		function(o){},  // if resolved
+		function(o){
+			Genesys("command", "Database.set", {
+			  messaging: {
+				customAttributes: {
+				  firstname: document.getElementById('fname').value,
+				  lastname: document.getElementById('lname').value,
+				  email: document.getElementById('email').value
+				}
+			  }
+			});
+		},  // if resolved
 		function(o){    // if rejected
         Genesys("command", "Messenger.close");
       }
@@ -29,7 +39,7 @@
 	</head>
 	<body>
 	
-		<form name="webchat_form" onsubmit="toggleMessenger()">
+		<form name="webchat_form" action="javascript:toggleMessenger()">
 		  <label for="fname">First name:</label><br>
 		  <input type="text" id="fname" name="fname"><br>
 		  <label for="lname">Last name:</label><br>
