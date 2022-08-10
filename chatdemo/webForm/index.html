@@ -41,12 +41,14 @@
 			console.log(document.getElementById('lname').value);
 			console.log(document.getElementById('email').value);
 			//toggleVisibility();
+			document.ElementById('launchChat').value = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
-        Genesys("command", "Messenger.close");
-      }
-    );
-  } 
+			Genesys("command", "Messenger.close");
+		}
+		);
+		document.ElementById('launchChat').value = "Start chat"
+	  } 
 	
 </script>
 		
@@ -60,7 +62,7 @@
 		  <input type="text" id="lname" name="lname"><br>
 		  <label for="email">Email address:</label><br>
 		  <input type="text" id="email" name="email"><br>
-		  <input type="submit" value="Start Chat">
+		  <input id="launchChat" type="submit" value="Start Chat">
 		</form>
 		
 
