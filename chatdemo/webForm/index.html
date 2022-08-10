@@ -41,13 +41,13 @@
 			console.log(document.getElementById('lname').value);
 			console.log(document.getElementById('email').value);
 			//toggleVisibility();
-			document.ElementById('launchChat').value = "Close chat"
+			document.getElementById('launchChat').value = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
 			Genesys("command", "Messenger.close");
 		}
 		);
-		document.ElementById('launchChat').value = "Start chat"
+		document.getElementById('launchChat').value = "Start chat"
 	  } 
 	
 </script>
