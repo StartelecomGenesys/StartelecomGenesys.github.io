@@ -15,9 +15,19 @@
 		debug: true
 	  });
 	  
+	  function toggleVisibility() {
+			var x = document.getElementsByName("webchat_form");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+
 	  function toggleMessenger(){
 		Genesys("command", "Messenger.open", {},
 		function(o){
+			toggleVisibility();
 			Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
@@ -32,6 +42,7 @@
 			console.log(document.getElementById('email').value);
 		},  // if resolved
 		function(o){    // if rejected
+		toggleVisibility();
         Genesys("command", "Messenger.close");
       }
     );
@@ -49,40 +60,10 @@
 		  <input type="text" id="lname" name="lname"><br>
 		  <label for="email">Email address:</label><br>
 		  <input type="text" id="email" name="email"><br>
-		  <input type="submit" value="Submit">
+		  <input type="submit" value="Start Chat">
 		</form>
 		
-		
-	<div class="cx-form-wrapper" style="display: block;">
-		<div class="cx-form cx-form-horizontal" role="form">
-		
-			<div class="cx-form-inputs">
-				<table>
-					<tr><th><label  for="fname">First Name:</label></th><td><input autocomplete="on"  id="fname" name="fname" maxlenght="100" placeholder="Required" validate="false" type="text"></td>
-					</tr>
-					
-					<tr><th><label  for="lname">Last Name:</label></th><td><input autocomplete="on"  id="lname" name="lname" maxlenght="100" placeholder="Required" validate="false" type="text"></td>
-					</tr>
-					
-					<tr><th><label  for="email">Email</label></th><td><input autocomplete="on"  id="email" name="Email" maxlenght="100" placeholder="Required" validate="false" type="text"></td>
-					</tr>
-				</table>
-			
-			</div>
-			
-			<div class="cx-button-group cx-buttons-binary">
-				<!--<button class="cx-btn cx-btn-default i18n" data-message="ChatFormCancel" aria-label="Cancel">Cancel</button> -->
-				<button class="cx-submit cx-btn cx-btn-primary i18n" data-message="ChatFormSubmit" onclick="toggleMessenger()" >Start Chat</button>
-			</div>
 
-		</div>
-	</div>
-		
-		
-		
-		<button id="custom-launcher" onclick="toggleMessenger()">
-			Messenger
-		</button>
 	</body>
 	
 </html>
