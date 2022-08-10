@@ -17,10 +17,10 @@
 	  
 	  function toggleVisibility() {
 			var x = document.getElementsByName("webchat_form");
-			if (x.style.display === "none") {
-				x.style.display = "block";
+			if (x[0].style.display === "none") {
+				x[0].style.display = "block";
 			} else {
-				x.style.display = "none";
+				x[0].style.display = "none";
 			}
 		}
 
