@@ -16,7 +16,7 @@
 	  });
 	  
 	  function toggleVisibility() {
-			var x = document.getElementsByName("webchat_form");
+			var x = document.getElementsByName("launchChat");
 			if (x[0].style.display === "none") {
 				x[0].style.display = "block";
 			} else {
@@ -28,12 +28,13 @@
 		Genesys("command", "Messenger.open", {},
 		function(o){
 			
-			
-			//toggleVisibility();
+			Genesys("command", "Launcher.show");
+			toggleVisibility();
 			document.getElementById('launchChat').innerHTML = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
 			Genesys("command", "Messenger.close");
+			toggleVisibility();
 		}
 		);
 		document.getElementById('launchChat').innerHTML = "Start chat"
