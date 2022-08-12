@@ -28,7 +28,7 @@
 		Genesys("command", "Messenger.open", {},
 		function(o){
 			
-			Genesys("command", "Launcher.show");
+			//Genesys("command", "Launcher.show");
 			toggleVisibility();
 			document.getElementById('launchChat').innerHTML = "Close chat"
 		},  // if resolved
@@ -39,6 +39,9 @@
 		);
 		document.getElementById('launchChat').innerHTML = "Start chat"
 	  } 
+	  
+	  Genesys("subscribe", "Messenger.closed",function(o){
+    console.log("Messenger CLOSED!"););
 	
 </script>
 		
