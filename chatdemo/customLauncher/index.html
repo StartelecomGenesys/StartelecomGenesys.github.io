@@ -34,14 +34,16 @@
 		},  // if resolved
 		function(o){    // if rejected
 			Genesys("command", "Messenger.close");
-			toggleVisibility();
+			
 		}
 		);
 		document.getElementById('launchChat').innerHTML = "Start chat"
 	  } 
 	  
 	  Genesys("subscribe", "Messenger.closed",function(o){
-    console.log("Messenger CLOSED!");}
+    console.log("Messenger CLOSED!");
+	toggleVisibility();
+	}
 	);
 	
 </script>
