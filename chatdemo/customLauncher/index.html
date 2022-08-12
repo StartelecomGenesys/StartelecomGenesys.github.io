@@ -28,26 +28,15 @@
 		Genesys("command", "Messenger.open", {},
 		function(o){
 			
-			Genesys("command", "Database.set", {
-			  messaging: {
-				customAttributes: {
-				  firstname: document.getElementById('fname').value,
-				  lastname: document.getElementById('lname').value,
-				  email: document.getElementById('email').value
-				}
-			  }
-			});
-			console.log(document.getElementById('fname').value);
-			console.log(document.getElementById('lname').value);
-			console.log(document.getElementById('email').value);
+			
 			//toggleVisibility();
-			document.getElementById('launchChat').value = "Close chat"
+			document.getElementById('launchChat').innerHTML = "Close chat"
 		},  // if resolved
 		function(o){    // if rejected
 			Genesys("command", "Messenger.close");
 		}
 		);
-		document.getElementById('launchChat').value = "Start chat"
+		document.getElementById('launchChat').innerHTML = "Start chat"
 	  } 
 	
 </script>
