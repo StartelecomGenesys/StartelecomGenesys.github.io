@@ -21,6 +21,20 @@
 		Genesys("command", "Messenger.open");
 		
 	  } 
+	  
+	  
+	  //left in case it needed for a custom button
+	  function toggleMessenger(){
+		Genesys("command", "Messenger.open", {},
+		function(o){			
+			
+		},  // if resolved
+		function(o){    // if rejected
+			Genesys("command", "Messenger.close");			
+		}
+		);
+		
+	  } 
 	
 </script>
 		
