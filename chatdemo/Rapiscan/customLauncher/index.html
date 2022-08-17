@@ -15,26 +15,11 @@
 		debug: true
 	  });
 	  
-	  function toggleVisibility() {
-			var x = document.getElementsByName("webchat_form");
-			if (x[0].style.display === "none") {
-				x[0].style.display = "block";
-			} else {
-				x[0].style.display = "none";
-			}
-		}
+	  
 
-	  function toggleMessenger(){
-		Genesys("command", "Messenger.open", {},
-		function(o){
-			//toggleVisibility();
-			//document.getElementById('launchChat').value = "Close chat"
-		},  // if resolved
-		function(o){    // if rejected
-			Genesys("command", "Messenger.close");
-		}
-		);
-		//document.getElementById('launchChat').value = "Start chat"
+	  function launchMessenger(){
+		Genesys("command", "Messenger.open");
+		
 	  } 
 	
 </script>
@@ -71,7 +56,7 @@
 					<div class="mylivechat_container" style="border: 0px solid rgb(32, 112, 176); display: none;"></div>
 				</div>
 			</div>
-			<div class="mylivechat_buttonround" onclick="toggleMessenger()" title="Chat now" style="position: relative; background-color: rgb(2, 117, 216); color: rgb(255, 255, 255); border-radius: 99px !important; left: 12px; width: 218px; top: 27px; height: 62px; user-select: none; transform: translate(0px, 5.05718e-15px);">
+			<div class="mylivechat_buttonround" onclick="launchMessenger()" title="Chat now" style="position: relative; background-color: rgb(2, 117, 216); color: rgb(255, 255, 255); border-radius: 99px !important; left: 12px; width: 218px; top: 27px; height: 62px; user-select: none; transform: translate(0px, 5.05718e-15px);">
 			<img alt="round button" src="https://a2.mylivechat.com/Customization/Template/InlineChatRoundOnline_1.png" style="position: absolute; width: 42px; height: 42px; left: 20px; top: 10px;"><div class="mylivechat_buttonround_label" style="position: absolute; white-space: nowrap; text-align: center; right: 27px; line-height: 58.9px; color: white; font-weight: 400; font-size: 24px; min-width: 93px;">Chat now</div>
 			</div>
 		</div>
