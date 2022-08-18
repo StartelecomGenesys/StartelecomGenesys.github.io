@@ -30,7 +30,7 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"a530ebb3-37e6-4ab0-9b51-e2bffa8a9141"
 		},
-		"EssexDemo": {
+		"demo2": {
 			"title":"Demo chat for Essex Powerlines Corporation",
 			"environment": "use1",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
