@@ -48,6 +48,9 @@
 				console.log(data);
 				// Do authenticated things
 				//list all queues
+				return routingApi.getQueues({ 'pageSize': ["160"] });
+			  }).then((queues) =>{
+				console.log(queues);
 			  })
 			  .catch((err) => {
 				// Handle failure response
