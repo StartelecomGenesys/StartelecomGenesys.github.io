@@ -22,8 +22,6 @@
 		  <input type="text" id="phone" name="phone"><br>
 		  <label for="queues">Please select a queue:</label><br>
 		  <select  id="queues" name="queues">
-			<option value="queue_placeholder1_id"> queue_placeholder1_name </option>
-			<option value="queue_placeholder2_id"> queue_placeholder2_name </option>
 		  </select><br>
 		  <input id="createCB" type="submit" value="Schedule Callback">
 	</form>
@@ -51,6 +49,19 @@
 				return routingApi.getRoutingQueues({ 'pageSize': ["160"] });
 			  }).then((queues) =>{
 				console.log(queues);
+				var dropdown = document.getElementById('queues');
+				let defaultOption = document.createElement('option');
+				defaultOption.text = 'Select Queue';
+
+				dropdown.add(defaultOption);
+				dropdown.selectedIndex = 0;
+				let option;
+				for (let i = 0; i < queues.length; i++) {
+				  option = document.createElement('option');
+				  option.text = queues[i].name;
+				  option.value = queues[i].id;
+				  dropdown.add(option);
+				}
 			  })
 			  .catch((err) => {
 				// Handle failure response
