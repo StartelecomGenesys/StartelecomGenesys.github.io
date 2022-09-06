@@ -34,7 +34,9 @@
 	<script type="text/javascript">
 
 		const platformClient = require('platformClient');
+		var routingApi = new platformClient.RoutingApi();
 		console.log(platformClient);
+		console.log(routingApi);
 	
 		function doSomething(){
 			const client = platformClient.ApiClient.instance;
@@ -45,6 +47,7 @@
 			  .then((data) => {
 				console.log(data);
 				// Do authenticated things
+				//list all queues
 			  })
 			  .catch((err) => {
 				// Handle failure response
