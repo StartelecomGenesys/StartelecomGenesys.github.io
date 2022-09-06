@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo CallBack</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+
+    <!-- <script src="//code.jquery.com/jquery-2.1.4.min.js"></script> -->
+    
+        
+</head>
+<body>
+    <form name="callback_form" action="javascript:createCallback()">
+		  <label for="fname">First name:</label><br>
+		  <input type="text" id="fname" name="fname"><br>
+		  <label for="phone">Phone Number:</label><br>
+		  <input type="text" id="phone" name="phone"><br>
+		  <label for="queues">Please select a queue:</label><br>
+		  <select  id="queues" name="queues">
+			<option value="queue_placeholder1_id"> queue_placeholder1_name </option>
+			<option value="queue_placeholder2_id"> queue_placeholder2_name </option>
+		  </select><br>
+		  <input id="createCB" type="submit" value="Schedule Callback">
+	</form>
+
+
+    
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/latest/purecloud-platform-client-v2.min.js"></script>
+	<script type="text/javascript">
+
+		const platformClient = require('platformClient');
+		console.log(platformClient);
+	
+		function doSomething(){
+			const client = platformClient.ApiClient.instance;
+			var clientId = 'd413fea6-9405-46bf-b7db-a6598ee10be5';
+			var redirectUri = 'https://startelecomgenesys.github.io/callbackdemo/index.html';
+			var state = 'state';
+			client.loginImplicitGrant(clientId, redirectUri, { state: state })
+			  .then((data) => {
+				console.log(data);
+				// Do authenticated things
+			  })
+			  .catch((err) => {
+				// Handle failure response
+				console.log(err);
+			  });
+		}
+        
+		
+		function createCallback(){
+			console.log(document.getElementById('fname').value);
+			console.log(document.getElementById('phone').value);
+			console.log(document.getElementById('queues').value);
+			
+			//axios post request to create callback
+		
+		}
+		window.onload = doSomething;
+    </script>    
+</body>
+</html>
