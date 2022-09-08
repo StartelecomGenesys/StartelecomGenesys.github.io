@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo CallBack</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+
+    <!-- <script src="//code.jquery.com/jquery-2.1.4.min.js"></script> -->
+    
+        
+</head>
+<body>
+    <form name="callback_form" action="javascript:createCallback()">
+		  <label for="fname">First name:</label><br>
+		  <input type="text" id="fname" name="fname"><br>
+		  <label for="phone">Phone Number:</label><br>
+		  <input type="text" id="phone" name="phone"><br>
+		  <label for="queues">Please select a queue:</label><br>
+		  <select  id="queues" name="queues">
+		  </select><br>
+		  <input id="createCB" type="submit" value="Schedule Callback">
+	</form>
+
+
+    
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/latest/purecloud-platform-client-v2.min.js"></script>
+	<script type="text/javascript">
+
+		const platformClient = require('platformClient');
+		//const client = platformClient.ApiClient.instance;
+		console.log(platformClient);
+		var routingApi = new platformClient.RoutingApi();
+		var conversationsApi = new platformClient.ConversationsApi();
+		
+	
+		function doSomething(){
+			const client = platformClient.ApiClient.instance;
+			var clientId = 'd413fea6-9405-46bf-b7db-a6598ee10be5';
+			var redirectUri = 'https://startelecomgenesys.github.io/callbackdemo/index.html';
+			var state = 'state';
+			client.loginImplicitGrant(clientId, redirectUri, { state: state })
+			  .then((data) => {
+				console.log(data);
+				// Do authenticated things
+				//list all queues
+				return routingApi.getRoutingQueues({ 'pageSize': ["160"] });
+			  }).then((queues) =>{
+				//console.log(queues);
+				var dropdown = document.getElementById('queues');
+				let defaultOption = document.createElement('option');
+				defaultOption.text = 'Select Queue';
+
+				dropdown.add(defaultOption);
+				dropdown.selectedIndex = 0;
+				let option;
+				for(let item of queues.entities){
+					//console.log(item);
+				  option = document.createElement('option');
+				  option.text = item.name;
+				  option.value = item.id;
+				  dropdown.add(option);
+				}
+				
+			  })
+			  .catch((err) => {
+				// Handle failure response
+				console.log(err);
+			  });
+		}
+        
+		
+		function createCallback(){
+		var clientId = 'd413fea6-9405-46bf-b7db-a6598ee10be5';
+		var redirectUri = 'https://startelecomgenesys.github.io/callbackdemo/index.html';
+		var state = 'state';
+			console.log(document.getElementById('fname').value);
+			console.log(document.getElementById('phone').value);
+			console.log(document.getElementById('queues').value);
+			
+			let customer_name = document.getElementById('fname').value;
+			let customer_phone = document.getElementById('phone').value;
+			let queue_id = document.getElementById('queues').value;
+			
+			const callbackData = {
+					routingData: {
+						queueId: queue_id
+					},
+					scriptId: '29d5d6a0-6199-11e7-8dfd-3b02f841a302',
+					callbackUserName: customer_name,
+					callbackNumbers: [
+						customer_phone
+					],
+					data:{
+						customDataAttribute: 'custom value'
+					},
+					callerId: '+13175555555',
+					callerIdName: 'John Doe'
+				};
+				
+				console.log(callbackData);
+			
+		
+			
+			
+		
+		}
+		window.onload = doSomething;
+    </script>    
+</body>
+</html>
