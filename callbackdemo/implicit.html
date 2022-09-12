@@ -41,7 +41,7 @@
 		function doSomething(){
 			const client = platformClient.ApiClient.instance;
 			var clientId = 'd413fea6-9405-46bf-b7db-a6598ee10be5';
-			var redirectUri = 'https://startelecomgenesys.github.io/callbackdemo/index.html';
+			var redirectUri = 'https://startelecomgenesys.github.io/callbackdemo/implicit.html';
 			var state = 'state';
 			client.loginImplicitGrant(clientId, redirectUri, { state: state })
 			  .then((data) => {
