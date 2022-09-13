@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Simple co-browse with voice example</title>
+</head>
+<body>
+
+    <h1>Simple co-browse with voice example</h1>
+
+        <button type="button" id="start-cobrowse" onclick="genesysWebchat.startCobrowse()">Enter Co-browse Security Key</button>
+
+    <!-- Div with this id required to display security key form -->
+    <div id="cobrowse-security-form"></div>
+
+    <!-- Co-browse with voice uses the webchat API, so include it here -->
+    <script src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" type="text/javascript"></script>
+
+    <!-- For co-browse with voice, you must load the co-browse API. Co-browse with web chat loads the co-browse API for you. -->
+    <script src="https://cobrowse.mypurecloud.com/cobrowse-jsapi-v1.js?deploymentKey=8ef8eX9bN2Dzl8xBKPWnWvLvQYJdo119" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    let genesysWebchat = (function() {
+        function createCobrowseConfig(){
+
+            return {
+                // Web chat application URL. Use the correct top-level domain for your Genesys Cloud region, i.e. apps.mypurecloud.ie, apps.mypurecloud.jp, apps.mypurecloud.co.uk.
+                "webchatAppUrl": "https://apps.mypurecloud.com/webchat",
+
+                // Web chat service URL
+                "webchatServiceUrl": "https://realtime.mypurecloud.com:443",
+
+                // Numeric organization ID
+                "orgId": 21125,
+
+                // OrgGuid. Needed for co-browse with voice.
+                "orgGuid": "b969b710-80cf-4689-9bcf-e9f3befa8e05",
+
+                // Organization name
+                "orgName": "genesys",
+
+                // Log level
+                "logLevel": "DEBUG",
+
+                // Locale code
+                "locale": "en",
+
+                // CSS class applied to the security key window, but not its contents
+                "cssClass": "webchat-frame",
+
+                // Custom style applied to the security key window, but not its contents
+                "css": {
+                    "width": "100%",
+                    "height": "100%"
+                },
+
+                // Optional CSS for styling security key form
+                "contentCssUrl": "http://example.com/style.css",
+
+                // Element id where the security key form will appear.
+                "containerEl": "cobrowse-security-form",
+
+                // Set to true to display security key form. Do not include for co-browse with web chat or for PureConnect co-browse with voice.
+                "promptForSecurityKey": true
+            };
+        }
+        return {
+            startCobrowse: function() {
+                let config = createCobrowseConfig();
+
+                // Can also use callback
+                ININ.cobrowse.create(config)
+                    .then(function(result) {
+                        // Handle success
+                    })
+                    .catch(function(err) {
+                        // Handle failure
+                    });
+            }
+        }
+    })();
+    </script>
+
+</body>
+</html>
