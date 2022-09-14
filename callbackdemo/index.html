@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title> Demo Callbaxk </title>
 		
+		
 		<script type="text/javascript" charset="utf-8">
 		
 		
@@ -64,7 +65,7 @@
 			//get token
 			fetch('https://10pa4oa5di.execute-api.ca-central-1.amazonaws.com/default/Genesys_Lab_Access_Token')
 			.then(function (resp){
-				console.log(resp);
+				//console.log(resp);
 				return resp.json();
 			}).then(function (data){
 				return data.accessToken;
@@ -81,7 +82,7 @@
 				return resp.json();
 			}).then(function (data){
 				console.log(data);
-				
+				alert("Callback scheduled");
 				
 			}).catch(function (error){
 				console.log("Error: ", error);
