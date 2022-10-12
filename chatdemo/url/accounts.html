@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Accounts page </title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		
+		<script type="text/javascript" charset="utf-8">
+		  (function (g, e, n, es, ys) {
+			g['_genesysJs'] = e;
+			g[e] = g[e] || function () {
+			  (g[e].q = g[e].q || []).push(arguments)
+			};
+			g[e].t = 1 * new Date();
+			g[e].c = es;
+			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+		  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			environment: 'use1',
+			deploymentId: '09061e37-4f27-488b-bf4b-2fda4ee7bbf0'
+		  });
+		  	Genesys("subscribe", "Messenger.opened", function(){
+					Genesys("command", "Database.set", {
+			  messaging: {
+				customAttributes: {
+				  url: window.location.href
+				}
+			  }
+			});
+	  });
+		</script>
+<body>
+<h1> Welcome to the accounts page </h1>
+	</body>
+</html>
