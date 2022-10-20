@@ -1,7 +1,8 @@
-input {
+
+#wc0-securityKey{
   visibility: hidden;
 }
-input:after {
+#wc0-securityKey:after {
   content:'co browsing code'; 
   visibility: visible;
   display: block;
