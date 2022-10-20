@@ -1,4 +1,10 @@
 
-::placeholder{
-	content:"co browse"
+::placeholder {
+  position: absolute;
+  visibility: hidden;
+}
+
+::placeholder:before {
+  content: "co browse";
+  visibility: visible;
 }
