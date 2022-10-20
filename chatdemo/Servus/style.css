@@ -1,13 +1,4 @@
 
-#wc0-securityKey{
-  visibility: hidden;
-}
-#wc0-securityKey:after {
-  content:'co browsing code'; 
-  visibility: visible;
-  display: block;
-  position: absolute;
-  color:red;
-  padding: 5px;
-  top: 2px;
+::placeholder{
+	content:"co browse"
 }
