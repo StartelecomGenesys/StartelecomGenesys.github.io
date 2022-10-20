@@ -1,10 +1,47 @@
-
-::placeholder {
-  position: absolute;
-  visibility: hidden;
+::-webkit-input-placeholder {
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
 }
 
-::placeholder:after {
-  content: "co browse";
-  visibility: visible;
+:-moz-placeholder {
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
+}
+
+::-moz-placeholder {
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
+}
+
+:-ms-input-placeholder {  
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
+}
+
+::input-placeholder {  
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
+}
+
+::placeholder {
+  font-style: italic;
+  font-size: 1em;
+  color: mintcream;
+  background: thistle;
+  padding: 5px;
 }
