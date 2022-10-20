@@ -4,7 +4,7 @@
   visibility: hidden;
 }
 
-::placeholder:before {
+::placeholder:after {
   content: "co browse";
   visibility: visible;
 }
