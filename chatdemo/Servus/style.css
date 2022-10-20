@@ -1,55 +1,25 @@
-/*::-webkit-input-placeholder {
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
+input {
+  position: relative;
 }
 
-:-moz-placeholder {
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: transparent;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: transparent;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: transparent;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: transparent;
 }
 
-::-moz-placeholder {
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
+input {
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='120px'><text x='0' y='15' fill='gray' font-size='15'>Type Something...</text></svg>");
+  background-repeat: no-repeat;
 }
 
-:-ms-input-placeholder {  
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
-}
-
-::input-placeholder {  
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
-}
-*/
-::placeholder{visibility: hidden;}
-::placeholder:after {
-  font-style: italic;
-  font-size: 1em;
-  color: mintcream;
-  background: thistle;
-  padding: 5px;
-  content:'goodbye'; 
-  visibility: visible;
-  display: block;
-  position: absolute;
-  
-  padding: 5px;
-  top: 2px;
+input:focus {
+  background-image: none;
 }
