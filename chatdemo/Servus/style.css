@@ -38,10 +38,18 @@
   padding: 5px;
 }
 */
-::placeholder {
+::placeholder{visibility: hidden;}
+::placeholder:after {
   font-style: italic;
   font-size: 1em;
   color: mintcream;
   background: thistle;
   padding: 5px;
+  content:'goodbye'; 
+  visibility: visible;
+  display: block;
+  position: absolute;
+  
+  padding: 5px;
+  top: 2px;
 }
