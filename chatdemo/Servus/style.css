@@ -1,0 +1,12 @@
+input {
+  visibility: hidden;
+}
+input:after {
+  content:'co browsing code'; 
+  visibility: visible;
+  display: block;
+  position: absolute;
+  color:red;
+  padding: 5px;
+  top: 2px;
+}
