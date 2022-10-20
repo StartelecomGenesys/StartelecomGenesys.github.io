@@ -1,4 +1,4 @@
-::-webkit-input-placeholder {
+/*::-webkit-input-placeholder {
   font-style: italic;
   font-size: 1em;
   color: mintcream;
@@ -37,7 +37,7 @@
   background: thistle;
   padding: 5px;
 }
-
+*/
 ::placeholder {
   font-style: italic;
   font-size: 1em;
