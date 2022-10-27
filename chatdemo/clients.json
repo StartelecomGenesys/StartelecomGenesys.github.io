@@ -54,6 +54,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"109d6faa-0868-44ff-adb6-7aa0475d33cc"
 		},
+		"ManitobaHydroKBDemo": {
+			"title":"Demo chat for Manitoba Hydro KB",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"46de3b4d-b80c-44de-ab18-cc360f99c08f"
+		},
 		"OakvilleHydroDemo": {
 			"title":"Demo chat for Oakville Hydro",
 			"environment": "use1",
