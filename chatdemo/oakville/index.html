@@ -21,6 +21,8 @@
 	  function start(){
 			
 			var open_closed = checkhours();
+			
+			
 
 			
 		}
@@ -79,10 +81,15 @@
 })
  
 // Converting to JSON
-.then(response => {return response.json()})
+.then(response => {return response.json();}).then(function(data){
+if (data.open=="true"){
+	alert("Hello World");
+}
+
+})
  
 // Displaying results to console
-.then(json => console.log(json))
+//.then(json => console.log(json))
 
 
 
