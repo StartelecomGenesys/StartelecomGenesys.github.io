@@ -85,8 +85,13 @@ fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSc
  
 // Displaying results to console
 .then(function (data){
-alert(data);
+//prvi poziv apija puca
 console.log(data);
+console.log(data.open);
+if (data.open)
+{
+alert ("open sam")
+}
 });
 
 
