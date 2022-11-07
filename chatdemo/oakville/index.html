@@ -59,9 +59,9 @@
 	
 
 			
-			function checkhours(){
+function checkhours(){
 			
-	fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSchedule", {
+fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSchedule", {
      
     // Adding method type
     method: "POST",
@@ -76,25 +76,20 @@
      
     // Adding headers to the request
     headers: {
-        //"Content-Type":"application/json;charset=UTF-8"
-		"Content-Type":"application/json"
-		
+        "Content-Type":"application/json"
     }
-}).then(function (resp){
-				return resp.json();
-			}).then(function (data){
-			console.log(data);
+})
+ 
+// Converting to JSON
+.then(response => {return response.json()})
+ 
+// Displaying results to console
+.then(json => console.log(json))
+
+
+
 
 }
-
-
-
-
-
-
-
-
-
 		
 			
 		
