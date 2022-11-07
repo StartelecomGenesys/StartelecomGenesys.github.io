@@ -20,7 +20,8 @@
 	  });
 	  function start(){
 			
-			checkhours();
+			var open_closed = checkhours();
+			console.log(open_closed);
 		}
 	  function toggleVisibility() {
 			var x = document.getElementById("launchChat");
@@ -81,6 +82,7 @@
  
 // Displaying results to console
 .then(json => console.log(json))
+.then(return json)
 
 
 
