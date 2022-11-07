@@ -35,26 +35,7 @@
 			}
 		}
 
-	  function toggleMessenger(){
-		Genesys("command", "Messenger.open", {},
-		function(o){
-			
-			//Genesys("command", "Launcher.show");
-			toggleVisibility();
-			//document.getElementById('launchChat').innerHTML = "Close chat"
-		},  // if resolved
-		function(o){    // if rejected
-			Genesys("command", "Messenger.close");
-			
-		}
-		);
-		//document.getElementById('launchChat').innerHTML = "Start chat"
-	  } 
-	  
-	  Genesys("subscribe", "Messenger.closed",function(o){
-    console.log("Messenger CLOSED!");
-	toggleVisibility();
-	});
+
 	
 	
 
@@ -89,9 +70,9 @@ fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSc
 console.log(data);
 console.log(data.open);
 if (data.open)
-{
-toggleMessenger();
-}
+	{
+	toggleVisibility();
+	}
 });
 
 
