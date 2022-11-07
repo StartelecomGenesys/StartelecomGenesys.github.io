@@ -61,7 +61,7 @@
 			
 			function checkhours(){
 			
-	const resp = await fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSchedule", {
+	fetch("https://e69jfedg3a.execute-api.ca-central-1.amazonaws.com/default/CheckSchedule", {
      
     // Adding method type
     method: "POST",
@@ -76,22 +76,24 @@
      
     // Adding headers to the request
     headers: {
-        "Content-Type":"application/json"
+        //"Content-Type":"application/json;charset=UTF-8"
+		"Content-Type":"application/json"
+		
     }
 });
  
- console.log(resp.json());
+
  
  
 // Converting to JSON
-//.then(function (resp){
-		//		return resp.json();
-	//		}).then(function (data){
-
-//})
+.then(response => response.json())
  
 // Displaying results to console
-//.then(json => console.log(json))
+.then(json => json);
+const marija = json.open;
+console.log(marija);
+
+}
 
 
 
