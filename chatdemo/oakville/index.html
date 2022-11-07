@@ -83,7 +83,16 @@
 .then(response => {return response.json()})
  
 // Displaying results to console
-.then(json => console.log(json))
+.then(mydata => {
+
+open=mydata.open;
+if (open){
+	toggleMessenger();
+	}
+
+
+
+})
 
 
 
