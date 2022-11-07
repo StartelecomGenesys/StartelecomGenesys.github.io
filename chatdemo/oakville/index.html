@@ -80,20 +80,19 @@
 		"Content-Type":"application/json"
 		
     }
-})
- 
-
- 
- 
-// Converting to JSON
-.then(response => response.json())
- 
-// Displaying results to console
-.then(json => json);
-const marija = json.open;
+}).then(function (resp){
+				return resp.json();
+			}).then(function (data){
+			console.log(data);
+let marija;
+marija = data.open;
 console.log(marija);
+alert(data);
+}
+
 
 }
+
 
 
 
