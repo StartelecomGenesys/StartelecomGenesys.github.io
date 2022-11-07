@@ -78,11 +78,10 @@
 })
  
 // Converting to JSON
-.then(response => response.json())
+.then(response => {return response.json()})
  
 // Displaying results to console
 .then(json => console.log(json))
-.then(return json)
 
 
 
