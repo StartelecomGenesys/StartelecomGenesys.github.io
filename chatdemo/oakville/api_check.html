@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Oakville Hydro </title>
+		<script type="text/javascript" charset="utf-8">
+
+	  function start(){			
+			var open_closed = checkhours();			
+		}
+	  function toggleVisibility() {
+						  (function (g, e, n, es, ys) {
+				g['_genesysJs'] = e;
+			g[e] = g[e] || function () {
+			  (g[e].q = g[e].q || []).push(arguments)
+			};
+			g[e].t = 1 * new Date();
+			g[e].c = es;
+			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+		  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+			environment: 'cac1',
+			deploymentId: 'a0929966-2315-470c-96d7-470874d34302',
+				debug: true
+			  });
+		}
+			
+function checkhours(){
+var request_data={
+	"orgName":"startelecom",
+	"region":"us",
+	"scheduleGroupId":"2d10764c-2b4c-4752-b368-b35321a35fdd",	
+	"emergencyGroupId":"f25c82ab-e26f-45b8-90cd-c4146f464234",
+	"queue_id": "3b55d4d5-290a-4261-ba0a-366824bc201d"
+	}
+fetch("https://b59ffck3kd.execute-api.ca-central-1.amazonaws.com/default/OakvilleHydro", {
+     
+    // Adding method type
+    method: "POST",
+	//mode: "cors",
+     
+    // Adding body or contents to send
+    body: JSON.stringify(request_data),
+     
+    // Adding headers to the request
+    headers: {
+		'Content-Type': 'application/json'
+    }
+})
+ 
+// Converting to JSON
+.then((response) => {return response.json()})
+ 
+// Displaying results to console
+.then((data)=>{
+	//prvi poziv apija puca
+	console.log("tu smaaadasdasdas")
+	console.log(data);
+	console.log(data.open);
+	if (data.open)
+		{
+			toggleVisibility();
+		}
+});
+
+
+}
+		
+				
+	
+	window.onload = start;
+</script>
+		
+	</head>
+
+	
+</html>
