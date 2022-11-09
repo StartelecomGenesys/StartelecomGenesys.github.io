@@ -26,7 +26,7 @@
 		}
 			
 function checkhours(){
-			
+console.log("marija")
 fetch("https://l4cufy3q7h.execute-api.ca-central-1.amazonaws.com/default/OakvileScheduleAndAgents", {
      
     // Adding method type
@@ -53,6 +53,7 @@ fetch("https://l4cufy3q7h.execute-api.ca-central-1.amazonaws.com/default/Oakvile
 // Displaying results to console
 .then(function (data){
 	//prvi poziv apija puca
+	console.log("marija")
 	console.log(data);
 	console.log(data.open);
 	if (data.open)
