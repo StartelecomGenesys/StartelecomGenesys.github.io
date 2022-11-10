@@ -6,10 +6,10 @@
 		<title> Oakville Hydro </title>
 		<script type="text/javascript" charset="utf-8">
 
-	  function start(){			
+		function start(){			
 			var open_closed = checkhours();			
 		}
-	  function toggleVisibility() {
+		function toggleVisibility() {
 						  (function (g, e, n, es, ys) {
 				g['_genesysJs'] = e;
 			g[e] = g[e] || function () {
@@ -25,42 +25,38 @@
 			  });
 		}
 			
-function checkhours(){
-const data={"orgName":"startelecom","region":"us","scheduleGroupId":"2d10764c-2b4c-4752-b368-b35321a35fdd","emergencyGroupId":"f25c82ab-e26f-45b8-90cd-c4146f464234","queue_id": "3b55d4d5-290a-4261-ba0a-366824bc201d"}
-fetch("https://ng6malu3ng.execute-api.ca-central-1.amazonaws.com/default/OakvilleHydro", {
-     
-    // Adding method type
-    method: "POST",
-	//mode: "cors",
-     
-    // Adding body or contents to send
-    body: JSON.stringify(data),
-     
-    // Adding headers to the request
-    headers: {
-		'Content-Type': 'application/json'
-    }
-})
- 
-// Converting to JSON
-.then((response) => {return response.json()})
- 
-// Displaying results to console
-.then((data)=>{
-	//prvi poziv apija puca
-	console.log("tu smaaadasdasdas")
-	console.log(data);
-	console.log(data.open);
-	if (data.open)
-		{
-			toggleVisibility();
-		}
-});
+		function checkhours(){
+			const data={"orgName":"oakville","region":"ca","scheduleGroupId":"a18b7ff2-ae91-4f81-9f94-c08ee88418d2","emergencyGroupId":"5269c72d-d8ef-48cb-bb03-f2cc1975b584","queue_id": "472159df-468c-4178-9fce-03341bc99e4c"}
+			fetch("https://ng6malu3ng.execute-api.ca-central-1.amazonaws.com/default/OakvilleHydro", {
+			 
+				// Adding method type
+				method: "POST",
+				//mode: "cors",
+				 
+				// Adding body or contents to send
+				body: JSON.stringify(data),
+				 
+				// Adding headers to the request
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+		 
+			// Converting to JSON
+			.then((response) => {return response.json()})
+			 
+			// Displaying results to console
+			.then((data)=>{
+				//prvi poziv apija puca
+				console.log(data.open);
+				if (data.open)
+					{
+						toggleVisibility();
+					}
+			});
 
 
-}
-		
-				
+		}				
 	
 	window.onload = start;
 </script>
