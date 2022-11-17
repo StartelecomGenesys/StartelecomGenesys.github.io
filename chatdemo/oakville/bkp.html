@@ -30,7 +30,10 @@
 		<title> Oakville Hydro </title>
 		<script type="text/javascript" charset="utf-8">
 
-		
+		function start(){			
+			var open_closed = checkhours();			
+		}
+		function toggleVisibility() {
 						  (function (g, e, n, es, ys) {
 				g['_genesysJs'] = e;
 			g[e] = g[e] || function () {
@@ -44,10 +47,42 @@
 			deploymentId: 'a0929966-2315-470c-96d7-470874d34302',
 				debug: true
 			  });
-		
-				
-	
+		}
+			
+		function checkhours(){
+			const data={"orgName":"oakville","region":"ca","scheduleGroupId":"c83810b0-c302-4f40-bce0-5f150bf07dd2","emergencyGroupId":"5269c72d-d8ef-48cb-bb03-f2cc1975b584","queue_id": "472159df-468c-4178-9fce-03341bc99e4c"}
+			fetch("https://ng6malu3ng.execute-api.ca-central-1.amazonaws.com/default/OakvilleHydro", {
+			 
+				// Adding method type
+				method: "POST",
+				//mode: "cors",
+				 
+				// Adding body or contents to send
+				body: JSON.stringify(data),
+				 
+				// Adding headers to the request
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+		 
+			// Converting to JSON
+			.then((response) => {return response.json()})
+			 
+			// Displaying results to console
+			.then((data)=>{
+				//prvi poziv apija puca
+				console.log(data.open);
+				if (data.open)
+					{
+						toggleVisibility();
+					}
+			});
 
+
+		}				
+	
+	window.onload = start;
 </script>
 		
 	</head>
