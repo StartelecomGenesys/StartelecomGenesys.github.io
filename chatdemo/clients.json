@@ -84,6 +84,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"bec35b5c-9829-4bdc-8ac3-d6cb31e5fab9"
 		},
+		"OakvilleTEST": {
+			"title":"Demo chat for Oakville Hydro",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"423b5478-8bd0-4093-89b5-7c3c638fc4ed"
+		},
 		"Servus": {
 			"title":"Demo chat for Servus",
 			"environment": "cac1",
