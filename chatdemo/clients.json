@@ -90,6 +90,12 @@
 			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"423b5478-8bd0-4093-89b5-7c3c638fc4ed"
 		},
+		"Oakville": {
+			"title":"Demo chat for Oakville Hydro",
+			"environment": "cac1",
+			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"a0929966-2315-470c-96d7-470874d34302"
+		},
 		"Servus": {
 			"title":"Demo chat for Servus",
 			"environment": "cac1",
