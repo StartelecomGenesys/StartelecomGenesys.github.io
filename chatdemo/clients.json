@@ -18,6 +18,12 @@
 			"link":"https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"f5ac6bee-a3da-41fa-996c-4976ec252373"
 		},
+		"RapiscanTest": {
+			"title":"Test messenger for Rapiscan Systems",
+			"environment": "usw2",
+			"link":"https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"67dc9441-442a-4e15-8066-8359683dc0c8"
+		},
 		"Blackboard": {
 			"title":"Demo for Blackboard",
 			"environment": "usw2",
