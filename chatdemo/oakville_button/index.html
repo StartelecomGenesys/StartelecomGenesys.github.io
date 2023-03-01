@@ -4,7 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title> Demo Chat with custom launch button and bubble </title>
-
 		<script type="text/javascript" charset="utf-8">
 	  (function (g, e, n, es, ys) {
 		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
@@ -41,7 +40,7 @@
 	  } 
   function launchMessenger(){
 		Genesys("command", "Messenger.open");
-		
+		toggleVisibility();
 	  } 
 	
 </script>
@@ -49,8 +48,8 @@
 	</head>
 	<body>
 	<div class="center-screen">
-		<div class="bubble"> Hello</div>
-		<br><button id="custom-launcher" title="Hello" onclick="launchMessenger()"> Chat</button>
+		<div class="bubble"> Hi there, have a question? Chat with us here</div>
+		<br><button id="custom-launcher" onclick="launchMessenger()"> <img src="https://i.ibb.co/3zwVPWn/forum-FILL0-wght400-GRAD0-opsz48.png"> </button>
 	</div>	
 
 	</body>
@@ -58,68 +57,68 @@
 
 	
 <style>
-	body {
-			background-color: #fff;
-			-webkit-text-size-adjust: 100%;
-			padding: 0;
-			margin: 0;
-			
-			 
-			background: url(manitoba.png) no-repeat center center fixed;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;
 
-        
-		}
-.box {
-  width: 300px;
-  margin: 50px auto;
-  background: #00bfb6;
-  padding: 20px;
-  text-align: center;
-  font-weight: 900;
-  color: #fff;
-  font-family: arial;
-  position:relative;
+.bubble {
+	position: absolute;
+	background: #d2d2d2;
+	border-radius: .4em;
+	padding: 20px;
+	right: 30px;
+	bottom: 136px;
+	/* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.489); */
+	
 }
-.bubble:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid #00bfb6;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #00bfb6;
-  border-bottom: 10px solid transparent;
-  right: -20px;
-  top: 6px;
+
+.bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #d2d2d2;
+	border-bottom: 0;
+	border-right: 0;
+	margin-left: 40px;
+	margin-bottom: -20px;
+	/* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.489); */
+	
+    
 }
+
+
 #custom-launcher{
-  background-color: #BF1212;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 16px;
+	background-color: #fb9100;	
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	position: relative;
+	bottom: -50px;
+	right: -30px;
 }
+
+
+#custom-launcher img {
+	height: 40px;
+	width: 40px;
+	filter: invert(100%);
+}
+
 .center-screen {
   width: 230px;
   height: 170px;
   background-color: white;
-  position: absolute;
-  top:0;
   bottom: 0;
-  left: 0;
   right: 0;
   margin: auto;
   border-radius: 8px;
   padding: 5px;
   display: block;
   text-align: center;
+  position: fixed
 }
 </style>
 	
