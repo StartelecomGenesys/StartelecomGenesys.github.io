@@ -20,21 +20,29 @@
 	  
 	  
 	  function toggleVisibility() {
-			var x = document.getElementsByName("bubble");
+			var x = document.getElementsByName("center-screen");
 			if (x[0].style.display === "none") {
 				x[0].style.display = "block";
 			} else {
 				x[0].style.display = "none";
 			}
 		}
- function toggleMessenger(){
-    Genesys("command", "Messenger.open", {},
-      function(o){    // if rejected
-        Genesys("command", "Messenger.close");
-      }
-    );
-  }
-
+ //left in case it needed for a custom button
+	  function toggleMessenger(){
+		Genesys("command", "Messenger.open", {},
+		function(o){			
+			
+		},  // if resolved
+		function(o){    // if rejected
+			Genesys("command", "Messenger.close");			
+		}
+		);
+		
+	  } 
+  function launchMessenger(){
+		Genesys("command", "Messenger.open");
+		
+	  } 
 	
 </script>
 		
@@ -42,8 +50,7 @@
 	<body>
 	<div class="center-screen">
 		<div class="bubble"> Hello</div>
-		
-			<br><button id="custom-launcher" onclick="toggleMessenger()"> Chat</button>
+		<br><button id="custom-launcher" onclick="launchMessenger()"> Chat</button>
 	</div>	
 
 	</body>
