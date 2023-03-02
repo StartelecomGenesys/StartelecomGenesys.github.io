@@ -9,9 +9,9 @@
 		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
 		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
 		ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-	  })(window, 'Genesys','https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
-    environment: 'use1',
-    deploymentId: 'bec35b5c-9829-4bdc-8ac3-d6cb31e5fab9',
+	  })(window, 'Genesys','https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+    environment: 'cac1',
+    deploymentId: '69533f36-edf6-4b94-8662-193ffc3968cf',
 		debug: true
 	  });
 	  
@@ -26,18 +26,7 @@
 				x[0].style.display = "none";
 			}
 		}
- //left in case it needed for a custom button
-	  function toggleMessenger(){
-		Genesys("command", "Messenger.open", {},
-		function(o){			
-			
-		},  // if resolved
-		function(o){    // if rejected
-			Genesys("command", "Messenger.close");			
-		}
-		);
-		
-	  } 
+
   function launchMessenger(){
 		Genesys("command", "Messenger.open");
 		toggleVisibility();
