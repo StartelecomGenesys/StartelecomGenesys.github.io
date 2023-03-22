@@ -26,6 +26,14 @@
 		function toggleMessenger(){
 			Genesys("command", "Messenger.open", {},
 			function(o){
+				Genesys("command", "Database.set", {
+			  messaging: {
+				customAttributes: {
+				  navigatorlanguage: navigator.language,
+				  
+				}
+			  }
+			});
 				
 				Genesys("command", "Launcher.show");
 				
