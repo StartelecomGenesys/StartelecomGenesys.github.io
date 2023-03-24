@@ -16,22 +16,21 @@
 			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
 		  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
 			environment: 'use1',
-			deploymentId: '44fd1b25-0712-4f89-85fb-39ebc4160499'
+			deploymentId: 'd5a33d38-4ec2-4d20-9621-aae0cbef1ea9'
 		  });
 		
 		  Genesys("subscribe", "Messenger.ready", function(){
 			function(o){
 				Genesys("command", "Database.set", {
-			  messaging: {
-				customAttributes: {
-				  navigatorlanguage: navigator.language,
-				  
+				  messaging: {
+					customAttributes: {
+					  navigatorlanguage: navigator.language,
+					  
+					}
+				  }
 				}
-			  }
-			}
-		  });	  
-		
-		  }
+			});			
+		  });
 		  
 		  
 		</script>
