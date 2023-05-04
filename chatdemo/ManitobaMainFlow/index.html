@@ -24,12 +24,12 @@
 	  
 function toggleVisibility() {
 			var x = document.getElementById("custom-launcher");
-			if (x[0].style.display === "none") {
-				x[0].style.display = "block";
-			} else {
-				x[0].style.display = "none";
+			if (x.style.display !== "none") {
+				x.style.display = "none";
+			  } else {
+				x.style.display = "block";
+				}
 			}
-		}
 
   function launchMessenger(){
 		Genesys("command", "Messenger.open");
