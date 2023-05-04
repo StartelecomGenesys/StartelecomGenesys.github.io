@@ -19,21 +19,15 @@
     deploymentId: 'cd753eee-a2c4-448b-abae-afe922bd1ca0'
   });
 
+	   Genesys("subscribe", "Messenger.closed",function(){
+			Genesys("command", "Launcher.hide");
+		  });
 	  
 	  
-	  
-function toggleVisibility() {
-			var x = document.getElementsByName("custom-launcher");
-			if (x[0].style.display === "none") {
-				x[0].style.display = "block";
-			} else {
-				x[0].style.display = "none";
-			}
-		}
 
   function launchMessenger(){
 		Genesys("command", "Messenger.open");
-		toggleVisibility();
+		Genesys("command", "Launcher.show");
 	  } 
 
 	
