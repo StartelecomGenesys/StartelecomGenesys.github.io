@@ -23,7 +23,7 @@
 	  
 	  
 function toggleVisibility() {
-			var x = document.getElementsByName("center-screen");
+			var x = document.getElementsByName("custom-launcher");
 			if (x[0].style.display === "none") {
 				x[0].style.display = "block";
 			} else {
@@ -41,9 +41,9 @@ function toggleVisibility() {
 		
 	</head>
 	<body>
-	<div class="center-screen">
+
 		<br><button id="custom-launcher" onclick="launchMessenger()"> <img src="https://i.ibb.co/3zwVPWn/forum-FILL0-wght400-GRAD0-opsz48.png"> </button>
-	</div>	
+
 
 	</body>
 	
@@ -75,21 +75,7 @@ function toggleVisibility() {
   cursor: pointer;
   border-radius: 16px;
 }
-.center-screen {
-  width: 230px;
-  height: 170px;
-  background-color: white;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border-radius: 8px;
-  padding: 5px;
-  display: block;
-  text-align: center;
-}
+
 	</style>
 	
 </html>
