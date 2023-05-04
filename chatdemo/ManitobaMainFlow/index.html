@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with custom launch button and form </title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-cac1',
+    deploymentId: 'cd753eee-a2c4-448b-abae-afe922bd1ca0'
+  });
+
+	  
+	  
+	  
+function toggleVisibility() {
+			var x = document.getElementsByName("center-screen");
+			if (x[0].style.display === "none") {
+				x[0].style.display = "block";
+			} else {
+				x[0].style.display = "none";
+			}
+		}
+
+  function launchMessenger(){
+		Genesys("command", "Messenger.open");
+		toggleVisibility();
+	  } 
+
+	
+</script>
+		
+	</head>
+	<body>
+	<div class="center-screen">
+		<br><button id="custom-launcher" onclick="launchMessenger()"> <img src="https://i.ibb.co/3zwVPWn/forum-FILL0-wght400-GRAD0-opsz48.png"> </button>
+	</div>	
+
+	</body>
+	
+
+	
+	<style>
+	body {
+			background-color: #fff;
+			-webkit-text-size-adjust: 100%;
+			padding: 0;
+			margin: 0;
+			
+			 
+			background: url(manitoba.png) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+
+        
+		}
+#custom-launcher{
+  background-color: #0079C1;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+.center-screen {
+  width: 230px;
+  height: 170px;
+  background-color: white;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 8px;
+  padding: 5px;
+  display: block;
+  text-align: center;
+}
+	</style>
+	
+</html>
