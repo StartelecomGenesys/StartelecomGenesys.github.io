@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with custom launch button and form </title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-cac1',
+    deploymentId: 'b88f54eb-bf3d-4acd-8f15-8a1fc0375805'
+  });
+
+	  
+	  
+	  
+
+
+  function launchMessenger(){
+		Genesys("command", "Messenger.open");
+		  function(o){Genesys("command", "Database.set", {
+			  messaging: {
+				customAttributes: {
+				  name: "test"
+				  accnt: "123"
+				  email: "m@m.gmail.com"
+				  token: "124ejfjek2"
+				}
+			  }
+			});
+		},  // if resolved
+      function(o){    // if rejected
+        Genesys("command", "Messenger.close");
+		
+	  } 
+
+	
+</script>
+		
+	</head>
+	<body>
+
+		<br><button id="custom-launcher" onclick="launchMessenger()"> <img src="icon.svg"> </button>
+
+
+	</body>
+	
+
+	
+	<style>
+
+#custom-launcher{
+	background-color:transparent;
+	border:none;
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+	height: 90px;
+	width: 90px;
+	cursor: pointer;
+}
+
+	</style>
+	
+</html>
