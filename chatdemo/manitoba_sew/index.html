@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title> Demo Chat with custom launch button and form </title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		
 <script type="text/javascript" charset="utf-8">
   (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
@@ -25,22 +25,25 @@
 
 
   function launchMessenger(){
-		Genesys("command", "Messenger.open");
-		  function(o){Genesys("command", "Database.set", {
+    Genesys("command", "Messenger.open", {},
+      function(o){Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
-				  name: "test"
-				  accnt: "123"
-				  email: "m@m.gmail.com"
-				  token: "124ejfjek2"
+				  name: "testing" , //placeholder for your parameters
+				  account:"1256" ,
+				  email: "m@test.ca",
+				  token: "12345678"
+						 
 				}
 			  }
 			});
 		},  // if resolved
       function(o){    // if rejected
         Genesys("command", "Messenger.close");
-		
-	  } 
+  
+      }
+    );
+  }
 
 	
 </script>
