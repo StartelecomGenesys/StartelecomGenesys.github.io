@@ -43,7 +43,12 @@ function launchMessenger(){
 	set_data().then(
 		(message) => {
 			if (message){
-				Genesys("command", "Messenger.open");
+				Genesys("command", "Messenger.open", {},
+					  function(o){},  // if resolved
+					  function(o){    // if rejected
+						Genesys("command", "Messenger.close");
+						}
+					);
 			}
 			else{
 				console.log("error with opening chat");
