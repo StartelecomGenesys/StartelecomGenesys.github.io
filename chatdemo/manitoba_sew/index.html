@@ -25,7 +25,8 @@
 				  name: "testing" , //placeholder for your parameters
 				  account:"1256" ,
 				  email: "m@test.ca",
-				  token: "12345678"
+				  token: "12345678",
+				  lang:"EN"
 						 
 				}
 			  }
@@ -34,11 +35,12 @@
 
 
   function launchMessenger(){
-		Genesys("subscribe", "Messenger.ready", function(o){
-		console.log("Messenger Ready Event"); 
-        Genesys("command", "Messenger.open");
-		}
-		)		
+	Genesys("command", "Messenger.open", {},
+      function(o){},  // if resolved
+      function(o){    // if rejected
+        Genesys("command", "Messenger.close");
+      }
+    );	
   }
 
 	
