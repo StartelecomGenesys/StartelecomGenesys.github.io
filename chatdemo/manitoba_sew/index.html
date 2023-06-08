@@ -19,44 +19,31 @@
     deploymentId: 'b88f54eb-bf3d-4acd-8f15-8a1fc0375805'
   });
 
-	  
-function set_data(){
-	let check = Genesys("command", "Database.set", {
+     function(o){Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
 				  name: "testing" , //placeholder for your parameters
 				  account:"1256" ,
 				  email: "m@test.ca",
-				  token: "12345678",
-				  lang:"EN" 
-						
+				  token: "12345678"
+						 
 				}
 			  }
 			});
-		return Promise.resolve(check);
-			
-}	  
+		}	  
+	  
 	  
 
 
-function launchMessenger(){
-	set_data().then(
-		(message) => {
-			if (message){
-				Genesys("command", "Messenger.open", {},
-					  function(o){},  // if resolved
-					  function(o){    // if rejected
-						Genesys("command", "Messenger.close");
-						}
-					);
-			}
-			else{
-				console.log("error with opening chat");
-			}
-		}
-	);
-	
-}
+  function launchMessenger(){
+    Genesys("command", "Messenger.open", {},
+  // if resolved
+      function(o){    // if rejected
+        Genesys("command", "Messenger.close");
+  
+      }
+    );
+  }
 
 	
 </script>
