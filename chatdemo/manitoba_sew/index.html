@@ -33,10 +33,6 @@
 			});  
 	  
 
-Genesys("subscribe", "Messenger.ready", function(){
-	document.getElementById("custom-launcher").style.display="block";
-});
-
 
   function launchMessenger(){
 	Genesys("command", "Messenger.open", {},
@@ -46,7 +42,7 @@ Genesys("subscribe", "Messenger.ready", function(){
       }
     );	
   }
-  
+
 
 	
 </script>
@@ -64,7 +60,6 @@ Genesys("subscribe", "Messenger.ready", function(){
 	<style>
 
 #custom-launcher{
-	display:none;
 	background-color:transparent;
 	border:none;
     position: fixed;
