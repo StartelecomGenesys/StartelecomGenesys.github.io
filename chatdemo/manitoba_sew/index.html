@@ -33,9 +33,11 @@
 			});  
 	  
 
-Genesys("subscribe", "Messenger.ready", function (){
+Genesys("subscribe", "Messenger.ready", function(){
 	document.getElementById("custom-launcher").style.display="block";
 });
+
+
   function launchMessenger(){
 	Genesys("command", "Messenger.open", {},
       function(o){},  // if resolved
@@ -62,7 +64,7 @@ Genesys("subscribe", "Messenger.ready", function (){
 	<style>
 
 #custom-launcher{
-	display:none
+	display:none;
 	background-color:transparent;
 	border:none;
     position: fixed;
