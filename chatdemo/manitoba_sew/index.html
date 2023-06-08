@@ -29,18 +29,15 @@
 						 
 				}
 			  }
-			});
-			  
-	  
+			});  
 	  
 
 
   function launchMessenger(){
-    Genesys("command", "Messenger.open", {},
-  // if resolved
+	Genesys("command", "Messenger.open", {},
+      function(o){},  // if resolved
       function(o){    // if rejected
         Genesys("command", "Messenger.close");
-  
       }
     );
   }
