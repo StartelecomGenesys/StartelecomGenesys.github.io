@@ -19,7 +19,7 @@
     deploymentId: 'b88f54eb-bf3d-4acd-8f15-8a1fc0375805'
   });
 
-     function(o){Genesys("command", "Database.set", {
+     Genesys("command", "Database.set", {
 			  messaging: {
 				customAttributes: {
 				  name: "testing" , //placeholder for your parameters
@@ -30,7 +30,7 @@
 				}
 			  }
 			});
-		}	  
+			  
 	  
 	  
 
