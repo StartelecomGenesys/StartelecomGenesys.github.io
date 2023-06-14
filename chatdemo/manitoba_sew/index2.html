@@ -37,7 +37,7 @@ function setData(){
 }
 
   
-  Genesys("subscribe", "Messenger.ready", function(){
+  Genesys("subscribe", "MessagingService.ready", function(){
 		setData().then(
 			(resolved) => {
 				console.log("resolved" + resolved);
