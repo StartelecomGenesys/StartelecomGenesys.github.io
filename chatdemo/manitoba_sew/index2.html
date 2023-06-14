@@ -38,29 +38,42 @@ function setData(){
 	
 }
 
+Genesys("subscribe", "Messenger.ready", function(){
+	setData().then(
+		(resolved) => {
+				console.log("resolved" + resolved);
+				if(resolved){
+					document.getElementById("custom-launcher").style.visibility = "visible";
+				}
+				else{
+					alert("Error encountered while loading the messenger. Please refresh the page!");
+				}
+			}
+	);
+});
+
 
 Genesys("subscribe","Messenger.ready", function (){
 
-	Genesys("command", "MessagingService.fetchHistory").then(
-		(resolved) => {
-			Genesys("subscribe", "MessagingService.ready", function(){
+	Genesys("command", "MessagingService.fetchHistory", {},
+		function(o){
+			Genesys("subscribe", "Messenger.ready", function(){
 				setData().then(
 					(resolved) => {
-						console.log("resolved" + resolved);
-						if(resolved){
-							document.getElementById("custom-launcher").style.visibility = "visible";
+							console.log("resolved" + resolved);
+							if(resolved){
+								document.getElementById("custom-launcher").style.visibility = "visible";
+							}
+							else{
+								alert("Error encountered while loading the messenger. Please refresh the page!");
+							}
 						}
-						else{
-							alert("Error encountered while loading the messenger. Please refresh the page!");
-						}
-					}
 				);
-  });
-		},
-		(rejected) => {
-			setTimeout(()=>{
-				setData().then(
-					(resolved) => {
+			});
+		},//resolved
+		function(o){
+			setData().then(
+				(resolved) => {
 						console.log("resolved" + resolved);
 						if(resolved){
 							document.getElementById("custom-launcher").style.visibility = "visible";
@@ -69,13 +82,11 @@ Genesys("subscribe","Messenger.ready", function (){
 							alert("Error encountered while loading the messenger. Please refresh the page!");
 						}
 					}
-				);			
-		}
+			);
+		}//rejected
 	);
-	
-	},"2000");
 
-})
+});
 
  
 
