@@ -35,23 +35,53 @@ function setData(){
 	});
 
 	return Promise.resolve(dataIsSet);
+	
 }
 
 
-  
-  Genesys("subscribe", "Launcher.ready", function(){
-		setData().then(
-			(resolved) => {
-				console.log("resolved" + resolved);
-				if(resolved){
-					document.getElementById("custom-launcher").style.visibility = "visible";
-				}
-				else{
-					alert("Error encountered while loading the messenger. Please refresh the page!");
-				}
-			}
-		);
+Genesys("subscribe","Messenger.ready", function (){
+
+	Genesys("command", "MessagingService.fetchHistory").then(
+		(resolved) => {
+			Genesys("subscribe", "MessagingService.ready", function(){
+				setData().then(
+					(resolved) => {
+						console.log("resolved" + resolved);
+						if(resolved){
+							document.getElementById("custom-launcher").style.visibility = "visible";
+						}
+						else{
+							alert("Error encountered while loading the messenger. Please refresh the page!");
+						}
+					}
+				);
   });
+		},
+		(rejected) => {
+			setTimeout(()=>{
+				setData().then(
+					(resolved) => {
+						console.log("resolved" + resolved);
+						if(resolved){
+							document.getElementById("custom-launcher").style.visibility = "visible";
+						}
+						else{
+							alert("Error encountered while loading the messenger. Please refresh the page!");
+						}
+					}
+				);			
+		}
+	);
+	
+	},"2000");
+
+})
+
+ 
+
+
+  
+  
   
  
 
