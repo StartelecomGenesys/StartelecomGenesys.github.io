@@ -37,8 +37,9 @@ function setData(){
 	return Promise.resolve(dataIsSet);
 }
 
-  Genesys("subscribe","Messenger.ready",function(){
-  Genesys("subscribe", "MessagingService.ready", function(){
+
+  
+  Genesys("subscribe", "Launcher.ready", function(){
 		setData().then(
 			(resolved) => {
 				console.log("resolved" + resolved);
@@ -52,7 +53,7 @@ function setData(){
 		);
   });
   
-  });
+ 
 
     /* Genesys("command", "Database.set", {
 			  messaging: {
