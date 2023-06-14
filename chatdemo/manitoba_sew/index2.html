@@ -38,7 +38,7 @@ function setData(){
 	
 }
 
-setTimeout(() => {Genesys("subscribe", "Messenger.ready", function(){
+setTimeout(() => {
 	setData().then(
 		(resolved) => {
 				console.log("resolved" + resolved);
@@ -50,8 +50,8 @@ setTimeout(() => {Genesys("subscribe", "Messenger.ready", function(){
 				}
 			}
 	);
-});
-},"2000");
+
+},"3000");
 
 
  
