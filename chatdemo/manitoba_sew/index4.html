@@ -24,7 +24,9 @@
       Genesys("command", "Messenger.open");
     }
 	
-	  /** Subscribe to Database.ready event before calling its command.**/
+document.addEventListener("DOMContentLoaded", function(){
+  
+   /** Subscribe to Database.ready event before calling its command.**/
     Genesys("subscribe", "Database.ready", function() {
       // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
       Genesys("command", "Database.set", {
@@ -40,15 +42,22 @@
       })
     });
 	
-	
- /*Genesys("subscribe", "Messenger.ready", function() {
+  
+  Genesys("subscribe", "Messenger.ready", function() {
       document.getElementById("custom-launcher").style.display = "block";
     });
-*/
-document.addEventListener("DOMContentLoaded", function(){
+  
+  
+  
+});
+	 
+	
+ /*document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("custom-launcher").style.display = "block";
 });
- //document.getElementById("background-img").style.backgroundImage = "test.gif";
+*/
+
+
 </script>
 <style>
 body { background-image:url('test.gif'); background-repeat:repeat; }
@@ -59,8 +68,7 @@ body { background-image:url('test.gif'); background-repeat:repeat; }
 
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
 
-<!-- <div id="background-img"></div>
- -->	</body>
+	</body>
 	
 	<style>
 
