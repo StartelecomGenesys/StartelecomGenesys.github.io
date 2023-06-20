@@ -48,16 +48,19 @@
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("custom-launcher").style.display = "block";
 });
- document.getElementById("background-img").style.backgroundImage = "test.gif";
+ //document.getElementById("background-img").style.backgroundImage = "test.gif";
 </script>
+<style>
+body { background-image:url('test.gif'); background-repeat:repeat; }
+</style>
 		
 	</head>
 	<body>
 
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
 
-<div id="background-img"></div>
-	</body>
+<!-- <div id="background-img"></div>
+ -->	</body>
 	
 	<style>
 
