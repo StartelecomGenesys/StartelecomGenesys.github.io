@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	<body>
 
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
-
+document.getElementById("background-img").style.backgroundImage = "test.gif";
 
 	</body>
 	
@@ -72,7 +72,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	cursor: pointer;
 	display: none;
 }
-
+#background-img{
+		
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		height:100vh;
+	}
 	</style>
 	
 </html>
