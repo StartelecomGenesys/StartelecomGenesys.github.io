@@ -7,41 +7,41 @@
 		
 <script type="text/javascript" charset="utf-8">
 window.onload = function() {
-  (function (g, e, n, es, ys) {
-    g['_genesysJs'] = e;
-    g[e] = g[e] || function () {
-      (g[e].q = g[e].q || []).push(arguments)
-    };
-    g[e].t = 1 * new Date();
-    g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
-    environment: 'prod-cac1',
-    deploymentId: 'dcd2eeec-889e-4f7a-ad95-0880d01fffa7',
-	debug: true
-  });
-     
-  
- /** Subscribe to Database.ready event before calling its command.**/
-    Genesys("subscribe", "Database.ready", function() {
-      // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
-      Genesys("command", "Database.set", {
-        messaging: {
-          customAttributes: {
-            name: "testing" , //placeholder for your parameters
-			  account:"1256" ,
-			  email: "m@test.ca",
-			  token: "12345678",
-			  lang:"EN"	
-          }
-        }
-      })
-    });
-	
-  
-  Genesys("subscribe", "Messenger.ready", function() {
-      document.getElementById("custom-launcher").style.display = "block";
-    }); 
+	  (function (g, e, n, es, ys) {
+		g['_genesysJs'] = e;
+		g[e] = g[e] || function () {
+		  (g[e].q = g[e].q || []).push(arguments)
+		};
+		g[e].t = 1 * new Date();
+		g[e].c = es;
+		ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+		environment: 'prod-cac1',
+		deploymentId: 'b88f54eb-bf3d-4acd-8f15-8a1fc0375805',
+		debug: true
+	  });
+		 
+	  
+	 /** Subscribe to Database.ready event before calling its command.**/
+		Genesys("subscribe", "Database.ready", function() {
+		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				name: "testing" , //placeholder for your parameters
+				  account:"1256" ,
+				  email: "m@test.ca",
+				  token: "12345678",
+				  lang:"EN"	
+			  }
+			}
+		  })
+		});
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
 
 }
 
@@ -52,6 +52,7 @@ window.onload = function() {
 	
 	
 </script>
+
 <style>
 body { background-image:url('test.gif'); background-repeat:repeat; }
 </style>
