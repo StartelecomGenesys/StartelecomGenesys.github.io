@@ -21,12 +21,7 @@ window.onload = function() {
 	debug: true
   });
   
-   function openMessenger() {
-      Genesys("command", "Messenger.open");
-    }
-	
-
-  
+   
    /** Subscribe to Database.ready event before calling its command.**/
     Genesys("subscribe", "Database.ready", function() {
       // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
@@ -51,6 +46,11 @@ window.onload = function() {
   
 
 }
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
+	
+	
 </script>
 <style>
 body { background-image:url('test.gif'); background-repeat:repeat; }
