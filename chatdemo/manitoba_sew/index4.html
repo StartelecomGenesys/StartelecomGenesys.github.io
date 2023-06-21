@@ -22,10 +22,7 @@ window.onload = function() {
   });
      
   
-  
-
-}
-/** Subscribe to Database.ready event before calling its command.**/
+ /** Subscribe to Database.ready event before calling its command.**/
     Genesys("subscribe", "Database.ready", function() {
       // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
       Genesys("command", "Database.set", {
@@ -44,7 +41,10 @@ window.onload = function() {
   
   Genesys("subscribe", "Messenger.ready", function() {
       document.getElementById("custom-launcher").style.display = "block";
-    });
+    }); 
+
+}
+
 	
   function openMessenger() {
       Genesys("command", "Messenger.open");
