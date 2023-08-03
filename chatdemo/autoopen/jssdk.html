@@ -17,11 +17,11 @@
     environment: 'prod',
     deploymentId: '6a01ee4c-9e97-4a68-89c7-f5cdb001fa5d'
   });
+  Genesys("subscribe", "Messenger.ready", Genesys("command", "Messenger.open"));
   
-  Genesys("command", "Messenger.open");
 </script>
 </head>
-<body onload="Genesys('command', 'Messenger.open')">
+<body>
 
     <h1>Demo Page</h1>
 
