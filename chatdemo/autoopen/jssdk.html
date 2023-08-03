@@ -22,9 +22,9 @@
   
   
   
- //  window.onload = (event) => {
-  //Genesys("command", "Messenger.open");
-//};
+ Genesys("subscribe", "Messenger.ready", function(){
+	Genesys("command", "Messenger.open");
+ });
   
 </script>
 </head>
