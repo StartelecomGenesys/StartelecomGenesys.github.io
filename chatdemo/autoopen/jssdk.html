@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!window.onload = (event) => {
+  console.log("page is fully loaded");
+};DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -18,7 +20,13 @@
     deploymentId: '6a01ee4c-9e97-4a68-89c7-f5cdb001fa5d',
 	debug:true
   });
-  Genesys("subscribe", "Launcher.ready", Genesys("command", "Messenger.open"));
+  
+  
+  
+  window.onload = (event) => {
+  Genesys("command", "Messenger.open");
+};
+  
   
 </script>
 </head>
