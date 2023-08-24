@@ -38,9 +38,9 @@
 		},
 		"demo2": {
 			"title":"Demo chat for Essex Powerlines Corporation",
-			"environment": "use1",
+			"environment": "prod",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
-			"deploymentID":"13054925-2913-4b19-950a-c3fa1e2f04ec"
+			"deploymentID":"b9d4aebf-6246-4935-95ef-3dfdd128f461"
 		},
 		"EssexProd": {
 			"title":"Demo chat for Essex Powerlines Corporation",
