@@ -6,6 +6,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
 		},
+		"TorontoHydroDemo": {
+			"title":"TorontoHydroDemo",
+			"environment": "prod",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"59c974ca-4724-494e-9eee-ffce6f1c7e9f"
+		},
 		"KFF": {
 			"title":"Demo for Knowledge Firts Financials",
 			"environment": "use1",
