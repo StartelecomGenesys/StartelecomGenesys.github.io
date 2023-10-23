@@ -21,7 +21,14 @@
 			
 			
 		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
-			console.log(data);
+			Genesys("command", "MessagingService.clearConversation", 
+				{}, 
+				function() {
+				/*fulfilled callback*/
+				},
+				function() {
+				/*rejected callback*/
+				});
 		});
 			
 	
