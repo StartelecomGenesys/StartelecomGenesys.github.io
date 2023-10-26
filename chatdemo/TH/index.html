@@ -19,9 +19,7 @@
 			deploymentId: '59c974ca-4724-494e-9eee-ffce6f1c7e9f'
 			});
 			
-			
-		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
-			setTimeout( 
+			function clearHistoryAndClose(){
 				Genesys("command", "MessagingService.clearConversation", 
 						{}, 
 						function() {
@@ -29,8 +27,11 @@
 						},
 						function() {
 						/*rejected callback*/
-						})
-			, 5000);						
+						});
+			};
+			
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+			setTimeout( clearHistoryAndClose, 5000);						
 		});
 		
 			
