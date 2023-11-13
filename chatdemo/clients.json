@@ -18,6 +18,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"44fd1b25-0712-4f89-85fb-39ebc4160499"
 		},
+		"Spark": {
+			"title":"Demo for Spark",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"720e5bfc-fd1e-4ef6-906f-198202028249"
+		},
 		"Rapiscan": {
 			"title":"Demo for Rapiscan Systems",
 			"environment": "usw2",
