@@ -3,10 +3,11 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title> Demo Chat with custom launch button and form </title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<title> Spark Demo </title>
+
 		<script type="text/javascript" charset="utf-8">
-	  (function (g, e, n, es, ys) {
+window.onload = function() {
+	(function (g, e, n, es, ys) {
 		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
 		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
 		ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
@@ -17,32 +18,34 @@
 	  });
 	  
 	  
-	  
-	  function toggleVisibility() {
-			var x = document.getElementsByName("webchat_form");
-			if (x[0].style.display === "none") {
-				x[0].style.display = "block";
-			} else {
-				x[0].style.display = "none";
-			}
-		}
- function toggleMessenger(){
-    Genesys("command", "Messenger.open", {},
-      function(o){Genesys("command", "Database.set", {
-			  messaging: {
-				customAttributes: {
-				  name: document.getElementById('name').value,
-				 
-				}
+	 /** Subscribe to Database.ready event before calling its command.**/
+		Genesys("subscribe", "Database.ready", function() {
+		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				name: "testing" , //placeholder for your parameters
+				  account:"1256" ,
+				  email: "m@test.ca",
+				  token: "12345678",
+				  lang:"EN"	
 			  }
-			});
-			console.log(document.getElementById('name').value);
-			},  // if resolved
-      function(o){    // if rejected
-        Genesys("command", "Messenger.close");
-      }
-    );
-  }
+			}
+		  })
+		});
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+
+}
+
+	
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
+	
 
 	
 </script>
@@ -57,8 +60,8 @@
 		  <input type="password" id="pass" name="pass"><br>
 					
 			</form>
-			<br><button id="custom-launcher" onclick="toggleMessenger()">
-				<i class="fa fa-comment-dots"></i> Chat
+			<br><button id="custom-launcher" onclick="openMessenger()">
+				<i class="fa fa-comment-dots"></i> LogIn
 			</button>
 	</div>	
 
@@ -74,7 +77,7 @@
 			margin: 0;
 			
 			 
-			background: url(manitoba.png) no-repeat center center fixed;
+			background: url(Spark.png) no-repeat center center fixed;
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
