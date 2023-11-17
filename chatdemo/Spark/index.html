@@ -17,7 +17,11 @@
 	  });
 	  
 	  
-	 /** Subscribe to Database.ready event before calling its command.**/
+		
+	  
+
+	function LogIn() {
+		 /** Subscribe to Database.ready event before calling its command.**/
 		Genesys("subscribe", "Database.ready", function() {
 		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
 		  Genesys("command", "Database.set", {
@@ -29,11 +33,7 @@
 			}
 		  })
 		});
-		
-	  
-
-	function LogIn() {
-	document.getElementById('center-screen').style.display = 'none';
+	document.getElementByName('center-screen').style.display = 'none';
 	Genesys("command", "Launcher.show");
 
 	}
