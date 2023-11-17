@@ -33,7 +33,10 @@
 			}
 		  })
 		});
-	document.getElementsByClassName('center-screen').style.display = 'none';
+	// document.getElementsByClassName('center-screen').style.display = 'none';
+	var element = document.getElementById("myDIV");
+    element.classList.toggle("center-screen");
+	element.classList.toggle("center-screen-none");
 	Genesys("command", "Launcher.show");
 
 	}
@@ -43,7 +46,7 @@
 		
 	</head>
 	<body>
-	<div class="center-screen">
+	<div class="center-screen" id="myDiv">
 		<form name="webchat_form">
 		  <label for="name">Name:</label><br>
 		  <input type="text" id="name" name="name"><br>
@@ -101,6 +104,14 @@
   display: block;
   text-align: center;
 }
+}
+.center-screen-none {
+  display:none;
+}
+
+
+
+
 .center-screen input {
 width: 60%;
       height: 25px;
