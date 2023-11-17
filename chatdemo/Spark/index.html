@@ -6,7 +6,6 @@
 		<title> Spark Demo </title>
 
 		<script type="text/javascript" charset="utf-8">
-window.onload = function() {
 	(function (g, e, n, es, ys) {
 		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
 		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
@@ -24,28 +23,20 @@ window.onload = function() {
 		  Genesys("command", "Database.set", {
 			messaging: {
 			  customAttributes: {
-				name: "testing" , //placeholder for your parameters
-				  account:"1256" ,
-				  email: "m@test.ca",
-				  token: "12345678",
-				  lang:"EN"	
+				 name: document.getElementById('name').value,
+				 accnt: "123456"
 			  }
 			}
 		  })
 		});
 		
 	  
-	  Genesys("subscribe", "Messenger.ready", function() {
-		  document.getElementById("custom-launcher").style.display = "block";
-		}); 
 
-}
+	function LogIn() {
+	document.getElementById('center-screen').style.display = 'none';
+	Genesys("command", "Launcher.show");
 
-	
-  function openMessenger() {
-      Genesys("command", "Messenger.open");
-    }
-	
+	}
 
 	
 </script>
@@ -60,7 +51,7 @@ window.onload = function() {
 		  <input type="password" id="pass" name="pass"><br>
 					
 			</form>
-			<br><button id="custom-launcher" onclick="openMessenger()">
+			<br><button id="Login" onclick="LogIn()">
 				<i class="fa fa-comment-dots"></i> LogIn
 			</button>
 	</div>	
@@ -85,7 +76,7 @@ window.onload = function() {
 
         
 		}
-#custom-launcher{
+#Login{
   background-color: #0079C1;
   border: none;
   color: white;
