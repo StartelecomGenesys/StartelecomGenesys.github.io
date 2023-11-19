@@ -6,124 +6,120 @@
 		<title> Spark Demo </title>
 
 		<script type="text/javascript" charset="utf-8">
-		document.addEventListener("DOMContentLoaded" function (){
-	(function (g, e, n, es, ys) {
-		g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
-		g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
-		ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-	  })(window, 'Genesys','https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
-    environment: 'use1',
-    deploymentId: '720e5bfc-fd1e-4ef6-906f-198202028249',
-		debug: true
-	  });
-	  
-	  
 		
-	  
+       (function (g, e, n, es, ys) {
+       	g['_genesysJs'] = e; g[e] = g[e] || function () {(g[e].q = g[e].q || []).push(arguments)};
+       	g[e].t = 1 * new Date(); g[e].c = es; ys = document.createElement('script'); ys.async = 1;
+       	ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+         })(window, 'Genesys','https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+       environment: 'use1',
+       deploymentId: '720e5bfc-fd1e-4ef6-906f-198202028249',
+       	debug: true
+         });
 
-	function LogIn() {
-		 /** Subscribe to Database.ready event before calling its command.**/
-		Genesys("subscribe", "Database.ready", function() {
-		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
-		  Genesys("command", "Database.set", {
-			messaging: {
-			  customAttributes: {
-				 name: document.getElementById('name').value,
-				 accnt: "123456"
-			  }
-			}
-		  })
-		});
-	// document.getElementsByClassName('center-screen').style.display = 'none';
-	var element = document.getElementById("myDIV");
-    element.classList.toggle("center-screen");
-	element.classList.toggle("center-screen-none");
-	Genesys("command", "Launcher.show");
+      function LogIn() {
+        /** Subscribe to Database.ready event before calling its command.**/
+       	Genesys("subscribe", "Database.ready", function() {
+       	  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+       	  Genesys("command", "Database.set", {
+         		messaging: {
+         		  customAttributes: {
+         			 name: document.getElementById('name').value,
+         			 accnt: "123456"
+         		  }
+         		}
+         	  })
+         	});
+         // document.getElementsByClassName('center-screen').style.display = 'none';
+        var element = document.getElementById("myDiv");
+        if (element) {
+          element.classList.toggle("center-screen");
+          element.classList.toggle("center-screen-none");
+        }
+         Genesys("command", "Launcher.show");
+      }
 
-	}
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM fully loaded");
+        var loginButton = document.getElementById("Login");
+        if (loginButton) {
+          loginButton.addEventListener("click", LogIn);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="center-screen" id="myDiv">
+      <form name="webchat_form">
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" name="name" /><br />
+        <label for="pass">Password</label><br />
+        <input type="password" id="pass" name="pass" /><br />
+      </form>
+      <br /><button id="Login"><i class="fa fa-comment-dots"></i> LogIn</button>
+    </div>
+  </body>
 
-	})
-</script>
-		
-	</head>
-	<body>
-	<div class="center-screen" id="myDiv">
-		<form name="webchat_form">
-		  <label for="name">Name:</label><br>
-		  <input type="text" id="name" name="name"><br>
-		  <label for="pass">Password</label><br>
-		  <input type="password" id="pass" name="pass"><br>
-					
-			</form>
-			<br><button id="Login" onclick="LogIn()">
-				<i class="fa fa-comment-dots"></i> LogIn
-			</button>
-	</div>	
-
-	</body>
-	
-
-	
-	<style>
-	body {
-			background-color: #fff;
-			-webkit-text-size-adjust: 100%;
-			padding: 0;
-			margin: 0;
-			
-			 
-			background: url(Spark.JPG) no-repeat center center fixed;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;
-
-        
-		}
-#Login{
-  background-color: #0079C1;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 16px;
-}
-.center-screen {
-  width: 400px;
-  height: 200px;
-  background-color: transparent;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 10;
-  margin: auto;
-  border-radius: 10px;
-  padding: 5px;
-  display: block;
-  text-align: center;
-}
-}
-.center-screen-none {
-  display:none;
-}
+  <style>
+    body {
+    			background-color: #fff;
+    			-webkit-text-size-adjust: 100%;
+    			padding: 0;
+    			margin: 0;
 
 
+    			background: url(Spark.JPG) no-repeat center center fixed;
+    			-webkit-background-size: cover;
+    			-moz-background-size: cover;
+    			-o-background-size: cover;
+    			background-size: cover;
 
 
-.center-screen input {
-width: 60%;
-      height: 25px;
-      margin: 0 auto;
+    		}
+    #Login{
+      background-color: #0079C1;
       border: none;
-      border:solid 1px #ccc;
+      color: white;
+      padding: 16px 32px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 16px;
+    }
+    .center-screen {
+      width: 400px;
+      height: 200px;
+      background-color: transparent;
+      position: absolute;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 10;
+      margin: auto;
       border-radius: 10px;
+      padding: 5px;
+      display: block;
+      text-align: center;
+    }
+    
 
-  
-}
-
-	</style>
 	
+    .center-screen-none {
+      display:none;
+    }
+
+
+
+
+    .center-screen input {
+    width: 60%;
+          height: 25px;
+          margin: 0 auto;
+          border: none;
+          border:solid 1px #ccc;
+          border-radius: 10px;
+
+
+    }
+  </style>
 </html>
