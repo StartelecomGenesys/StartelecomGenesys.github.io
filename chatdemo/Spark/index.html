@@ -48,12 +48,12 @@
           loginButton.addEventListener("click", LogIn);
         }
       });
-logoutButton = document.getElementById("Logout");
-logoutButton.addEventListener("click", function() {
+
+function LogOut() {
 console.log("log out button clicked");
   Genesys("command", "MessagingService.clearSession");  
 location.reload();
-});
+}
 
 
     </script>
@@ -68,7 +68,7 @@ location.reload();
       </form>
       <br /><button id="Login"><i class="fa fa-comment-dots"></i> LogIn</button>
     </div>
-	<button id="Logout"><i class="logout"></i> Log Out</button>
+	<button id="Logout" onClick="LogOut()">Log Out</button>
   </body>
 
   <style>
