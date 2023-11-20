@@ -36,8 +36,9 @@
 		
 		window.addEventListener("beforeunload", function (e) {
 			console.log(e);
-			e.preventDefault();
 			clearHistoryAndClose();
+			e.preventDefault();
+			
 		});
 		
 			
