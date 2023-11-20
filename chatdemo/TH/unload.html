@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<title> Toronto Hydro demo </title>
+		<script type="text/javascript" charset="utf-8">
+			(function (g, e, n, es, ys) {
+			g['_genesysJs'] = e;
+			g[e] = g[e] || function () {
+			(g[e].q = g[e].q || []).push(arguments)
+			};
+			g[e].t = 1 * new Date();
+			g[e].c = es;
+			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+			})(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			environment: 'prod',
+			deploymentId: '59c974ca-4724-494e-9eee-ffce6f1c7e9f'
+			});
+			
+			function clearHistoryAndClose(){
+				Genesys("command", "MessagingService.clearConversation", 
+						{}, 
+						function() {
+						/*fulfilled callback*/
+						},
+						function() {
+						/*rejected callback*/
+						});
+			};
+			
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+			setTimeout( clearHistoryAndClose, 2000);						
+		});
+		
+		window.addEventListener("beforeunload", function (e) {
+			console.log(e);
+			clearHistoryAndClose();
+		});
+		
+			
+	
+		</script>
+	</head>
+	<body>
+		<h1>TH test disconnect</h1>
+		
+		
+	</body>
+</html>
