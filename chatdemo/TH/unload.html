@@ -35,10 +35,14 @@
 		});
 		
 		window.addEventListener("beforeunload", function (e) {
-			console.log(e);
-			clearHistoryAndClose();
-			e.preventDefault();
+			//console.log(e);
+			//clearHistoryAndClose();
+			//e.preventDefault();
 			
+		});
+		
+		addEventListener("pagehide", (event) => {
+			clearHistoryAndClose();
 		});
 		
 			
