@@ -50,6 +50,7 @@
       });
 logoutButton = document.getElementById("Logout");
 logoutButton.addEventListener("click", function() {
+console.log("log out button clicked");
   Genesys("command", "MessagingService.clearSession");  
 location.reload();
 });
