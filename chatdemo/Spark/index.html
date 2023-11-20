@@ -37,6 +37,8 @@
           element.classList.toggle("center-screen-none");
         }
          Genesys("command", "Launcher.show");
+		 document.getElementById("logout").style.display = "block";
+
       }
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -58,6 +60,7 @@
       </form>
       <br /><button id="Login"><i class="fa fa-comment-dots"></i> LogIn</button>
     </div>
+	<button id="Logout"><i class="logout"></i> Log Out</button>
   </body>
 
   <style>
@@ -120,6 +123,17 @@
           border-radius: 10px;
 
 
+    }
+	
+	   #Logout{
+      background-color: #0079C1;
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 16px;
     }
   </style>
 </html>
