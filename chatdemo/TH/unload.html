@@ -39,18 +39,22 @@
 			
 		});
 		
-		//window.addEventListener("load", function (e) {
 		Genesys("subscribe", "MessagingService.restored", function({data}){
-			let clear = localStorage.getItem("_widgetClose");
-			console.log("*******************************************************************");
-			console.log(clear);
-			if(clear === "True"){
-			// treba ti globalna varijabla i hendler za istu
-				clearHistoryAndClose(); // jedan event koji kad se fire-uje cuva u globalnoj varijabli nesto
-			}
-			localStorage.removeItem("_widgetClose");
-			
+				clearHistoryAndClose();  
 		});
+		
+		//window.addEventListener("load", function (e) {
+		//Genesys("subscribe", "MessagingService.restored", function({data}){
+			//let clear = localStorage.getItem("_widgetClose");
+			//console.log("*******************************************************************");
+			//console.log(clear);
+			//if(clear === "True"){
+			// treba ti globalna varijabla i hendler za istu
+			//	clearHistoryAndClose(); // jedan event koji kad se fire-uje cuva u globalnoj varijabli nesto
+			//}
+			//localStorage.removeItem("_widgetClose");
+			 
+		//});
 		
 			
 	
