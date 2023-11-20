@@ -36,14 +36,12 @@
 		
 		window.addEventListener("beforeunload", function (e) {
 			//console.log(e);
-			//clearHistoryAndClose();
+			clearHistoryAndClose();
 			//e.preventDefault();
 			
 		});
 		
-		addEventListener("pagehide", (event) => {
-			clearHistoryAndClose();
-		});
+		
 		
 			
 	
