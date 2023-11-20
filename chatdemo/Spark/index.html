@@ -51,7 +51,7 @@
 
 function LogOut() {
 console.log("log out button clicked");
-  Genesys("command", "MessagingService.clearSession");  
+  Genesys("command", "MessagingService.clearConversation"); 
 location.reload();
 }
 
