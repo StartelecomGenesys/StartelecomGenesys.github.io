@@ -48,8 +48,8 @@
           loginButton.addEventListener("click", LogIn);
         }
       });
-
-Logout.addEventListener("click", function() {
+logoutButton = document.getElementById("Logout");
+logoutButton.addEventListener("click", function() {
   Genesys("command", "MessagingService.clearSession");  
 location.reload();
 });
