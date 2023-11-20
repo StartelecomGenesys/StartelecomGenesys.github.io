@@ -35,13 +35,18 @@
 		});
 		
 		window.addEventListener("beforeunload", function (e) {
-			//console.log(e);
-			clearHistoryAndClose();
-			//e.preventDefault();
+			localStorage.setItem("_widgetClose", "True");;
 			
 		});
 		
-		
+		window.addEventListener("load", function (e) {
+			const clear = localStorage.getItem("_widgetClose");
+			console.log(clear)
+			if(clear === "True"){
+				clearHistoryAndClose();
+			}
+			
+		});
 		
 			
 	
