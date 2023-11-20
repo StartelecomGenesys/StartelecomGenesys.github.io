@@ -48,14 +48,13 @@
           loginButton.addEventListener("click", LogIn);
         }
       });
-var logoutButton = document.getElementById("Logout");
-        if (logoutButton) {
-          logoutButton.addEventListener("click", LogOut);
-        }
-function LogOut() {
-Genesys("command", "MessagingService.clearSession");  
+
+Logout.addEventListener("click", function() {
+  Genesys("command", "MessagingService.clearSession");  
 location.reload();
-}
+});
+
+
     </script>
   </head>
   <body>
