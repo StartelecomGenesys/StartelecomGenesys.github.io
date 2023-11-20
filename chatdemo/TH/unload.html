@@ -39,14 +39,16 @@
 			
 		});
 		
-		window.addEventListener("load", function (e) {
+		//window.addEventListener("load", function (e) {
+		Genesys("subscribe", "Messenger.ready", function({data}){
 			let clear = localStorage.getItem("_widgetClose");
 			console.log("*******************************************************************");
 			console.log(clear);
 			if(clear === "True"){
-				clearHistoryAndClose();
+			// treba ti globalna varijabla i hendler za istu
+				clearHistoryAndClose(); // jedan event koji kad se fire-uje cuva u globalnoj varijabli nesto
 			}
-			//removeitem
+			removeItem("_widgetClose");
 			
 		});
 		
