@@ -40,7 +40,7 @@
 		});
 		
 		//window.addEventListener("load", function (e) {
-		Genesys("subscribe", "MessagingService.historyComplete", function({data}){
+		Genesys("subscribe", "MessagingService.oldMessages", function({data}){
 			let clear = localStorage.getItem("_widgetClose");
 			console.log("*******************************************************************");
 			console.log(clear);
