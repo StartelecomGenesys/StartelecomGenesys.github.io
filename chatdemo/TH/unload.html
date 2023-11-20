@@ -34,7 +34,10 @@
 			setTimeout( clearHistoryAndClose, 2000);						
 		});
 		
-		window.onunload = function(){clearHistoryAndClose};
+		window.addEventListener("beforeunload", function (e) {
+			console.log(e);
+			clearHistoryAndClose();
+		});
 		
 			
 	
