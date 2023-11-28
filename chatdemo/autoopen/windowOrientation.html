@@ -23,6 +23,7 @@
   
   
 	Genesys("subscribe", "Messenger.ready", function(){
+		alert(window.screen.orientation.angle);
 		if(window.screen.orientation.angle  <= 1){
 			Genesys("command", "Messenger.open");
 		}
