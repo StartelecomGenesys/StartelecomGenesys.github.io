@@ -23,8 +23,8 @@
   
   
 	Genesys("subscribe", "Messenger.ready", function(){
-		alert(window.screen.orientation.angle);
-		if(window.screen.orientation.angle  <= 1){
+		
+		if(!window.matchMedia("only screen and (max-width: 480px)").matches){
 			Genesys("command", "Messenger.open");
 		}
 	});
