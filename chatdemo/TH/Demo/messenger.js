@@ -29,10 +29,16 @@ let isOpened = false;
 	  d.class="start-button";
 	  d.role="button";
 	  d.setAttribute("aria-expanded","false");
-	  d.tabindex="0";
+	  d.setAttribute("tabindex","0");
 	  d.setAttribute("data-tooltip","Power outage chat");
 	  d.setAttribute("data-message","Power outage chat");
 	  d.addEventListener("click",function(){Genesys('command', 'Messenger.open');})
+	  d.addEventListener("keypress", function(e){
+		  e.preventDefault();
+		  if (e.keyCode==13){
+			  d.click();
+		  }
+	  });
 	  
 	  var s = document.createElement("span");
 	  s.class="cx-message-text";
