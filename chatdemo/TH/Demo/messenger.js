@@ -46,7 +46,7 @@ let isOpened = false;
 	  var t = document.createElement("link");
 		t.rel = "stylesheet";
 		t.type = "text/css";
-		t.href = "/style.css";
+		t.href = "style.css";
 		t.media = "all";
 		document.head.appendChild(t)	  
   }
