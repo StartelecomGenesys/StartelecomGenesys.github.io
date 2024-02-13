@@ -29,6 +29,7 @@ let isOpened = false;
 	  d.class="start-button";
 	  d.role="button";
 	  d.setAttribute("aria-expanded","false");
+	  d.setAttribute("aria-label","Power outage chat");
 	  d.setAttribute("tabindex","0");
 	  d.setAttribute("data-tooltip","Power outage chat");
 	  d.setAttribute("data-message","Power outage chat");
@@ -44,6 +45,7 @@ let isOpened = false;
 	  s.class="cx-message-text";
 	  s.setAttribute("data-message","Power outage chat")
 	  
+
 	  d.appendChild(s);
 	  document.body.appendChild(d);
   }
@@ -113,7 +115,7 @@ let isOpened = false;
 	Genesys("subscribe", "Messenger.ready", function(){
 		element = document.getElementById('startChatButton');
 		element.style.display = "block";
-		setTimeout(openMessenger, 5000);
+		//setTimeout(openMessenger, 5000);
 	});
 
 	Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){

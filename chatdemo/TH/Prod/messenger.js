@@ -30,6 +30,7 @@ let isOpened = false;
 	  d.role="button";
 	  d.setAttribute("aria-expanded","false");
 	  d.setAttribute("tabindex","0");
+	  d.setAttribute("aria-label","Power outage chat");
 	  d.setAttribute("data-tooltip","Power outage chat");
 	  d.setAttribute("data-message","Power outage chat");
 	  d.addEventListener("click",function(){Genesys('command', 'Messenger.open');})
@@ -88,12 +89,6 @@ let isOpened = false;
 		Genesys("command", "Messenger.open");
 	}
 
-	function toggleMessenger(){
-		
-	}
-
-
-
   window.addEventListener("load", function () {
     // const scriptBaseUrl = getScriptLocation();
 	loadStyle();
@@ -104,8 +99,7 @@ let isOpened = false;
       {
         environment: "prod-cac1",
         deploymentId: deploymentId,
-		debug:true
-        // deploymentId: "f30fa0b8-f22b-49a4-a7f4-3294c684b36f",  //Vlade
+		//debug:true
       }
     );
 	loadButton();
@@ -113,7 +107,7 @@ let isOpened = false;
 	Genesys("subscribe", "Messenger.ready", function(){
 		element = document.getElementById('startChatButton');
 		element.style.display = "block";
-		setTimeout(openMessenger, 5000);
+		//setTimeout(openMessenger, 5000);
 	});
 
 	Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
