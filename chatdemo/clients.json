@@ -66,6 +66,12 @@
 			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"5e6aebad-c995-4a81-82f2-98dabe93eb34"
 		},
+		"PrincessAuto": {
+			"title":"PrincessAuto playground",
+			"environment": "cac1",
+			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"01a9fd09-66a5-4514-9e93-2874c9a08b04"
+		},
 		"Elexicon": {
 			"title":"Demo chat for Elexicon Energy",
 			"environment": "cac1",
