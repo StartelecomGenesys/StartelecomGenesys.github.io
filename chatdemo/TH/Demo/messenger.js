@@ -31,13 +31,18 @@ let isOpened = false;
 	  d.setAttribute("aria-expanded","false");
 	  d.setAttribute("aria-label","Power outage chat");
 	  d.setAttribute("tabindex","0");
+	  d.setAttribute("data-trigger","focus");
 	  d.setAttribute("data-tooltip","Power outage chat");
 	  d.setAttribute("data-message","Power outage chat");
 	  d.addEventListener("click",function(){Genesys('command', 'Messenger.open');})
+
 	  d.addEventListener("keypress", function(e){
 		  e.preventDefault();
-		  if (e.keyCode==13){
+		  if (e.key=="Enter" || e.key==" "){
 			  d.click();
+		  }
+		  else{
+			  d.onmouseover();	
 		  }
 	  });
 	  
@@ -76,14 +81,17 @@ let isOpened = false;
   }
 
 	function clearHistoryAndClose(){
-		Genesys("command", "MessagingService.clearConversation", 
-				{}, 
-				function() {
-				/*fulfilled callback*/
-				},
-				function() {
-				/*rejected callback*/
-				});
+		const deleteAndClose = localStorage.getItem("deleteHistory");
+		if (JSON.parse(deleteAndClose) === true ){
+			Genesys("command", "MessagingService.clearConversation", 
+					{}, 
+					function() {
+					/*fulfilled callback*/
+					},
+					function() {
+					/*rejected callback*/
+			});
+		}
 	};
 
 	function openMessenger(){
@@ -119,18 +127,54 @@ let isOpened = false;
 	});
 
 	Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
-		setTimeout( clearHistoryAndClose, 2000);						
+		localStorage.setItem("deleteHistory","true");
+		setTimeout( clearHistoryAndClose, 60000);						
 	});
       
 	Genesys("subscribe", "Messenger.opened", function(){
 		element = document.getElementById('startChatButton');
 		element.style.display = "none";
+		//document.body.style.display="none";
+		//document.getElementById("genesys-mxg-container-frame").focus();
 	});
 	
 	Genesys("subscribe", "Messenger.closed", function(){
 		element = document.getElementById('startChatButton');
 		element.style.display = "block";
+		//document.body.style.display="block";
 	});
+	
+	Genesys("subscribe", "Conversations.started", function(){
+		localStorage.setItem("deleteHistory","false");
+		messengerIframe = document.getElementById("genesys-mxg-container-frame");
+		console.log(messengerIframe);
+	});
+
+	window.addEventListener("keydown", function(e){
+		//e.preventDefault();
+		  if (e.key=="Escape"){
+			Genesys("command", "Messenger.Close");
+		  }
+		
+	});
+
+/*	window.addEventListener('blur',function(e){
+		const { activeElement } = document;
+  const iframeIsActiveElement = activeElement && activeElement.tagName === 'IFRAME';
+
+  if (iframeIsActiveElement) {
+    // timeout necessary to not blur the iframe too quickly
+    //setTimeout(() => activeElement.blur(), 0);
+    //return;
+	console.log("in focus");
+	console.log(activeElement);
+  }
+
+  console.log("BLURRRR");
+	});*/
+
+
+
 	  
   });
 
