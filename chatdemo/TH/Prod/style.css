@@ -322,7 +322,7 @@
     -webkit-transform: none;
     -moz-transform: none;
     -ms-transform: none;
-    -o-transform: none
+    -o-transform: none  
 }
 
 #startChatButton {
@@ -338,6 +338,26 @@
     animation: bot-to-top 2s ease-out;
 	display: none
 }
+
+#startChatButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.1em #000, 0 0 0 0.2em rgb(0, 0, 0);
+    
+  /*  border-radius: 1px;
+    outline-style: solid !important;   
+    outline-width: 2px !important;
+    outline-color: rgb(165, 31, 31) !important;
+    -moz-outline-radius: 2px !important;
+    outline: -webkit-focus-ring-color auto 1px !important*/
+
+}  
+
+@media (forced-colors: active) {
+    #startChatButton:focus {
+      outline: 0.2em solid;
+      outline-color: #000;
+    }
+  }
 
 .cx-widget.th-theme .cx-side-button:focus,.cx-widget.th-theme .cx-menu-item.cx-emoji:focus,.cx-widget.th-theme .cx-emoji-menu>.cx-option:focus {
     outline-style: solid !important;
@@ -383,6 +403,13 @@
 }
 
 [data-tooltip]:hover:before,[data-tooltip]:hover:after {
+    visibility: visible;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    opacity: 1
+}
+
+[data-tooltip]:focus:before,[data-tooltip]:focus:after {
     visibility: visible;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";

@@ -36,7 +36,7 @@ let isOpened = false;
 	  d.addEventListener("click",function(){Genesys('command', 'Messenger.open');})
 	  d.addEventListener("keypress", function(e){
 		  e.preventDefault();
-		  if (e.keyCode==13){
+		  if (e.key=="Enter" || e.key==" "){
 			  d.click();
 		  }
 	  });
@@ -75,14 +75,17 @@ let isOpened = false;
   }
 
 	function clearHistoryAndClose(){
-		Genesys("command", "MessagingService.clearConversation", 
-				{}, 
-				function() {
-				/*fulfilled callback*/
-				},
-				function() {
-				/*rejected callback*/
-				});
+		const deleteAndClose = localStorage.getItem("deleteHistory");
+		if (JSON.parse(deleteAndClose) === true ){
+			Genesys("command", "MessagingService.clearConversation", 
+					{}, 
+					function() {
+					/*fulfilled callback*/
+					},
+					function() {
+					/*rejected callback*/
+			});
+		}
 	};
 
 	function openMessenger(){
@@ -111,7 +114,8 @@ let isOpened = false;
 	});
 
 	Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
-		setTimeout( clearHistoryAndClose, 2000);						
+		localStorage.setItem("deleteHistory","true");
+		setTimeout( clearHistoryAndClose, 60000);						
 	});
       
 	Genesys("subscribe", "Messenger.opened", function(){
@@ -122,6 +126,21 @@ let isOpened = false;
 	Genesys("subscribe", "Messenger.closed", function(){
 		element = document.getElementById('startChatButton');
 		element.style.display = "block";
+	});
+
+	Genesys("subscribe", "Conversations.started", function(){
+		localStorage.setItem("deleteHistory","false");
+		messengerIframe = document.getElementById("genesys-mxg-container-frame");
+		console.log(messengerIframe);
+		
+	});
+
+	document.addEventListener("keydown", function(e){
+		//e.preventDefault();
+		  if (e.key=="Escape"){
+			Genesys("command", "Messenger.Close");
+		  }
+		
 	});
 	  
   });
