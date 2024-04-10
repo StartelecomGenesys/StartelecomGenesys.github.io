@@ -18,23 +18,21 @@
 			  deploymentId: '886458e1-25ca-47c7-aa9b-7cdd47eae1f8'
 			});
 
-		
-			Genesys('subscribe', 'Messenger.ready', function () {
+			Genesys('subscribe', 'Launcher.ready', function () {
 				Genesys(
 					'command',
-					'Launcher.show',
+					'Launcher.hide',
 					{},
 					() => {
 					/*fulfilled callback*/
-					console.log('Messenger opened');
+					//console.log('Messenger opened');
 					},
 					(error) => {
 					/*rejected callback*/
-					console.log("Couldn't open messenger.", error);
+					//console.log("Couldn't open messenger.", error);
 					}
 				);
 			});
-			
 		  </script>
 		<style>
 			
@@ -61,7 +59,8 @@
 	</head>
 	<body>
 	<h1>Messenger App Co Browse page #1</h1>
-	<button type="button" onclick="location.href='https://startelecomgenesys.github.io/cobrowsedemo/equitablelife/wmcobrowse2'">Register</button>
+	<button type="button" onclick="location.href='https://startelecomgenesys.github.io/cobrowsedemo/equitablelife/cobrowse2'">Register</button>
+	<button type="button" onclick='Genesys("command","Messenger.Open")'>co-browse</button>
 	
 	</body>
 </html>
