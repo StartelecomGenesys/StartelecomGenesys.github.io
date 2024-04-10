@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Co Browse Demo page #1 </title>
+		<script type="text/javascript" charset="utf-8">
+			(function (g, e, n, es, ys) {
+			  g['_genesysJs'] = e;
+			  g[e] = g[e] || function () {
+				(g[e].q = g[e].q || []).push(arguments)
+			  };
+			  g[e].t = 1 * new Date();
+			  g[e].c = es;
+			  ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+			})(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			  environment: 'prod',
+			  deploymentId: '886458e1-25ca-47c7-aa9b-7cdd47eae1f8'
+			});
+
+			Genesys('subscribe', 'Launcher.ready', function () {
+				Genesys(
+					'command',
+					'Launcher.hide',
+					{},
+					() => {
+					/*fulfilled callback*/
+					//console.log('Messenger opened');
+					},
+					(error) => {
+					/*rejected callback*/
+					//console.log("Couldn't open messenger.", error);
+					}
+				);
+			});
+
+			function startCoBrowse(e){
+				//console.log(e);
+				var code= document.getElementById("code").value;
+				//console.log(code);
+				Genesys("command", "CobrowseService.acceptSession", {
+						joinCode: "123123"
+					},   
+					// fulfilled callback   
+					() => {
+					console.log("Co-browse session successfully accepted");
+					},
+					// rejected callback
+					err => {
+					console.log("could not accept Co-browse session, error code: ", err.code);
+					alert("could not accept Co-browse session", err.code)
+					}
+				);
+			}
+		  </script>
+		<style>
+			
+			 button {
+				  width: 150px;
+				  padding: 10px;
+				  border: none;
+				  border-radius: 5px; 
+				  background:  #00A4AC;
+				  font-size: 16px;
+				  color: #000;
+				  cursor: pointer;
+				  
+				  position: relative;
+				  top: 50%;
+				  margin: -10px auto;
+				  /* -height/2 */
+			  }
+			  button:hover {
+				  background:  #32b6bc ;
+			  }
+
+	
+		</style>
+	</head>
+	<body>
+	<h1>Messenger App Co Browse page #1</h1>
+	<button type="button" onclick="location.href='https://startelecomgenesys.github.io/cobrowsedemo/wmcobrowse2'">Register</button>
+	<br><br>
+	<form action="#" onsubmit="return startCoBrowse(this)">
+	<input id="code" type="text" placeholder="Enter the code" />
+	<input type="submit" value="Start Cobrowse" />
+	</form>
+	</body>
+</html>
