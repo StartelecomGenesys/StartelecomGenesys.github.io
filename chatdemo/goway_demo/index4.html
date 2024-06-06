@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with custom launch button and form </title>
+		
+<script type="text/javascript" charset="utf-8">
+window.onload = function() {
+	  (function (g, e, n, es, ys) {
+		g['_genesysJs'] = e;
+		g[e] = g[e] || function () {
+		  (g[e].q = g[e].q || []).push(arguments)
+		};
+		g[e].t = 1 * new Date();
+		g[e].c = es;
+		ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+		environment: 'use1',
+		deploymentId: '5f9bf473-a342-4b2f-b7cd-f6bc198e6d09',
+		debug: true
+	  });
+		 
+	  
+	 /** Subscribe to Database.ready event before calling its command.**/
+		Genesys("subscribe", "Database.ready", function() {
+		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				link: window.location.href
+			  }
+			}
+		  })
+		});
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+
+}
+
+	
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
+	
+	
+</script>
+
+
+		
+	</head>
+	<body>
+
+		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
+
+	</body>
+	
+	<style>
+
+#custom-launcher{
+	background-color:transparent;
+	border:none;
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+	height: 90px;
+	width: 90px;
+	cursor: pointer;
+	display: none;
+}
+
+	</style>
+	
+</html>
