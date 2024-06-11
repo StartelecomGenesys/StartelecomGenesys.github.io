@@ -18,12 +18,23 @@
 		environment: 'use1',
 		deploymentId: '5f9bf473-a342-4b2f-b7cd-f6bc198e6d09',
 		debug: true
-	  });
+	  });	  
 		 
 	  
 	 /** Subscribe to Database.ready event before calling its command.**/
 		Genesys("subscribe", "Database.ready", function() {
 		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				link: window.location.href
+			  }
+			}
+		  })
+		});
+		
+		
+		Genesys("subscribe", "MessagingService.conversationCleared", function() {
 		  Genesys("command", "Database.set", {
 			messaging: {
 			  customAttributes: {
