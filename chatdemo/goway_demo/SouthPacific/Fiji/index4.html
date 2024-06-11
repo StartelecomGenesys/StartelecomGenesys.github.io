@@ -6,8 +6,8 @@
 		<title> Demo Chat with custom launch button and form </title>
 		
 <script type="text/javascript" charset="utf-8">
-window.onload = function() {
-	  (function (g, e, n, es, ys) {
+
+(function (g, e, n, es, ys) {
 		g['_genesysJs'] = e;
 		g[e] = g[e] || function () {
 		  (g[e].q = g[e].q || []).push(arguments)
@@ -19,7 +19,7 @@ window.onload = function() {
 		environment: 'use1',
 		deploymentId: '5f9bf473-a342-4b2f-b7cd-f6bc198e6d09',
 		debug: true
-	  });
+	  });	  
 		 
 	  
 	 /** Subscribe to Database.ready event before calling its command.**/
@@ -34,17 +34,28 @@ window.onload = function() {
 		  })
 		});
 		
+		
+
+		
 	  
 	  Genesys("subscribe", "Messenger.ready", function() {
 		  document.getElementById("custom-launcher").style.display = "block";
 		}); 
 
-}
 
-	
   function openMessenger() {
       Genesys("command", "Messenger.open");
     }
+	
+	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				link: window.location.href
+			  }
+			}
+		  })
+		});
 	
 	
 </script>
