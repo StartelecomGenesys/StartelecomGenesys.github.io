@@ -6,6 +6,7 @@
 		<title> Demo Chat with custom launch button and form </title>
 		
 <script type="text/javascript" charset="utf-8">
+window.onload = function() {
 (function (g, e, n, es, ys) {
 		g['_genesysJs'] = e;
 		g[e] = g[e] || function () {
@@ -34,7 +35,19 @@
 		});
 		
 		
-		Genesys("subscribe", "MessagingService.conversationCleared", function() {
+
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+
+}	
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
+	
+	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
 		  Genesys("command", "Database.set", {
 			messaging: {
 			  customAttributes: {
@@ -43,16 +56,6 @@
 			}
 		  })
 		});
-		
-	  
-	  Genesys("subscribe", "Messenger.ready", function() {
-		  document.getElementById("custom-launcher").style.display = "block";
-		}); 
-
-	
-  function openMessenger() {
-      Genesys("command", "Messenger.open");
-    }
 	
 	
 </script>
