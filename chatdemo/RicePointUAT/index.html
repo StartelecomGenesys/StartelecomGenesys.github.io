@@ -29,7 +29,18 @@
 				}
 				});
 			});
-			
+			Genesys("subscribe", "MessagingService.conversationCleared", function() {
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				Language: "English",
+					URL: window.location.href,
+					Country: "Canada",
+					CaseCode: "client-x"
+			  }
+			}
+		  })
+		});
 			
 		  </script>
 	</head>
