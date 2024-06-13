@@ -64,16 +64,14 @@
 		
 	</head>
 	<body>
-    <div class="center-screen">
-		<div class="bubble"> Hi there, have a question? Chat with us here</div>
+        <div class="bubble"> Chat with us</div>
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="goway.png"> </button>
-	</div>
 
 	</body>
 	
 	
-<style>
-
+	
+</style>
 .bubble {
 	position: absolute;
 	background: #d2d2d2;
@@ -81,7 +79,7 @@
 	padding: 20px;
 	right: 30px;
 	bottom: 136px;
-	font-family: "Segoe UI", Arial, sans-serif;
+	font-family: "Inter Variable", sans-serif;
 	/* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.489); */
 	
 }
@@ -105,6 +103,44 @@
 }
 
 #custom-launcher{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	bottom: 70px;
+	right: 60px;
+}
+
+
+#custom-launcher img {
+	height: 40px;
+	width: 40px;
+	filter: invert(100%);
+}
+
+.center-screen {
+  width: 230px;
+  height: 170px;
+  background-color: transparent;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 8px;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  position: fixed
+}
+	
+	
+<style>
+	
+	<style>
+
+#custom-launcher{
 	background-color:transparent;
 	border:none;
     position: fixed;
@@ -116,15 +152,7 @@
 	display: none;
 }
 
-
-#custom-launcher img {
-	height: 40px;
-	width: 40px;
-	filter: invert(100%);
-}
-
-<style>
-
+	</style>
 	
 	    <style type="text/css">
       body,
