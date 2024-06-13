@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with custom launch button and form </title>
+		
+<script type="text/javascript" charset="utf-8">
+
+(function (g, e, n, es, ys) {
+		g['_genesysJs'] = e;
+		g[e] = g[e] || function () {
+		  (g[e].q = g[e].q || []).push(arguments)
+		};
+		g[e].t = 1 * new Date();
+		g[e].c = es;
+		ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+		environment: 'use1',
+		deploymentId: '5f9bf473-a342-4b2f-b7cd-f6bc198e6d09',
+		debug: true
+	  });	  
+		 
+	  
+	 /** Subscribe to Database.ready event before calling its command.**/
+		Genesys("subscribe", "Database.ready", function() {
+		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				link: window.location.href
+			  }
+			}
+		  })
+		});
+		
+		
+
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+
+
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
+	
+	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+				link: window.location.href
+			  }
+			}
+		  })
+		});
+	
+	
+</script>
+
+
+		
+	</head>
+	<body>
+    <div class="center-screen">
+		<div class="bubble"> Hi there, have a question? Chat with us here</div>
+		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="goway.png"> </button>
+	</div>
+
+	</body>
+	
+	
+<style>
+
+.bubble {
+	position: absolute;
+	background: #d2d2d2;
+	border-radius: .4em;
+	padding: 20px;
+	right: 30px;
+	bottom: 136px;
+	font-family: "Segoe UI", Arial, sans-serif;
+	/* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.489); */
+	
+}
+
+.bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #d2d2d2;
+	border-bottom: 0;
+	border-right: 0;
+	margin-left: 40px;
+	margin-bottom: -20px;
+	/* box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.489); */
+	
+    
+}
+
+<style>
+	
+	<style>
+
+#custom-launcher{
+	background-color:transparent;
+	border:none;
+    position: fixed;
+    bottom: 70px;
+    right: 60px;
+	height: 60px;
+	width: 60px;
+	cursor: pointer;
+	display: none;
+}
+
+	</style>
+	
+	    <style type="text/css">
+      body,
+      html {
+        height: 100%;
+
+        margin: 0;
+
+        background: url(goway_site.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+        font-display: swap;
+        font-family: proxima-nova, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        background-color: #fff;
+        color: #464646;
+        line-height: 1;
+      }
+
+    </style>
+	
+</html>
