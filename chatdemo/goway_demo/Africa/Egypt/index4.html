@@ -17,7 +17,7 @@
 		ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
 	  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
 		environment: 'use1',
-		deploymentId: '5f9bf473-a342-4b2f-b7cd-f6bc198e6d09',
+		deploymentId: '0a5473da-0592-426b-9a67-c517ab773140',
 		debug: true
 	  });	  
 		 
@@ -41,10 +41,21 @@
 	  Genesys("subscribe", "Messenger.ready", function() {
 		  document.getElementById("custom-launcher").style.display = "block";
 		}); 
+		
+		
+      function toggleVisibility() {
+			var x = document.getElementsByName("center-screen");
+			if (x[0].style.display === "none") {
+				x[0].style.display = "block";
+			} else {
+				x[0].style.display = "none";
+			}
+		}
 
 
   function openMessenger() {
       Genesys("command", "Messenger.open");
+	  toggleVisibility();
     }
 	
 	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
@@ -64,28 +75,77 @@
 		
 	</head>
 	<body>
-
+	<div class="center-screen">
+	    <div class="bubble"> Chat with us</div>
 		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="goway.png"> </button>
+	</div>
 
 	</body>
 	
-	<style>
+<style>
 
-#custom-launcher{
-	background-color:transparent;
-	border:none;
-    position: fixed;
-    bottom: 70px;
-    right: 60px;
-	height: 60px;
-	width: 60px;
-	cursor: pointer;
-	display: none;
+
+.bubble {
+	position: absolute;
+	background: #d2d2d2;
+	border-radius: .4em;
+	padding: 20px;
+	right: 70px;
+	bottom: 136px;
+	font-family: "Inter Variable", sans-serif;	
 }
 
-	</style>
+.bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #d2d2d2;
+	border-bottom: 0;
+	border-right: 0;
+	margin-left: 40px;
+	margin-bottom: -20px;    
+}
+
+
+#custom-launcher{
+	background-color: transparent;	;	
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	bottom: 45px;
+	right: 60px;
+}
+
+
+#custom-launcher img {
+	height: 60px;
+	width: 60px;
+}
+
+.center-screen {
+  width: 230px;
+  height: 170px;
+  background-color: transparent;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 8px;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  position: fixed
+}
+
+</style>
 	
-	    <style type="text/css">
+<style type="text/css">
       body,
       html {
         height: 100%;
@@ -107,6 +167,6 @@
         line-height: 1;
       }
 
-    </style>
+</style>
 	
 </html>
