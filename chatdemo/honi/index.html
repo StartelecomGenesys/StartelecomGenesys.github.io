@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with web form </title>
+		<script type="text/javascript" charset="utf-8">
+	 
+    // use vanilla JS because why not
+    window.addEventListener("load", function() {
+		//generate UUID
+        var UUID="daaee70a-3367-11ed-a261-0242ac120002";
+        // create websocket instance
+        var mySocket = new WebSocket("wss://webmessaging.cac1.pure.cloud/v1?deploymentId=f543e5f6-2f2e-49a4-8a35-0cfb90cd22d9");
+		
+		mySocket.onopen = function(){
+			mySocket.send(JSON.stringify({
+					  "action": "configureSession",
+					  "deploymentId": "f543e5f6-2f2e-49a4-8a35-0cfb90cd22d9",
+                      "token": UUID
+				  }));
+		}
+        
+        // add event listener reacting when message is received
+        mySocket.onmessage = function (event) {
+            var output = document.getElementById("output");
+			var newp = document.createElement("p");
+            // put text into our output div
+            //output.textContent = event.data;
+			newp.textContent = event.data;
+			output.append(newp);
+        };
+        var form = document.getElementsByClassName("foo");
+        var input = document.getElementById("input");
+        form[0].addEventListener("submit", function (e) {
+            // on forms submission send input to our server
+            input_text = input.value;
+            //mySocket.send(input_text);
+			mySocket.send(JSON.stringify({
+				"action": "onMessage",
+				  "token": UUID,
+				  "message": {
+					"type": "Text",
+					"text": input_text
+				  }
+			}));
+            e.preventDefault()
+        })
+    });
+
+	  
+	  
+	 
+	</script>
+
+
+		<style>
+			/* just some super basic css to make things bit more readable */
+		div {
+			margin: 10em;
+		}
+		form {
+			margin: 10em;
+		}
+		
+		</style>		
+	</head>
+	<body>
+	
+	<form class="foo">
+        <input id="input"></input>
+        <input type="submit"></input>
+    </form>
+    <div id="output"></div>
+
+	</body>
+	
+</html>
