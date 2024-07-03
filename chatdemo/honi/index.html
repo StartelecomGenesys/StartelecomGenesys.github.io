@@ -5,7 +5,38 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title> Demo Chat with web form </title>
 		<script type="text/javascript" charset="utf-8">
-	 
+	let firstMessage = true;
+
+	function download(text){
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		element.setAttribute('download', "transcript.txt");
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
+	}
+
+	function httpGetAsync(theUrl, jwt ,callback)
+		{
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() { 
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					callback(xmlHttp.responseText);
+			}
+			xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+			xmlHttp.setRequestHeader("Authorization","Bearer "+jwt);
+			xmlHttp.setRequestHeader("Origin", window.location.hostname);
+			xmlHttp.send(null);
+		}
+
+	function printD(text){
+		//console.log(text);
+		download(text);
+	}
     
     window.addEventListener("load", function() {
 		//generate UUID
@@ -27,8 +58,15 @@
 			var newp = document.createElement("p");
             // put text into our output div
             //output.textContent = event.data;
+			var obj = JSON.parse(event.data);
+			console.log(obj);
+			if(obj.class != "JwtResponse"){
 			newp.textContent = event.data;
 			output.append(newp);
+			}else{
+				//console.log(obj.body.jwt);
+				httpGetAsync("https://api.cac1.pure.cloud/api/v2/webmessaging/messages?pageSize=10&pageNumber=1", obj.body.jwt, download);
+			}
         };
         var form = document.getElementsByClassName("foo");
         var input = document.getElementById("input");
@@ -36,6 +74,28 @@
             // on forms submission send input to our server
             input_text = input.value;
             //mySocket.send(input_text);
+			if(firstMessage){
+				mySocket.send(JSON.stringify({
+					"action": "onMessage",
+					"token": UUID,
+					"message": {
+						"type": "Text",
+						"text": input_text,
+						"channel": {
+						"metadata": {
+							"customAttributes": {
+							"attr_ca": "200302804665",
+							"attr_customerauthstatus": "Authenticated",
+							"attr_channel": "Chat",
+							"attr_customerintent":"outage",
+							"attr_webportalurl":"https://www.hydroone.com/myaccount/#",
+							"attr_email":"NA"
+							}
+						}
+						}
+					}
+					}));
+			}else{
 			mySocket.send(JSON.stringify({
 				"action": "onMessage",
 				  "token": UUID,
@@ -44,8 +104,41 @@
 					"text": input_text
 				  }
 			}));
+		}
             e.preventDefault()
-        })
+        });
+
+		var disconnect = document.getElementById("disconnect");
+		disconnect.addEventListener("click", function(e){
+			mySocket.send(JSON.stringify(
+				{
+					"action": "onMessage",
+						"message": {
+							"type": "Event",
+							"events": [
+							{
+								"eventType": "Presence",
+								"presence": {
+								"type": "Clear"
+								}
+							}
+							]
+						},
+						"tracingId": "11111111-1111-1111-1111-111111111111",
+						"token": UUID
+				}
+			));
+		});
+
+		var transcript = document.getElementById("transcript");
+		transcript.addEventListener("click", function(e){
+			mySocket.send(JSON.stringify(
+				{
+					"action":"getJwt",
+					"token" : UUID
+				}
+			));
+		});
     });
 
 	  
@@ -72,6 +165,11 @@
         <input type="submit"></input>
     </form>
     <div id="output"></div>
+
+	<div>
+		<button id="disconnect" type="button"> disconnect  </button>
+		<button id="transcript" type="button"> transcript  </button>
+	</div>
 
 	</body>
 	
