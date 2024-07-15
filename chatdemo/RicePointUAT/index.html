@@ -41,7 +41,7 @@
 			}
 		  })
 		});
-		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
                 Genesys("command", "Database.set", {
                   messaging: {
                     customAttributes: {
@@ -51,6 +51,7 @@
 					CaseCode: "CaseCode"
                     }
                   }
+				  })
                 });
 			
 		  </script>
