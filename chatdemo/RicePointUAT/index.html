@@ -41,6 +41,17 @@
 			}
 		  })
 		});
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+                Genesys("command", "Database.set", {
+                  messaging: {
+                    customAttributes: {
+                      Language: "English",
+					URL: window.location.href,
+					Country: "Canada",
+					CaseCode: "CaseCode"
+                    }
+                  }
+                });
 			
 		  </script>
 	</head>
