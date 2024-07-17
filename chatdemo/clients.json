@@ -162,6 +162,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"16ade9d2-a247-429b-a0ac-4ee8c73b4305"
 		},
+		"MiltonHydroDemo": {
+			"title":"Demo chat for Mariano",
+			"environment": "prod",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"0fead45b-ba56-441f-99dc-51988a06c8f6"
+		},
 		"Conexus": {
 			"title":"Demo chat for Conexus",
 			"environment": "prod-cac1",
