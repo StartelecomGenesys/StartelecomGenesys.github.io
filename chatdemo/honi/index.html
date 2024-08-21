@@ -122,10 +122,11 @@
 								"type": "Clear"
 								}
 							}
-							]
-						},
+							],
+						
 						"tracingId": "11111111-1111-1111-1111-111111111111",
 						"token": UUID
+						}
 				}
 			));
 		});
@@ -139,9 +140,43 @@
 				}
 			));
 		});
-    });
 
-	  
+
+		var start = document.getElementById("start");
+		start.addEventListener("click", function(e){
+			mySocket.send(JSON.stringify(
+				{
+					"action": "onMessage",
+					"message": {
+						"type": "Event",
+						"events": [
+						{
+							"eventType": "Presence",
+							"presence": {
+							"type": "Join"
+							}
+						}
+						],
+						"channel": {
+								"metadata": {
+									"customAttributes": {
+									"attr_ca": "200302804665",
+									"attr_customerauthstatus": "Authenticated",
+									"attr_channel": "Chat",
+									"attr_customerintent":"outage",
+									"attr_webportalurl":"https://www.hydroone.com/myaccount/#",
+									"attr_email":"test@test.com"
+									}
+								}
+							}
+					},
+					"tracingId": "11111111-1111-1111-1111-111111111111",
+					"token": UUID
+				}
+			));
+		});
+
+	});
 	  
 	 
 	</script>
@@ -159,7 +194,10 @@
 		</style>		
 	</head>
 	<body>
-	
+	<div>
+		<button id="start" type="button"> Start Chat  </button>
+
+	</div>
 	<form class="foo">
         <input id="input"></input>
         <input type="submit"></input>
