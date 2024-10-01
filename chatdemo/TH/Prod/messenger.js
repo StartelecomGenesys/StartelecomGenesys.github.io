@@ -108,7 +108,7 @@ let isOpened = false;
 	loadButton();
 	
 	Genesys("subscribe", "Messenger.ready", function(){
-		element = document.getElementById('startChatButton');
+		const element = document.getElementById('startChatButton');
 		element.style.display = "block";
 		//setTimeout(openMessenger, 5000);
 	});
@@ -119,18 +119,18 @@ let isOpened = false;
 	});
       
 	Genesys("subscribe", "Messenger.opened", function(){
-		element = document.getElementById('startChatButton');
+		const element = document.getElementById('startChatButton');
 		element.style.display = "none";
 	});
 	
 	Genesys("subscribe", "Messenger.closed", function(){
-		element = document.getElementById('startChatButton');
+		const element = document.getElementById('startChatButton');
 		element.style.display = "block";
 	});
 
 	Genesys("subscribe", "Conversations.started", function(){
 		localStorage.setItem("deleteHistory","false");
-		messengerIframe = document.getElementById("genesys-mxg-container-frame");
+		const messengerIframe = document.getElementById("genesys-mxg-container-frame");
 		console.log(messengerIframe);
 		
 	});
