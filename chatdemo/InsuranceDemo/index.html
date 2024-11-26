@@ -16,17 +16,7 @@
 			})(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
 			  environment: 'use1',
 			  deploymentId: 'a0179c7f-d29c-4536-86fa-1969476df15b'
-			});
-			Genesys('subscribe', 'Messenger.ready', function (){
-				Genesys("command", "Database.set", {
-					messaging: {
-					customAttributes: {
-					name:"Square One"
-					}
-				}
-				});
-			});
-			
+			});			
 			
 		  </script>
 	</head>
@@ -42,7 +32,7 @@
 			margin: 0;
 			
 			 
-			background: url(insurance.PNG) no-repeat center center fixed;
+			background: url(insurance.png) no-repeat center center fixed;
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
