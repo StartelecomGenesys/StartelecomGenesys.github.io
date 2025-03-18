@@ -3,22 +3,26 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title> Chat ITG </title>
-		<script type="text/javascript" charset="utf-8">
-		  (function (g, e, n, es, ys) {
-			g['_genesysJs'] = e;
-			g[e] = g[e] || function () {
-			  (g[e].q = g[e].q || []).push(arguments)
-			};
-			g[e].t = 1 * new Date();
-			g[e].c = es;
-			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-		  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
-			environment: 'cac1',
-			deploymentId: 'da82651b-8b7f-4a51-b72f-242d835d3ea9'  //change the deploymentID here
-		  });
-			
-			/** Subscribe to Database.ready event before calling its command.**/
+		<title> Demo Chat with custom launch button and form </title>
+		
+<script type="text/javascript" charset="utf-8">
+
+(function (g, e, n, es, ys) {
+		g['_genesysJs'] = e;
+		g[e] = g[e] || function () {
+		  (g[e].q = g[e].q || []).push(arguments)
+		};
+		g[e].t = 1 * new Date();
+		g[e].c = es;
+		ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+	  })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+		environment: 'cac1',
+		deploymentId: 'da82651b-8b7f-4a51-b72f-242d835d3ea9',
+		debug: true
+	  });	  
+		 
+	  
+	 /** Subscribe to Database.ready event before calling its command.**/
 		Genesys("subscribe", "Database.ready", function() {
 		  // Set the data in the Database plugin. This data will automatically be included along when sending actual messages.
 		  Genesys("command", "Database.set", {
@@ -29,18 +33,41 @@
 			}
 		  })
 		});
-			
-			Genesys("subscribe", "MessagingService.conversationCleared", function() {
+		
+		
+
+		
+	  
+	  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+		
+		
+      function toggleVisibility() {
+			var x = document.getElementsByName("center-screen");
+			if (x[0].style.display === "none") {
+				x[0].style.display = "block";
+			} else {
+				x[0].style.display = "none";
+			}
+		}
+
+
+  function openMessenger() {
+      Genesys("command", "Messenger.open");
+	  toggleVisibility();
+    }
+	
+	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
 		  Genesys("command", "Database.set", {
 			messaging: {
 			  customAttributes: {
-					URL: window.location.href,
-					Country: "Canada",
-					CaseCode: "CaseCode"
+				link: window.location.href
 			  }
 			}
 		  })
 		});
+		
 		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
                 Genesys("command", "Database.set", {
                   messaging: {
@@ -52,11 +79,18 @@
                   }
 				  })
                 });
-			
-		  </script>
+	
+	
+</script>
+
+
+		
 	</head>
 	<body>
-	<h1>Chat ITG</h1>
+	<h1>Chat Ontario One Call</h1>
 
 	</body>
+</html>
+
+	
 </html>
