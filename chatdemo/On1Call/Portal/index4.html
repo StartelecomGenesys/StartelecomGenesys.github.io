@@ -34,29 +34,6 @@
 		  })
 		});
 		
-		
-
-		
-	  
-	  Genesys("subscribe", "Messenger.ready", function() {
-		  document.getElementById("custom-launcher").style.display = "block";
-		}); 
-		
-		
-      function toggleVisibility() {
-			var x = document.getElementsByName("center-screen");
-			if (x[0].style.display === "none") {
-				x[0].style.display = "block";
-			} else {
-				x[0].style.display = "none";
-			}
-		}
-
-
-  function openMessenger() {
-      Genesys("command", "Messenger.open");
-	  toggleVisibility();
-    }
 	
 	    Genesys("subscribe", "MessagingService.conversationCleared", function() {
 		  Genesys("command", "Database.set", {
