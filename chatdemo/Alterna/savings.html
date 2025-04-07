@@ -16,20 +16,24 @@
           ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
         })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
           environment: 'prod-cac1',
-          deploymentId: '1eab1c96-6f63-4aba-a28f-0dafadb75e73'
+          deploymentId: '1eab1c96-6f63-4aba-a28f-0dafadb75e73',
+          debug:true
         });
 
         //checkedRadio = document.querySelector('input[name="radio"]:checked');
-        Genesys("subscribe", "MessagingService.started", function({data}){
+        Genesys("subscribe", "Conversations.ready", function({data}){
+          console.log(document.querySelector('input[name="radio"]:checked').value)
             Genesys("command", "Database.set", {
                             messaging: {
                                 customAttributes: {
                                 Language: document.querySelector('input[name="radio"]:checked').value
-                                        
+                                      
                                 }
                             }
-                            });
+                            },function(data){ console.log(data)}, function(){ console.log("REJECTED") });
             });
+
+          
       </script>
 
 </head>
