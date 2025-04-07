@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+  
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Alterna Savings chat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script type="text/javascript" charset="utf-8">
+        (function (g, e, n, es, ys) {
+          g['_genesysJs'] = e;
+          g[e] = g[e] || function () {
+            (g[e].q = g[e].q || []).push(arguments)
+          };
+          g[e].t = 1 * new Date();
+          g[e].c = es;
+          ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+        })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
+          environment: 'prod-cac1',
+          deploymentId: '3b5b7bfa-4a77-48c3-b81c-6e49797c87f7',
+          debug:true
+        });
+
+        //checkedRadio = document.querySelector('input[name="radio"]:checked');
+        Genesys("subscribe", "Conversations.ready", function({data}){
+          console.log(document.querySelector('input[name="radio"]:checked').value)
+            Genesys("command", "Database.set", {
+                            messaging: {
+                                customAttributes: {
+                                Language: document.querySelector('input[name="radio"]:checked').value
+                                      
+                                }
+                            }
+                            },function(data){ console.log(data)}, function(){ console.log("REJECTED") });
+            });
+
+          
+      </script>
+
+</head>
+<body>
+
+    <h1>Banking</h1>
+    <br>
+<label class="container">English
+  <input type="radio" checked="checked" name="radio" value="en">
+  <span class="checkmark"></span>
+</label>
+<label class="container">French
+  <input type="radio" name="radio" value="fr">
+  <span class="checkmark"></span>
+</label>
+
+       
+</body>
+<style>
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: rgb(77, 74, 74);
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #1779BB;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+</style>
+</html>
