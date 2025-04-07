@@ -24,7 +24,7 @@
             Genesys("command", "Database.set", {
                             messaging: {
                                 customAttributes: {
-                                Language: document.querySelector('input[name="radio"]:checked') 
+                                Language: document.querySelector('input[name="radio"]:checked').value
                                         
                                 }
                             }
@@ -38,11 +38,11 @@
     <h1>Savings</h1>
     <br>
 <label class="container">English
-  <input type="radio" checked="checked" name="radio">
+  <input type="radio" checked="checked" name="radio" value="en">
   <span class="checkmark"></span>
 </label>
 <label class="container">French
-  <input type="radio" name="radio">
+  <input type="radio" name="radio" value="fr">
   <span class="checkmark"></span>
 </label>
 
