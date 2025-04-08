@@ -20,7 +20,7 @@
           debug:true
         });
 
-        //checkedRadio = document.querySelector('input[name="radio"]:checked');
+        
         Genesys("subscribe", "Conversations.ready", function({data}){
           console.log(document.querySelector('input[name="radio"]:checked').value)
             Genesys("command", "Database.set", {

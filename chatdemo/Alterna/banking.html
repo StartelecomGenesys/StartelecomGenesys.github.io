@@ -20,7 +20,6 @@
           debug:true
         });
 
-        //checkedRadio = document.querySelector('input[name="radio"]:checked');
         Genesys("subscribe", "Conversations.ready", function({data}){
           console.log(document.querySelector('input[name="radio"]:checked').value)
             Genesys("command", "Database.set", {
@@ -41,15 +40,14 @@
 
     <h1>Banking</h1>
     <br>
-<label class="container">English
-  <input type="radio" checked="checked" name="radio" value="en">
-  <span class="checkmark"></span>
-</label>
-<label class="container">French
-  <input type="radio" name="radio" value="fr">
-  <span class="checkmark"></span>
-</label>
-
+    <label class="container">English
+      <input type="radio" checked="checked" name="radio" value="en">
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">French
+      <input type="radio" name="radio" value="fr">
+      <span class="checkmark"></span>
+    </label>
        
 </body>
 <style>
