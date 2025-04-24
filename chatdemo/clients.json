@@ -18,6 +18,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"44fd1b25-0712-4f89-85fb-39ebc4160499"
 		},
+		"PIC": {
+			"title":"Demo for Plan International Canada",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"a9b869b3-a0f3-450a-9737-87aaec9aebc6"
+		},
 		"Spark": {
 			"title":"Demo for Spark",
 			"environment": "use1",
