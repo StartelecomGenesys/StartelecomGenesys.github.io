@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Chat ITG </title>
+		<script type="text/javascript" charset="utf-8">
+		  (function (g, e, n, es, ys) {
+			g['_genesysJs'] = e;
+			g[e] = g[e] || function () {
+			  (g[e].q = g[e].q || []).push(arguments)
+			};
+			g[e].t = 1 * new Date();
+			g[e].c = es;
+			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+		  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			environment: 'use1',
+			deploymentId: 'a9b869b3-a0f3-450a-9737-87aaec9aebc6'  //change the deploymentID here
+		  });
+			Genesys('subscribe', 'Messenger.ready', function (){
+				Genesys("command", "Database.set", {
+					messaging: {
+					customAttributes: {
+					URL: window.location.href
+					}
+				}
+				});
+			});
+			Genesys("subscribe", "MessagingService.conversationCleared", function() {
+			Console. log("cleared");
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+					URL: window.location.href
+			  }
+			}
+		  })
+		});
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
+		Console. log("disconnected");
+                Genesys("command", "Database.set", {
+                  messaging: {
+                    customAttributes: {
+					URL: window.location.href
+                    }
+                  }
+				  })
+                });
+			
+		  </script>
+	</head>
+	<body>
+	<h1>Chat Demo</h1>
+
+	</body>
+</html>
