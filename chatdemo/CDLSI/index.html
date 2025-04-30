@@ -27,7 +27,7 @@
 				});
 			});
 			Genesys("subscribe", "MessagingService.conversationCleared", function() {
-			Console. log("cleared");
+			Console.log("cleared");
 		  Genesys("command", "Database.set", {
 			messaging: {
 			  customAttributes: {
@@ -37,7 +37,7 @@
 		  })
 		});
 		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
-		Console. log("disconnected");
+		Console.log("disconnected");
                 Genesys("command", "Database.set", {
                   messaging: {
                     customAttributes: {
