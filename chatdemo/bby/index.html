@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Demo Chat with custom launch button </title>
+		<script type="text/javascript" charset="utf-8">
+			  (function (g, e, n, es, ys) {
+			g['_genesysJs'] = e;
+			g[e] = g[e] || function () {
+			  (g[e].q = g[e].q || []).push(arguments)
+			};
+			g[e].t = 1 * new Date();
+			g[e].c = es;
+			ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+		  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			environment: 'prod',
+			deploymentId: '436f12df-df77-44a1-b357-150121cf37d4',
+			debug:true
+		  });
+			  
+			  
+			  
+			  
+		  function toggleVisibility() {
+				var x = document.getElementById("launcher");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+			}
+
+		  function launchMessenger(){
+				Genesys("command", "Messenger.open");
+				toggleVisibility();
+			  } 
+			  
+		  Genesys("subscribe", "Messenger.closed", toggleVisibility);
+
+		  Genesys("subscribe", "Database.ready", function() {
+			Genesys("command", "Database.set", { messaging: { customAttributes: { WebSocketID: '123456' }}},
+				function(data){ console.log(data)}, function(){ console.warn("error while setting data") });
+		  });
+			 	
+</script>
+		
+	</head>
+	<body>
+	<div id="launcher">
+		
+		<br><button id="custom-launcher" onclick="launchMessenger()"> launcher </button>
+	</div>	
+
+	</body>
+	
+
+	
+<style>
+
+
+#custom-launcher{
+	background-color: #F0FD0D;	;	
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	position: relative;
+	bottom: -50px;
+	right: -30px;
+}
+
+
+#custom-launcher img {
+	height: 40px;
+	width: 40px;
+	filter: invert(100%);
+}
+
+.center-screen {
+  width: 230px;
+  height: 170px;
+  background-color: white;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 8px;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  position: fixed
+}
+</style>
+	
+</html>
