@@ -17,13 +17,49 @@
 			environment: 'prod',
 			deploymentId: '2632f404-fe18-409a-a710-88d94adcad49'
 		  });
+
+		  function startChat() {
+			// Replace this with your chat initiation code
+			Genesys("command", "Messenger.open",
+			{},
+				function() {
+					/*fulfilled callback*/
+				},
+				function() {
+					/*rejected callback*/
+				}
+			);
+		  }
+
 		</script>
 		
 	</head>
 	<body>
 	<h1>Plan International Canada Messenger Deployment</h1>
-
+	<button class="live-chat-button" onclick="startChat()">Live Chat</button>
+	
+	
 	</body>
-	
-	
+<style>
+	.live-chat-button {
+	position: fixed;
+	bottom: 300px;
+	left: 20px;
+	background-color: #0072ce; /* Plan Canada's brand color */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 12px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	transition: background-color 0.3s ease;
+	}
+
+	.live-chat-button:hover {
+	background-color: #005fa3; /* Darker shade on hover */
+	}
+</style>
+
 </html>
