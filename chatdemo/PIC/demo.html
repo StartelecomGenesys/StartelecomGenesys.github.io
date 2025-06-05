@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title> Plan International Canada messenger Deployment </title>
+		<script type="text/javascript" charset="utf-8">
+			(function (g, e, n, es, ys) {
+			  g['_genesysJs'] = e;
+			  g[e] = g[e] || function () {
+				(g[e].q = g[e].q || []).push(arguments)
+			  };
+			  g[e].t = 1 * new Date();
+			  g[e].c = es;
+			  ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+			})(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+			  environment: 'prod',
+			  deploymentId: 'a137ca5a-8d39-46a3-9cdd-dcbdc3fedd05',
+			  debug:true
+			});
+		  
+
+		  function startChat() {
+			// Replace this with your chat initiation code
+			Genesys("command", "Messenger.open",
+			{},
+				function() {
+					/*fulfilled callback*/
+				},
+				function() {
+					/*rejected callback*/
+				}
+			);
+		  }
+
+		</script>
+		
+	</head>
+	<body>
+	<h1>Plan International Canada Messenger Deployment</h1>
+	<h5> Messenger is hosted on Star Telecom Lab, this messeneger is to be used for testing customer experience. Transfer to agent is not available and the flow is set to be open all the time </h5>
+	<button class="live-chat-button" onclick="startChat()">Live Chat</button>
+	
+	
+	</body>
+<style>
+	.live-chat-button {
+	position: fixed;
+	bottom: 300px;
+	left: 20px;
+	background-color: #0072ce; /* Plan Canada's brand color */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 12px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	transition: background-color 0.3s ease;
+	}
+
+	.live-chat-button:hover {
+	background-color: #005fa3; /* Darker shade on hover */
+	}
+</style>
+
+</html>
