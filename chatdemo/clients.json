@@ -180,6 +180,12 @@
 			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"8494321f-7d41-4835-bedc-692f3089bb17"
 		},
+		"ConexusStaging": {
+			"title":"UAT Staging for Conexus",
+			"environment": "prod-cac1",
+			"link":"https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"b2dab78e-dd56-4498-ad39-d89ce77fdac8"
+		},
 		"Walmart": {
 			"title":"Demo chat for Walmart",
 			"environment": "use1",
