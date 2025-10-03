@@ -6,6 +6,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
 		},
+		"SnezaTest": {
+			"title":"Demo web messaging",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"d8aaf0dc-5202-4db2-9434-642235026500"
+		},
 		"TorontoHydroDemo": {
 			"title":"TorontoHydroDemo",
 			"environment": "prod",
