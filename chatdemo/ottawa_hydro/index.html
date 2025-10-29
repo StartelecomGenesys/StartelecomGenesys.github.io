@@ -29,7 +29,29 @@
 				}
 				});
 			});
-			
+			Genesys("subscribe", "MessagingService.conversationCleared", function() {
+		  Genesys("command", "Database.set", {
+			messaging: {
+			  customAttributes: {
+					firstName: "Jon", //replace test values with your variables
+					lastName: "Doe",
+					email: "test@test.ca",
+					accountNumber: "1234"
+			  }
+			}
+		  })
+		});
+		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
+                Genesys("command", "Database.set", {
+                  messaging: {
+                    firstName: "Jon", //replace test values with your variables
+					lastName: "Doe",
+					email: "test@test.ca",
+					accountNumber: "1234"
+                    }
+                  }
+				  })
+                });
 			
 		  </script>
 	</head>
