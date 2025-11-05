@@ -17,6 +17,7 @@
     environment: 'prod-cac1',
     deploymentId: 'd44c4faf-109f-4d96-9fcc-b929855d3b63'
   });
+  
 			Genesys('subscribe', 'Messenger.ready', function (){
 				Genesys("command", "Database.set", {
 					messaging: {
@@ -24,7 +25,8 @@
 							firstName: "Jon", //replace test values with your variables
 							lastName: "Doe",
 							email: "test@test.ca",
-							accountNumber: "1234"
+							accountNumber: "1234",
+							language:"EN"
 						}
 					}
 				});
@@ -36,7 +38,8 @@
 							firstName: "Jon", //replace test values with your variables
 							lastName: "Doe",
 							email: "test@test.ca",
-							accountNumber: "1234"
+							accountNumber: "1234",
+							language:"EN"
 					  }
 					}
 				  })
@@ -48,7 +51,8 @@
 						firstName: "Jon", //replace test values with your variables
 						lastName: "Doe",
 						email: "test@test.ca",
-						accountNumber: "1234"			  
+						accountNumber: "1234",
+						language:"EN"						
 						}
 					}
 				  })
