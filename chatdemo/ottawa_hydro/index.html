@@ -18,7 +18,7 @@
     deploymentId: 'd44c4faf-109f-4d96-9fcc-b929855d3b63'
   });
   
-			Genesys('subscribe', 'Conversation.started', function (){
+			Genesys('subscribe', 'Conversations.started', function (){
 				Genesys("command", "Database.set", {
 					messaging: {
 						customAttributes: {
