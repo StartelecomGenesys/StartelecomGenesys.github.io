@@ -18,21 +18,21 @@
     deploymentId: 'd44c4faf-109f-4d96-9fcc-b929855d3b63'
   });
   
-			Genesys('subscribe', 'Conversations.started', function (){
+			Genesys('subscribe', 'Conversations.open', function (){
 				Genesys("command", "Database.set", {
 					messaging: {
 						customAttributes: {
 						firstName: 'John',
-        lastName: 'Doe',
-        email: 'user@hydroottawa.com',
-        accountNumber: '1234567890',
-        language: 'EN',
-        url: window.location.href,
-        utm_source: 'google',
-        utm_medium: 'email',
-        utm_campaign: 'get_in_touch',
-        utm_term: 'connect_with_us',
-        utm_content: 'chat_button',
+						lastName: 'Doe',
+						email: 'user@hydroottawa.com',
+						accountNumber: '1234567890',
+						language: 'EN',
+						url: window.location.href,
+						utm_source: 'google',
+						utm_medium: 'email',
+						utm_campaign: 'get_in_touch',
+						utm_term: 'connect_with_us',
+						utm_content: 'chat_button',
 						}
 					}
 				});
