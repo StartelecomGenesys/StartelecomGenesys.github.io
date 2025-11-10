@@ -18,45 +18,26 @@
     deploymentId: 'd44c4faf-109f-4d96-9fcc-b929855d3b63'
   });
   
-			Genesys('subscribe', 'Messenger.ready', function (){
+			Genesys('subscribe', 'Conversation.started', function (){
 				Genesys("command", "Database.set", {
 					messaging: {
 						customAttributes: {
-							firstName: "Jon", //replace test values with your variables
-							lastName: "Doe",
-							email: "test@test.ca",
-							accountNumber: "1234",
-							language:"EN"
+						firstName: 'John',
+        lastName: 'Doe',
+        email: 'user@hydroottawa.com',
+        accountNumber: '1234567890',
+        language: 'EN',
+        url: window.location.href,
+        utm_source: 'google',
+        utm_medium: 'email',
+        utm_campaign: 'get_in_touch',
+        utm_term: 'connect_with_us',
+        utm_content: 'chat_button',
 						}
 					}
 				});
 			});
-			Genesys("subscribe", "MessagingService.conversationCleared", function() {
-				Genesys("command", "Database.set", {
-					messaging: {
-						customAttributes: {
-							firstName: "Jon", //replace test values with your variables
-							lastName: "Doe",
-							email: "test@test.ca",
-							accountNumber: "1234",
-							language:"EN"
-					  }
-					}
-				  })
-				});
-		Genesys("subscribe", "MessagingService.conversationDisconnected", function(){
-                Genesys("command", "Database.set", {
-                  messaging: {
-                     customAttributes: {
-						firstName: "Jon", //replace test values with your variables
-						lastName: "Doe",
-						email: "test@test.ca",
-						accountNumber: "1234",
-						language:"EN"						
-						}
-					}
-				  })
-                });
+			
 			
 		  </script>
 	</head>
