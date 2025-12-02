@@ -5,7 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title> HydroOttawa </title>
 		<script type="text/javascript" charset="utf-8">
-	(function (g, e, n, es, ys) {
+
+  (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
     g[e] = g[e] || function () {
       (g[e].q = g[e].q || []).push(arguments)
@@ -15,10 +16,11 @@
     ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
   })(window, 'Genesys', 'https://apps.cac1.pure.cloud/genesys-bootstrap/genesys.min.js', {
     environment: 'prod-cac1',
-    deploymentId: 'd44c4faf-109f-4d96-9fcc-b929855d3b63'
+    deploymentId: 'e370d880-ee4a-436c-a04a-4ef5c75c6153'
   });
+
   
-		Genesys('subscribe', 'Conversations.opened', function (){
+	Genesys('subscribe', 'Conversations.opened', function (){
 				Genesys("command", "Database.set", {
 					messaging: {
 						customAttributes: {
@@ -37,12 +39,35 @@
 					}
 				});
 			});
-	
+			
+				  Genesys("subscribe", "Messenger.ready", function() {
+		  document.getElementById("custom-launcher").style.display = "block";
+		}); 
+			
+	  function openMessenger() {
+      Genesys("command", "Messenger.open");
+    }
 			
 		  </script>
 	</head>
-	<body>
+		<body>
 
-	
+		<br><button id="custom-launcher" onclick="openMessenger()"> <img src="icon.svg"> </button>
+	<style>
+
+#custom-launcher{
+	background-color:transparent;
+	border:none;
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+	height: 90px;
+	width: 90px;
+	cursor: pointer;
+	display: none;
+}
+
+	</style>
 	</body>
+	
 </html>
