@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+  
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Auto Open JS SDK</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod',
+    deploymentId: '6a01ee4c-9e97-4a68-89c7-f5cdb001fa5d',
+	debug:true
+  });
+  
+document.addEventListener("DOMContentLoaded", () => {
+    //console.log("Page is ready!");
+    // your code here
+    Genesys("command", "Database.set", { messaging: { customAttributes: { survey: 'not_eligible' }}},
+      function(data){ /* fulfilled, returns data */}, function(){ /* rejected */ }
+    );
+});
+
+function update_survey_status(status){
+  Genesys("command", "Database.update", { messaging: { customAttributes: { survey: status }}},
+      function(data){ /* fulfilled, returns data */}, function(){ /* rejected */ }
+  );
+}
+  
+  var connected = false;
+Genesys('subscribe', 'MessagingService.messagesReceived' , function(eventObject) {
+var data = eventObject.data;
+	data.messages.forEach(function(message) {
+	  if(!connected){
+	  if (message.direction === 'Outbound' ) {
+		var agent = message.originatingEntity;
+			if (agent === 'Human') {
+			 connected=true; 
+			 console.log("agent entered the chat");
+       update_survey_status('eligible');
+			}	 
+		  }
+		}
+	
+	  if (message.type === 'Event' && message.events) {
+		var disconnectEvent = message.events.find(function(e) {
+      return e.eventType === 'Presence' && e.presence.type === 'Disconnect';
+    });		
+		if (disconnectEvent) {
+			//revert back connected to false since they are disconnected
+			console.log("disconnected");
+			connected=false;
+	
+		  }
+		  }
+		  }
+		  )
+		  }
+		  );
+
+    Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}){
+        console.log(data);
+    });
+  
+</script>
+</head>
+<body>
+
+    <h1>Demo Page</h1>
+
+       
+</body>
+</html>
