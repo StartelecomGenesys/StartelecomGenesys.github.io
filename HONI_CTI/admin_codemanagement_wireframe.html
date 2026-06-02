@@ -322,6 +322,138 @@ td.code { font-variant-numeric: tabular-nums; font-size: 12px; color: #555e6b; }
 .table-wrap::-webkit-scrollbar-track { background: transparent; }
 .table-wrap::-webkit-scrollbar-thumb { background: #d0d5dd; border-radius: 3px; }
 .table-wrap::-webkit-scrollbar-thumb:hover { background: #005b66; }
+/* ── On-Call Upload tab ── */
+.oc-wrap {
+  flex: 1; overflow-y: auto; padding: 28px 18px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.oc-stepper {
+  display: flex; align-items: center; gap: 0;
+  padding: 14px 0 20px; width: 100%; max-width: 580px;
+}
+.oc-step { display: flex; align-items: center; gap: 10px; flex: 1; }
+.oc-step:last-child { flex: 0; }
+.oc-circle {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all 0.2s;
+}
+.oc-circle.pending  { background: #f0f2f4; color: #9aa0a8; border: 2px solid #e2e5e9; }
+.oc-circle.active   { background: #005b66; color: #fff; border: 2px solid #005b66; }
+.oc-circle.complete { background: #22c55e; color: #fff; border: 2px solid #22c55e; }
+.oc-step-label { font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.oc-step-label.pending  { color: #9aa0a8; }
+.oc-step-label.active   { color: #005b66; font-weight: 600; }
+.oc-step-label.complete { color: #22c55e; }
+.oc-line { flex: 1; height: 2px; background: #e2e5e9; margin: 0 12px; transition: background 0.3s; }
+.oc-line.complete { background: #22c55e; }
+
+.upload-card { background:#fff; border:1px solid #e2e5e9; border-radius:14px; padding:28px; width:100%; max-width:580px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.upload-card-title { font-size:16px; font-weight:700; color:#1a1d20; margin-bottom:4px; }
+.upload-card-sub { font-size:13px; color:#6b7480; margin-bottom:20px; line-height:1.5; }
+.last-upload-box { padding:12px 14px; background:#f5f7f9; border-radius:8px; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+.last-upload-box i { font-size:16px; color:#9aa0a8; flex-shrink:0; }
+.last-upload-text { font-size:12px; color:#6b7480; line-height:1.5; }
+.last-upload-text strong { color:#1a1d20; }
+.drop-zone { border:2px dashed #d8dce2; border-radius:10px; padding:36px 20px; text-align:center; cursor:pointer; transition:all 0.15s; background:#fafbfc; margin-bottom:16px; }
+.drop-zone:hover, .drop-zone.drag-over { border-color:#005b66; background:#f0faf9; }
+.drop-zone .dz-icon { font-size:32px; color:#9aa0a8; margin-bottom:8px; display:block; }
+.drop-zone.drag-over .dz-icon { color:#005b66; }
+.drop-title { font-size:13px; font-weight:600; color:#1a1d20; margin-bottom:3px; }
+.drop-sub { font-size:12px; color:#9aa0a8; }
+.drop-sub span { color:#005b66; font-weight:500; cursor:pointer; }
+.file-type-badge { display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:3px 10px; background:#f0f2f4; border-radius:20px; font-size:11px; font-weight:600; color:#6b7480; }
+.oc-file-selected { display:none; align-items:center; gap:12px; padding:12px 14px; background:#f0faf9; border:1px solid #22c55e; border-radius:10px; margin-bottom:16px; }
+.oc-file-selected.show { display:flex; }
+.oc-file-icon { width:38px; height:38px; background:#dcfce7; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.oc-file-icon i { font-size:18px; color:#15803d; }
+.oc-file-info { flex:1; }
+.oc-file-name { font-size:13px; font-weight:600; color:#1a1d20; }
+.oc-file-meta { font-size:11px; color:#6b7480; margin-top:2px; }
+.oc-file-remove { background:none; border:none; cursor:pointer; color:#9aa0a8; font-size:17px; padding:2px; }
+.oc-file-remove:hover { color:#ef4444; }
+.btn-process { display:inline-flex; align-items:center; justify-content:center; gap:7px; width:100%; padding:10px; background:#005b66; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.12s; }
+.btn-process:hover { background:#004a55; }
+.btn-process i { font-size:15px; }
+
+/* Delta card */
+.delta-card { background:#fff; border:1px solid #e2e5e9; border-radius:14px; width:100%; max-width:900px; box-shadow:0 2px 12px rgba(0,0,0,0.06); overflow:hidden; }
+.delta-header { padding:18px 22px; border-bottom:1px solid #eef0f3; }
+.delta-title { font-size:15px; font-weight:700; color:#1a1d20; margin-bottom:3px; }
+.delta-sub { font-size:12px; color:#6b7480; }
+.delta-summary { display:flex; gap:0; border-bottom:1px solid #eef0f3; }
+.delta-stat { flex:1; padding:14px 18px; border-right:1px solid #eef0f3; display:flex; align-items:center; gap:10px; cursor:pointer; transition:background 0.1s; }
+.delta-stat:last-child { border-right:none; }
+.delta-stat:hover { background:#fafbfc; }
+.delta-stat-icon { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.delta-stat-icon.ds-added   { background:#dcfce7; } .delta-stat-icon.ds-added i   { color:#15803d; }
+.delta-stat-icon.ds-changed { background:#fef3c7; } .delta-stat-icon.ds-changed i { color:#92400e; }
+.delta-stat-icon.ds-removed { background:#fee2e2; } .delta-stat-icon.ds-removed i { color:#b91c1c; }
+.delta-stat-icon.ds-same    { background:#f0f2f4; } .delta-stat-icon.ds-same i    { color:#9aa0a8; }
+.delta-stat-icon i { font-size:17px; }
+.delta-stat-count { font-size:20px; font-weight:700; color:#1a1d20; line-height:1; }
+.delta-stat-label { font-size:11px; color:#6b7480; margin-top:2px; }
+.delta-stat-hint  { font-size:10px; color:#b0b8c4; margin-top:1px; }
+.delta-filter-strip { padding:9px 22px; border-bottom:1px solid #eef0f3; display:flex; align-items:center; gap:7px; background:#fafbfc; }
+.oc-chip { padding:3px 11px; border-radius:20px; font-size:12px; font-weight:500; border:1px solid #d8dce2; background:#fff; color:#555e6b; cursor:pointer; transition:all 0.1s; }
+.oc-chip:hover { border-color:#b0b8c4; color:#1a1d20; }
+.oc-chip.ca { background:#005b66; border-color:#005b66; color:#fff; }
+.oc-chip.cad { background:#dcfce7; border-color:#22c55e; color:#15803d; }
+.oc-chip.cch { background:#fef3c7; border-color:#f59e0b; color:#92400e; }
+.oc-chip.crm { background:#fee2e2; border-color:#ef4444; color:#b91c1c; }
+.delta-filter-count { margin-left:auto; font-size:12px; color:#9aa0a8; }
+.delta-tbl-wrap { overflow-y:auto; max-height:320px; }
+.delta-tbl-wrap::-webkit-scrollbar { width:5px; }
+.delta-tbl-wrap::-webkit-scrollbar-thumb { background:#d0d5dd; border-radius:3px; }
+table.dtbl { width:100%; border-collapse:collapse; font-size:13px; }
+table.dtbl thead th { background:#f5f7f9; padding:7px 14px; text-align:left; font-size:11px; font-weight:600; color:#6b7480; text-transform:uppercase; letter-spacing:0.4px; border-bottom:1px solid #e2e5e9; position:sticky; top:0; z-index:1; }
+table.dtbl tbody tr { border-bottom:1px solid #f0f2f4; }
+table.dtbl tbody td { padding:9px 14px; vertical-align:middle; }
+.cpill { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
+.cpill-added   { background:#dcfce7; color:#15803d; }
+.cpill-changed { background:#fef3c7; color:#92400e; }
+.cpill-removed { background:#fee2e2; color:#b91c1c; }
+.from-to { display:flex; align-items:center; gap:5px; font-size:12px; }
+.from-val { color:#b91c1c; text-decoration:line-through; }
+.to-val   { color:#15803d; font-weight:500; }
+.delta-footer { padding:14px 22px; border-top:1px solid #e2e5e9; display:flex; align-items:center; justify-content:space-between; background:#fff; }
+.delta-footer-note { font-size:12px; color:#9aa0a8; display:flex; align-items:center; gap:5px; }
+.delta-footer-note i { font-size:13px; }
+.delta-footer-btns { display:flex; gap:8px; }
+.btn-commit { display:inline-flex; align-items:center; gap:6px; padding:8px 20px; background:#005b66; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.12s; }
+.btn-commit:hover { background:#004a55; }
+
+/* Result */
+.result-card { background:#fff; border:1px solid #e2e5e9; border-radius:14px; padding:36px 28px; width:100%; max-width:500px; box-shadow:0 2px 12px rgba(0,0,0,0.06); text-align:center; }
+.result-icon-wrap { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+.result-icon-wrap.success { background:#dcfce7; }
+.result-icon-wrap i { font-size:30px; color:#15803d; }
+.result-title { font-size:17px; font-weight:700; color:#1a1d20; margin-bottom:7px; }
+.result-sub { font-size:13px; color:#6b7480; line-height:1.5; margin-bottom:22px; }
+.result-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#e2e5e9; border:1px solid #e2e5e9; border-radius:10px; overflow:hidden; margin-bottom:22px; }
+.result-stat { background:#fff; padding:12px 8px; text-align:center; }
+.result-stat-num { font-size:20px; font-weight:700; }
+.result-stat-num.rg { color:#15803d; } .result-stat-num.ra { color:#92400e; } .result-stat-num.rr { color:#b91c1c; }
+.result-stat-label { font-size:11px; color:#9aa0a8; margin-top:2px; }
+.result-log { text-align:left; padding:12px 14px; background:#f5f7f9; border-radius:8px; margin-bottom:22px; }
+.result-log-title { font-size:11px; font-weight:600; color:#9aa0a8; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:8px; }
+.log-line { display:flex; align-items:flex-start; gap:6px; font-size:12px; color:#555e6b; margin-bottom:5px; line-height:1.4; }
+.log-line:last-child { margin-bottom:0; }
+.log-line i { font-size:13px; flex-shrink:0; margin-top:1px; }
+.log-ok   { color:#22c55e; } .log-info { color:#9aa0a8; }
+.btn-new-upload { display:inline-flex; align-items:center; justify-content:center; gap:7px; width:100%; padding:10px; background:#005b66; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.12s; }
+.btn-new-upload:hover { background:#004a55; }
+.result-timestamp { font-size:11px; color:#b0b8c4; margin-top:8px; }
+
+/* Processing overlay (shared) */
+.oc-processing { display:none; position:fixed; inset:0; background:rgba(255,255,255,0.88); z-index:400; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.oc-processing.show { display:flex; }
+.oc-spinner { width:38px; height:38px; border:3px solid #e2e5e9; border-top-color:#005b66; border-radius:50%; animation:spin 0.8s linear infinite; }
+.oc-proc-label { font-size:14px; font-weight:500; color:#555e6b; }
+.oc-proc-sub { font-size:12px; color:#9aa0a8; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.oc-wrap::-webkit-scrollbar { width:6px; }
+.oc-wrap::-webkit-scrollbar-thumb { background:#d0d5dd; border-radius:3px; }
 </style>
 </head>
 <body>
@@ -361,14 +493,14 @@ td.code { font-variant-numeric: tabular-nums; font-size: 12px; color: #555e6b; }
   <button class="tab-btn disabled" id="tab-ieso" title="Pending scope confirmation — SL-672">
     <i class="ti ti-bolt"></i> IESO <span class="tab-pill">TBD</span>
   </button>
-  <button class="tab-btn disabled" id="tab-radio" title="Pending scope confirmation — SL-672">
-    <i class="ti ti-antenna"></i> Radio ANI/Site Mappings <span class="tab-pill">TBD</span>
+  <button class="tab-btn" onclick="switchTab('radio')" id="tab-radio">
+    <i class="ti ti-antenna"></i> Radio ANI/Site Mappings <span class="tab-pill" id="pill-radio">0</span>
   </button>
   <button class="tab-btn disabled" id="tab-ivr" title="Pending scope confirmation — SL-672">
     <i class="ti ti-settings"></i> IVR Configs <span class="tab-pill">TBD</span>
   </button>
-  <button class="tab-btn disabled" id="tab-oncall" title="Separate CTI App — App 5">
-    <i class="ti ti-upload"></i> On-Call Upload <span class="tab-pill">App 5</span>
+  <button class="tab-btn" onclick="switchTab('oncall')" id="tab-oncall">
+    <i class="ti ti-upload"></i> On-Call Upload
   </button>
 </div>
 
@@ -491,7 +623,46 @@ let STATIONS = [
   { id: 123, name: 'Alliston TS',             sector: 4, aor: 'BARRIE' },
 ];
 
-// ── State ──
+let RADIO = [
+  { id:1,  phone:'705-792-3254', desc:'Zetron radio Emergency DID -KAPUSK Zone 6',   type:'Emergency', queue:'TXCC',     site:'KAPUSK'    },
+  { id:2,  phone:'705-792-3255', desc:'Zetron radio Emergency DID -SM ROCK Zone 6',  type:'Emergency', queue:'TXCC',     site:'SM ROCK'   },
+  { id:3,  phone:'705-792-3259', desc:'Zetron radio Emergency DID -TIMMINS ZONE 6',  type:'Emergency', queue:'OPTXS4',   site:'TIMMINS'   },
+  { id:4,  phone:'705-792-3250', desc:'Zetron radio Emergency DID -PINARD Zone 6',   type:'Emergency', queue:'Zone6',    site:'PINARD'    },
+  { id:5,  phone:'705-792-3251', desc:'Zetron radio Emergency DID -HEARST Zone 6',   type:'Emergency', queue:'Zone6',    site:'HEARST'    },
+  { id:6,  phone:'705-792-3252', desc:'Zetron radio Emergency DID -FORD LK Zone 6',  type:'Emergency', queue:'Zone6',    site:'FORD LK'   },
+  { id:7,  phone:'705-792-3253', desc:'Zetron radio Emergency DID -HPAYNE Zone 6',   type:'Emergency', queue:'Zone6',    site:'HPAYNE'    },
+  { id:8,  phone:'705-792-3256', desc:'Zetron radio Emergency DID -COCHRAN Zone 6',  type:'Emergency', queue:'Zone6',    site:'COCHRAN'   },
+  { id:9,  phone:'705-792-3258', desc:'Zetron radio Emergency DID -IRQUOIS Zone 6',  type:'Emergency', queue:'Zone6',    site:'IRQUOIS'   },
+  { id:10, phone:'705-792-3260', desc:'Zetron radio Emergency DID -RAMORE Zone 6',   type:'Emergency', queue:'Zone6',    site:'RAMORE'    },
+  { id:11, phone:'705-792-3261', desc:'Zetron radio Emergency DID -KIRK LK Zone 6',  type:'Emergency', queue:'Zone6',    site:'KIRK LK'   },
+  { id:12, phone:'705-792-3262', desc:'Zetron radio Emergency DID -GOGANDA Zone 6',  type:'Emergency', queue:'Zone6',    site:'GOGANDA'   },
+  { id:13, phone:'705-792-3263', desc:'Zetron radio Emergency DID -ENGLHART Zone 6', type:'Emergency', queue:'Zone6',    site:'ENGLHART'  },
+  { id:14, phone:'705-792-3264', desc:'Zetron radio Emergency DID -COBALT Zone 6',   type:'Emergency', queue:'Zone6',    site:'COBALT'    },
+  { id:15, phone:'705-792-3265', desc:'Zetron radio Emergency DID -TEMAGMI Zone 6',  type:'Emergency', queue:'Zone6',    site:'TEMAGMI'   },
+  { id:16, phone:'705-792-3266', desc:'Zetron radio Emergency DID -N MINE Zone 6',   type:'Emergency', queue:'Zone6',    site:'N MINE'    },
+  { id:17, phone:'705-792-3267', desc:'Zetron radio Emergency DID -TOMIKO Zone 6',   type:'Emergency', queue:'Zone6',    site:'TOMIKO'    },
+  { id:18, phone:'705-792-3217', desc:'Hanmer area Zetron radios Zone-6',            type:'Normal',    queue:'Zone6',    site:'Hanmer Area'},
+  { id:19, phone:'705-792-3218', desc:'Lakehead area Zetron radios Zone-7',          type:'Normal',    queue:'Zone7',    site:'Lakehead Area'},
+  { id:20, phone:'705-792-3228', desc:'Zetron radio Normal Calls (CLID)',            type:'Normal',    queue:'Zone All', site:'(CLID) Normal'},
+  { id:21, phone:'705-792-3229', desc:'Zetron radio Emergency Calls (CLID)',         type:'Normal',    queue:'Zone7',    site:'(CLID) Emergency'},
+  { id:22, phone:'705-792-3230', desc:'Zetron radio DID -PINARD Zone 6',            type:'Normal',    queue:'Zone6',    site:'PINARD'    },
+  { id:23, phone:'705-792-3231', desc:'Zetron radio DID -HEARST Zone 6',            type:'Normal',    queue:'Zone6',    site:'HEARST'    },
+  { id:24, phone:'705-792-3232', desc:'Zetron radio DID -FORD LK Zone 6',           type:'Normal',    queue:'Zone6',    site:'FORD LK'   },
+  { id:25, phone:'705-792-3233', desc:'Zetron radio DID -HPAYNE Zone 6',            type:'Normal',    queue:'Zone6',    site:'HPAYNE'    },
+  { id:26, phone:'705-792-3234', desc:'Zetron radio DID -KAPUSK Zone 6',            type:'Normal',    queue:'Zone6',    site:'KAPUSK'    },
+  { id:27, phone:'705-792-3235', desc:'Zetron radio DID -SM ROCK Zone 6',           type:'Normal',    queue:'Zone6',    site:'SM ROCK'   },
+  { id:28, phone:'705-792-3236', desc:'Zetron radio DID -COCHRAN Zone 6',           type:'Normal',    queue:'Zone6',    site:'COCHRAN'   },
+  { id:29, phone:'705-792-3238', desc:'Zetron radio DID -IRQUOIS Zone 6',           type:'Normal',    queue:'Zone6',    site:'IRQUOIS'   },
+  { id:30, phone:'705-792-3239', desc:'Zetron radio DID -TIMMINS ZONE 6',           type:'Normal',    queue:'Zone6',    site:'TIMMINS'   },
+  { id:31, phone:'705-792-3240', desc:'Zetron radio DID -RAMORE Zone 6',            type:'Normal',    queue:'Zone6',    site:'RAMORE'    },
+  { id:32, phone:'705-792-3241', desc:'Zetron radio DID -KIRK LK Zone 6',           type:'Normal',    queue:'Zone6',    site:'KIRK LK'   },
+  { id:33, phone:'705-792-3242', desc:'Zetron radio DID -GOGANDA Zone 6',           type:'Normal',    queue:'Zone6',    site:'GOGANDA'   },
+  { id:34, phone:'705-792-3243', desc:'Zetron radio DID -ENGLHART Zone 6',          type:'Normal',    queue:'Zone6',    site:'ENGLHART'  },
+  { id:35, phone:'705-792-3244', desc:'Zetron radio DID -COBALT Zone 6',            type:'Normal',    queue:'Zone6',    site:'COBALT'    },
+  { id:36, phone:'705-792-3245', desc:'Zetron radio DID -TEMAGMI Zone 6',           type:'Normal',    queue:'Zone6',    site:'TEMAGMI'   },
+  { id:37, phone:'705-792-3246', desc:'Zetron radio DID -N MINE Zone 6',            type:'Normal',    queue:'Zone6',    site:'N MINE'    },
+  { id:38, phone:'705-792-3247', desc:'Zetron radio DID -TOMIKO Zone 6',            type:'Normal',    queue:'Zone6',    site:'TOMIKO'    },
+];
 let activeTab = 'employee';
 let editingEnabled = false;
 let selectedId = null;
@@ -502,7 +673,7 @@ let sortDir = 1;
 
 // ── Tab switch ──
 function switchTab(tab) {
-  if (['ieso','radio','ivr','oncall'].includes(tab)) return;
+  if (['ieso','ivr'].includes(tab)) return;
   activeTab = tab;
   selectedId = null;
   editingRowId = null;
@@ -510,8 +681,15 @@ function switchTab(tab) {
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  updateDeleteBtn();
-  render();
+
+  const isOncall = tab === 'oncall';
+  document.getElementById('contentArea').style.display = isOncall ? 'none' : 'flex';
+  document.getElementById('panel-oncall').style.display = isOncall ? 'flex' : 'none';
+
+  if (!isOncall) {
+    updateDeleteBtn();
+    render();
+  }
 }
 
 // ── Editing toggle ──
@@ -535,6 +713,7 @@ function updateDeleteBtn() {
 function getData() {
   if (activeTab === 'employee') return EMPLOYEES;
   if (activeTab === 'customer') return CUSTOMERS;
+  if (activeTab === 'radio')    return RADIO;
   return STATIONS;
 }
 function getFiltered() {
@@ -579,15 +758,18 @@ function setSort(col) {
 function render() {
   const data = getFiltered();
   // Update pills
-  ['employee','customer','station'].forEach(t => {
-    const ds = t === 'employee' ? EMPLOYEES : t === 'customer' ? CUSTOMERS : STATIONS;
-    document.getElementById('pill-' + t).textContent = ds.length;
+  ['employee','customer','station','radio'].forEach(t => {
+    const el = document.getElementById('pill-' + t);
+    if (!el) return;
+    const ds = t === 'employee' ? EMPLOYEES : t === 'customer' ? CUSTOMERS : t === 'radio' ? RADIO : STATIONS;
+    el.textContent = ds.length;
   });
   document.getElementById('recordCount').textContent =
     data.length + ' of ' + getData().length + ' records';
 
   if (activeTab === 'employee') renderEmployeeTable(data);
   else if (activeTab === 'customer') renderCustomerTable(data);
+  else if (activeTab === 'radio') renderRadioTable(data);
   else renderStationTable(data);
 }
 
@@ -752,6 +934,12 @@ function saveInline(id) {
     data[idx].name     = document.getElementById('edit-name').value;
     data[idx].priority = parseInt(document.getElementById('edit-priority').value);
     data[idx].aor      = document.getElementById('edit-aor').value.toUpperCase();
+  } else if (activeTab === 'radio') {
+    data[idx].phone = document.getElementById('edit-phone').value;
+    data[idx].site  = document.getElementById('edit-site').value;
+    data[idx].type  = document.getElementById('edit-type').value;
+    data[idx].queue = document.getElementById('edit-queue').value;
+    data[idx].desc  = document.getElementById('edit-desc').value;
   } else {
     data[idx].name   = document.getElementById('edit-name').value;
     data[idx].sector = parseInt(document.getElementById('edit-sector').value);
@@ -768,7 +956,59 @@ function toggleNotify(id) {
   if (r) { r.notify = !r.notify; render(); }
 }
 
-// ── Add modal ──
+// ── Radio ANI table ──
+function renderRadioTable(data) {
+  document.getElementById('tableHead').innerHTML = `<tr>
+    <th onclick="setSort('phone')" class="${sortCol==='phone'?'sorted':''}">DID / Phone Number ${sortIcon('phone')}</th>
+    <th onclick="setSort('site')" class="${sortCol==='site'?'sorted':''}">Site ${sortIcon('site')}</th>
+    <th onclick="setSort('type')" class="${sortCol==='type'?'sorted':''}" style="text-align:center">Call Type ${sortIcon('type')}</th>
+    <th onclick="setSort('queue')" class="${sortCol==='queue'?'sorted':''}">Queue ${sortIcon('queue')}</th>
+    <th onclick="setSort('desc')" class="${sortCol==='desc'?'sorted':''}">Description ${sortIcon('desc')}</th>
+    ${editingEnabled ? '<th style="width:120px">Actions</th>' : ''}
+  </tr>`;
+
+  document.getElementById('tableBody').innerHTML = data.map(r => {
+    const sel = selectedId === r.id;
+    const editing = editingEnabled && editingRowId === r.id;
+    const isEmerg = r.type === 'Emergency';
+    const typeBadge = isEmerg
+      ? `<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;background:#fee2e2;color:#b91c1c"><i class="ti ti-alert-triangle" style="font-size:11px"></i>Emergency</span>`
+      : `<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;background:#f0f2f4;color:#6b7480"><i class="ti ti-radio" style="font-size:11px"></i>Normal</span>`;
+
+    if (editing) {
+      return `<tr class="editing">
+        <td><input class="inline-input" id="edit-phone" value="${r.phone}" style="width:140px;font-variant-numeric:tabular-nums"></td>
+        <td><input class="inline-input" id="edit-site" value="${r.site}" style="width:120px"></td>
+        <td style="text-align:center">
+          <select class="inline-select" id="edit-type">
+            <option value="Emergency" ${r.type==='Emergency'?'selected':''}>Emergency</option>
+            <option value="Normal" ${r.type==='Normal'?'selected':''}>Normal</option>
+          </select>
+        </td>
+        <td>
+          <select class="inline-select" id="edit-queue">
+            ${['Zone6','Zone7','Zone All','TXCC','OPTXS4'].map(q=>`<option value="${q}" ${r.queue===q?'selected':''}>${q}</option>`).join('')}
+          </select>
+        </td>
+        <td><input class="inline-input" id="edit-desc" value="${r.desc}" style="width:100%"></td>
+        <td><div class="row-actions">
+          <button class="row-btn row-btn-save" onclick="saveInline(${r.id})">Save</button>
+          <button class="row-btn row-btn-cancel" onclick="cancelInline()">Cancel</button>
+        </div></td>
+      </tr>`;
+    }
+    return `<tr class="${sel?'selected':''}" onclick="selectRow(${r.id})" ondblclick="${editingEnabled?`startInline(${r.id})`:''}">
+      <td class="code" style="font-variant-numeric:tabular-nums;letter-spacing:0.3px">${r.phone}</td>
+      <td style="font-weight:500">${r.site}</td>
+      <td style="text-align:center">${typeBadge}</td>
+      <td class="code">${r.queue}</td>
+      <td class="muted" style="font-size:12px">${r.desc}</td>
+      ${editingEnabled ? `<td><button class="row-btn row-btn-cancel" onclick="event.stopPropagation();startInline(${r.id})"><i class="ti ti-pencil" style="font-size:12px"></i> Edit</button></td>` : ''}
+    </tr>`;
+  }).join('');
+}
+
+
 function openAddModal() {
   document.getElementById('modalTitle').textContent = 'Add Record — ' + tabLabel();
   const f = document.getElementById('modalFields');
@@ -800,6 +1040,28 @@ function openAddModal() {
       </div>
       <div class="field-group"><div class="field-label">Customer Name</div><input class="field-input" id="mf-name" placeholder="e.g. Beachville Lime"></div>
       <div class="field-group"><div class="field-label">AOR</div><input class="field-input" id="mf-aor" placeholder="e.g. KENORA" style="text-transform:uppercase"></div>`;
+  } else if (activeTab === 'radio') {
+    f.innerHTML = `
+      <div class="field-row">
+        <div class="field-group"><div class="field-label">DID / Phone Number</div><input class="field-input" id="mf-phone" placeholder="705-792-3xxx" style="font-variant-numeric:tabular-nums"></div>
+        <div class="field-group"><div class="field-label">Call Type</div>
+          <select class="field-input" id="mf-type">
+            <option value="Emergency">Emergency</option>
+            <option value="Normal" selected>Normal</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group"><div class="field-label">Site Name</div><input class="field-input" id="mf-site" placeholder="e.g. KAPUSK"></div>
+      <div class="field-group"><div class="field-label">Queue</div>
+        <select class="field-input" id="mf-queue">
+          <option value="Zone6" selected>Zone6</option>
+          <option value="Zone7">Zone7</option>
+          <option value="Zone All">Zone All</option>
+          <option value="TXCC">TXCC</option>
+          <option value="OPTXS4">OPTXS4</option>
+        </select>
+      </div>
+      <div class="field-group"><div class="field-label">Full Description</div><input class="field-input" id="mf-desc" placeholder="e.g. Zetron radio DID -KAPUSK Zone 6"></div>`;
   } else {
     f.innerHTML = `
       <div class="field-row">
@@ -818,13 +1080,26 @@ function openAddModal() {
 }
 
 function tabLabel() {
-  return activeTab === 'employee' ? 'Employee Access Codes' : activeTab === 'customer' ? 'Customer Access Codes' : 'Stations';
+  return activeTab === 'employee' ? 'Employee Access Codes'
+       : activeTab === 'customer' ? 'Customer Access Codes'
+       : activeTab === 'radio'    ? 'Radio ANI/Site Mappings'
+       : 'Stations';
 }
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 
 function saveModal() {
   const data = getData();
+  if (activeTab === 'radio') {
+    const phone = document.getElementById('mf-phone').value.trim();
+    if (!phone) { document.getElementById('mf-phone').style.borderColor='#ef4444'; return; }
+    const newId = Date.now();
+    RADIO.push({ id: newId, phone, site: document.getElementById('mf-site').value,
+      type: document.getElementById('mf-type').value,
+      queue: document.getElementById('mf-queue').value,
+      desc: document.getElementById('mf-desc').value });
+    closeModal(); showToast('Record added', 'success'); render(); return;
+  }
   const idInput = document.getElementById('mf-id');
   const newId = parseInt(idInput ? idInput.value : Date.now());
   if (!newId) { idInput.style.borderColor='#ef4444'; return; }
@@ -880,6 +1155,251 @@ function showToast(msg, type='success') {
 
 // ── Init ──
 render();
+// ── On-Call Upload JS ──
+const OC_DELTA = [
+  { name:'Contact A', region:'Op Centre — North Zone',   role:'Primary On-Call',  change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact B', region:'Op Centre — North Zone',   role:'Backup On-Call',   change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact C', region:'Op Centre — Central Zone', role:'Primary On-Call',  change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact D', region:'Op Centre — Central Zone', role:'Backup On-Call',   change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact E', region:'Op Centre — South Zone',   role:'Primary On-Call',  change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact F', region:'Op Centre — South Zone',   role:'After-Hours',      change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact G', region:'Op Centre — East Zone',    role:'Primary On-Call',  change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact H', region:'Op Centre — East Zone',    role:'Backup On-Call',   change:'added',   from:'',                to:'On-Call Week 23' },
+  { name:'Contact I', region:'Op Centre — North Zone',   role:'Primary On-Call',  change:'changed', from:'On-Call Week 22', to:'On-Call Week 23' },
+  { name:'Contact J', region:'Op Centre — Central Zone', role:'After-Hours',      change:'changed', from:'On-Call Week 22', to:'On-Call Week 23' },
+  { name:'Contact K', region:'Op Centre — South Zone',   role:'Primary On-Call',  change:'changed', from:'On-Call Week 22', to:'On-Call Week 23' },
+  { name:'Contact L', region:'Op Centre — East Zone',    role:'Backup On-Call',   change:'changed', from:'On-Call Week 22', to:'On-Call Week 23' },
+  { name:'Contact M', region:'Op Centre — West Zone',    role:'Primary On-Call',  change:'changed', from:'On-Call Week 22', to:'On-Call Week 23' },
+  { name:'Contact N', region:'Op Centre — North Zone',   role:'After-Hours',      change:'removed', from:'On-Call Week 22', to:'' },
+  { name:'Contact O', region:'Op Centre — West Zone',    role:'Primary On-Call',  change:'removed', from:'On-Call Week 22', to:'' },
+  { name:'Contact P', region:'Op Centre — Central Zone', role:'Backup On-Call',   change:'removed', from:'On-Call Week 22', to:'' },
+];
+let ocFilter = 'all';
+
+function ocCpill(ch) {
+  const m = { added:['cpill-added','ti-plus','Added'], changed:['cpill-changed','ti-arrows-exchange','Changed'], removed:['cpill-removed','ti-minus','Removed'] };
+  const [c,i,l] = m[ch];
+  return `<span class="cpill ${c}"><i class="ti ${i}" style="font-size:10px"></i>${l}</span>`;
+}
+function ocFromTo(r) {
+  if (r.change==='added')   return `<span class="to-val">${r.to}</span>`;
+  if (r.change==='removed') return `<span class="from-val">${r.from}</span>`;
+  return `<div class="from-to"><span class="from-val">${r.from}</span><i class="ti ti-arrow-right" style="color:#9aa0a8;font-size:12px"></i><span class="to-val">${r.to}</span></div>`;
+}
+function ocSetFilter(f) {
+  ocFilter = f;
+  ['all','added','changed','removed'].forEach(k => {
+    const el = document.getElementById('oc-chip-'+k);
+    el.className = 'oc-chip' + (k===f ? (k==='all' ? ' ca' : k==='added' ? ' cad' : k==='changed' ? ' cch' : ' crm') : '');
+  });
+  ocRenderDelta();
+}
+function ocRenderDelta() {
+  const rows = ocFilter==='all' ? OC_DELTA : OC_DELTA.filter(r=>r.change===ocFilter);
+  document.getElementById('ocFilterLabel').textContent = 'Showing '+rows.length+' of '+OC_DELTA.length+' changes';
+  document.getElementById('ocDeltaBody').innerHTML = rows.map(r=>`<tr>
+    <td style="font-weight:500;color:#1a1d20">${r.name}</td>
+    <td style="color:#6b7480;font-size:12px">${r.region}</td>
+    <td style="color:#6b7480;font-size:12px">${r.role}</td>
+    <td>${ocCpill(r.change)}</td>
+    <td>${ocFromTo(r)}</td>
+  </tr>`).join('');
+}
+function ocHandleDrop(e) {
+  e.preventDefault();
+  document.getElementById('ocDropZone').classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) ocApplyFile(f);
+}
+function ocHandleFileSelect(e) { const f=e.target.files[0]; if(f) ocApplyFile(f); }
+function ocApplyFile(f) {
+  document.getElementById('ocDropZone').style.display='none';
+  document.getElementById('ocFileName').textContent=f.name;
+  document.getElementById('ocFileMeta').textContent=Math.round(f.size/1024)+' KB · Selected just now';
+  document.getElementById('ocFileSelected').classList.add('show');
+  document.getElementById('ocNewFileName').textContent=f.name;
+}
+function ocClearFile() {
+  document.getElementById('ocDropZone').style.display='';
+  document.getElementById('ocFileSelected').classList.remove('show');
+  document.getElementById('ocFileInput').value='';
+}
+function ocSetStep(n) {
+  [1,2,3].forEach(i=>{
+    const c=document.getElementById('oc-circle-'+i), l=document.getElementById('oc-label-'+i);
+    if(i<n){ c.className='oc-circle complete'; c.innerHTML='<i class="ti ti-check" style="font-size:12px"></i>'; l.className='oc-step-label complete'; }
+    else if(i===n){ c.className='oc-circle active'; c.innerHTML=i===1?'<i class="ti ti-upload" style="font-size:12px"></i>':String(i); l.className='oc-step-label active'; }
+    else{ c.className='oc-circle pending'; c.innerHTML=String(i); l.className='oc-step-label pending'; }
+    if(i<3) document.getElementById('oc-line-'+i).className='oc-line'+(i<n?' complete':'');
+  });
+}
+function ocShowScreen(s) {
+  ['upload','delta','result'].forEach(n=>{ document.getElementById('oc-screen-'+n).style.display='none'; });
+  document.getElementById('oc-screen-'+s).style.display='block';
+  document.getElementById('ocWrap').scrollTop=0;
+}
+function ocProcess() {
+  const ov=document.getElementById('ocProcessing');
+  document.getElementById('ocProcLabel').textContent='Comparing spreadsheets…';
+  document.getElementById('ocProcSub').textContent='Reading 312 contacts from previous upload';
+  ov.classList.add('show');
+  setTimeout(()=>{ document.getElementById('ocProcSub').textContent='Identifying changes…'; }, 600);
+  setTimeout(()=>{ document.getElementById('ocProcSub').textContent='16 changes found'; }, 1200);
+  setTimeout(()=>{ ov.classList.remove('show'); ocSetStep(2); ocShowScreen('delta'); ocRenderDelta(); }, 1800);
+}
+function ocCommit() {
+  const ov=document.getElementById('ocProcessing');
+  document.getElementById('ocProcLabel').textContent='Updating Genesys External Contacts…';
+  document.getElementById('ocProcSub').textContent='Sending API calls for 16 contacts';
+  ov.classList.add('show');
+  setTimeout(()=>{ document.getElementById('ocProcSub').textContent='Saving upload as new baseline…'; }, 800);
+  setTimeout(()=>{ ov.classList.remove('show'); ocSetStep(3); ocShowScreen('result'); }, 1600);
+}
+function ocGoBack() { ocSetStep(1); ocShowScreen('upload'); }
+function ocReset()  { ocClearFile(); ocSetStep(1); ocSetFilter('all'); ocShowScreen('upload'); }
 </script>
+<!-- ── On-Call Upload panel (hidden until tab active) ── -->
+<div id="panel-oncall" style="display:none; flex:1; flex-direction:column; overflow:hidden;">
+  <div class="oc-wrap" id="ocWrap">
+
+    <!-- Stepper -->
+    <div class="oc-stepper" id="ocStepper">
+      <div class="oc-step">
+        <div class="oc-circle active" id="oc-circle-1"><i class="ti ti-upload" style="font-size:12px"></i></div>
+        <span class="oc-step-label active" id="oc-label-1">Upload File</span>
+      </div>
+      <div class="oc-line" id="oc-line-1"></div>
+      <div class="oc-step">
+        <div class="oc-circle pending" id="oc-circle-2">2</div>
+        <span class="oc-step-label pending" id="oc-label-2">Review Changes</span>
+      </div>
+      <div class="oc-line" id="oc-line-2"></div>
+      <div class="oc-step">
+        <div class="oc-circle pending" id="oc-circle-3">3</div>
+        <span class="oc-step-label pending" id="oc-label-3">Confirm</span>
+      </div>
+    </div>
+
+    <!-- Screen 1: Upload -->
+    <div id="oc-screen-upload">
+      <div class="upload-card">
+        <div class="upload-card-title">Upload On-Call Spreadsheet</div>
+        <div class="upload-card-sub">Upload the current on-call spreadsheet. The app will compare it to the previous upload and show you exactly what has changed before anything is committed to Genesys External Contacts.</div>
+        <div class="last-upload-box">
+          <i class="ti ti-history"></i>
+          <div class="last-upload-text">
+            <strong>Last upload:</strong> Thursday, May 29, 2026 at 8:14 AM<br>
+            Uploaded by BASC Coordinator &middot; 312 contacts processed &middot; 18 changes applied
+          </div>
+        </div>
+        <div class="drop-zone" id="ocDropZone"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="ocHandleDrop(event)"
+          onclick="document.getElementById('ocFileInput').click()">
+          <i class="ti ti-file-spreadsheet dz-icon"></i>
+          <div class="drop-title">Drag and drop your spreadsheet here</div>
+          <div class="drop-sub">or <span>browse to choose a file</span></div>
+          <div class="file-type-badge"><i class="ti ti-file-type-xls" style="font-size:12px"></i> .xlsx or .xls only</div>
+        </div>
+        <input type="file" id="ocFileInput" accept=".xlsx,.xls" style="display:none" onchange="ocHandleFileSelect(event)">
+        <div class="oc-file-selected show" id="ocFileSelected">
+          <div class="oc-file-icon"><i class="ti ti-file-spreadsheet"></i></div>
+          <div class="oc-file-info">
+            <div class="oc-file-name" id="ocFileName">on_call_week_june01.xlsx</div>
+            <div class="oc-file-meta" id="ocFileMeta">52 KB &middot; Loaded for demo</div>
+          </div>
+          <button class="oc-file-remove" onclick="ocClearFile()" title="Remove"><i class="ti ti-x"></i></button>
+        </div>
+        <button class="btn-process" onclick="ocProcess()">
+          <i class="ti ti-arrows-diff"></i> Compare with Previous Upload
+        </button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Delta -->
+    <div id="oc-screen-delta" style="display:none; width:100%;">
+      <div class="delta-card">
+        <div class="delta-header">
+          <div class="delta-title">Review Changes</div>
+          <div class="delta-sub">Comparing <strong id="ocNewFileName">on_call_week_june01.xlsx</strong> against the previous upload from <strong>May 29, 2026</strong>. Review all changes before committing to Genesys.</div>
+        </div>
+        <div class="delta-summary">
+          <div class="delta-stat" onclick="ocSetFilter('added')">
+            <div class="delta-stat-icon ds-added"><i class="ti ti-user-plus"></i></div>
+            <div><div class="delta-stat-count">8</div><div class="delta-stat-label">Added</div><div class="delta-stat-hint">New on-call assignments</div></div>
+          </div>
+          <div class="delta-stat" onclick="ocSetFilter('changed')">
+            <div class="delta-stat-icon ds-changed"><i class="ti ti-arrows-exchange"></i></div>
+            <div><div class="delta-stat-count">5</div><div class="delta-stat-label">Changed</div><div class="delta-stat-hint">On-call contact updated</div></div>
+          </div>
+          <div class="delta-stat" onclick="ocSetFilter('removed')">
+            <div class="delta-stat-icon ds-removed"><i class="ti ti-user-minus"></i></div>
+            <div><div class="delta-stat-count">3</div><div class="delta-stat-label">Removed</div><div class="delta-stat-hint">No longer on-call</div></div>
+          </div>
+          <div class="delta-stat" onclick="ocSetFilter('all')">
+            <div class="delta-stat-icon ds-same"><i class="ti ti-check"></i></div>
+            <div><div class="delta-stat-count">296</div><div class="delta-stat-label">Unchanged</div><div class="delta-stat-hint">No update needed</div></div>
+          </div>
+        </div>
+        <div class="delta-filter-strip">
+          <button class="oc-chip ca" id="oc-chip-all"     onclick="ocSetFilter('all')">All changes (16)</button>
+          <button class="oc-chip"    id="oc-chip-added"   onclick="ocSetFilter('added')">Added (8)</button>
+          <button class="oc-chip"    id="oc-chip-changed" onclick="ocSetFilter('changed')">Changed (5)</button>
+          <button class="oc-chip"    id="oc-chip-removed" onclick="ocSetFilter('removed')">Removed (3)</button>
+          <span class="delta-filter-count" id="ocFilterLabel">Showing 16 of 16 changes</span>
+        </div>
+        <div class="delta-tbl-wrap">
+          <table class="dtbl">
+            <thead><tr>
+              <th>Contact Name</th><th>Op Centre / Region</th><th>Role</th><th>Change</th><th>On-Call Field</th>
+            </tr></thead>
+            <tbody id="ocDeltaBody"></tbody>
+          </table>
+        </div>
+        <div class="delta-footer">
+          <div class="delta-footer-note"><i class="ti ti-info-circle"></i> Unchanged contacts (296) will not be updated. No records deleted from Genesys.</div>
+          <div class="delta-footer-btns">
+            <button class="btn-outline" onclick="ocGoBack()"><i class="ti ti-arrow-left"></i> Back</button>
+            <button class="btn-commit" onclick="ocCommit()"><i class="ti ti-cloud-upload"></i> Commit 16 Changes to Genesys</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Result -->
+    <div id="oc-screen-result" style="display:none">
+      <div class="result-card">
+        <div class="result-icon-wrap success"><i class="ti ti-circle-check"></i></div>
+        <div class="result-title">Upload Complete</div>
+        <div class="result-sub">Genesys External Contacts have been updated. Changes are visible in the Genesys console immediately.</div>
+        <div class="result-stats">
+          <div class="result-stat"><div class="result-stat-num rg">8</div><div class="result-stat-label">Added</div></div>
+          <div class="result-stat"><div class="result-stat-num ra">5</div><div class="result-stat-label">Changed</div></div>
+          <div class="result-stat"><div class="result-stat-num rr">3</div><div class="result-stat-label">Removed</div></div>
+        </div>
+        <div class="result-log">
+          <div class="result-log-title">Activity Log</div>
+          <div class="log-line"><i class="ti ti-circle-check log-ok"></i> 8 contacts marked as newly on-call in Genesys</div>
+          <div class="log-line"><i class="ti ti-circle-check log-ok"></i> 5 on-call contact fields updated</div>
+          <div class="log-line"><i class="ti ti-circle-check log-ok"></i> 3 on-call fields cleared (no longer on-call)</div>
+          <div class="log-line"><i class="ti ti-circle-check log-info"></i> 296 contacts unchanged — no API calls made</div>
+          <div class="log-line"><i class="ti ti-circle-check log-ok"></i> Upload saved as new baseline for next comparison</div>
+        </div>
+        <button class="btn-new-upload" onclick="ocReset()"><i class="ti ti-upload"></i> Upload Another Spreadsheet</button>
+        <div class="result-timestamp">Completed Monday, June 1, 2026 at 9:47 AM</div>
+      </div>
+    </div>
+
+  </div><!-- /oc-wrap -->
+</div><!-- /panel-oncall -->
+
+<!-- On-Call processing overlay -->
+<div class="oc-processing" id="ocProcessing">
+  <div class="oc-spinner"></div>
+  <div class="oc-proc-label" id="ocProcLabel">Comparing spreadsheets…</div>
+  <div class="oc-proc-sub" id="ocProcSub">Reading 312 contacts from previous upload</div>
+</div>
+
 </body>
 </html>
