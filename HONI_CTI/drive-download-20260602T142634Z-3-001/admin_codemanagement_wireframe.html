@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONI IVCT — IVR Admin Tool</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23005b66'/><rect x='7' y='8' width='18' height='16' rx='2' fill='none' stroke='%23fff' stroke-width='2'/><line x1='11' y1='13' x2='21' y2='13' stroke='%23fff' stroke-width='1.5'/><line x1='11' y1='17' x2='17' y2='17' stroke='%23fff' stroke-width='1.5'/><circle cx='23' cy='23' r='5' fill='%23005b66' stroke='%23fff' stroke-width='1.5'/><line x1='23' y1='21' x2='23' y2='25' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><line x1='21' y1='23' x2='25' y2='23' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f2f4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Topbar ── */
+.topbar {
+  background: #005b66;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-logo { color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+.topbar-title { color: rgba(255,255,255,0.7); font-size: 12px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-user { color: rgba(255,255,255,0.8); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+.topbar-user i { font-size: 15px; }
+.edit-toggle-wrap { display: flex; align-items: center; gap: 8px; }
+.edit-toggle-label { color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; }
+.edit-toggle {
+  position: relative; width: 40px; height: 22px; cursor: pointer;
+}
+.edit-toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 22px;
+  transition: background 0.2s;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.toggle-slider::before {
+  content: ''; position: absolute;
+  width: 16px; height: 16px;
+  left: 3px; top: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.edit-toggle input:checked + .toggle-slider { background: #22c55e; border-color: #22c55e; }
+.edit-toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+.edit-badge {
+  font-size: 11px; font-weight: 600; padding: 3px 8px;
+  border-radius: 20px; background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  transition: all 0.2s;
+}
+.edit-badge.active { background: #22c55e; color: #fff; }
+
+/* ── Tab bar ── */
+.tab-bar {
+  background: #fff;
+  border-bottom: 2px solid #e2e5e9;
+  display: flex;
+  align-items: stretch;
+  padding: 0 18px;
+  flex-shrink: 0;
+  gap: 2px;
+  overflow-x: auto;
+}
+.tab-bar::-webkit-scrollbar { height: 3px; }
+.tab-bar::-webkit-scrollbar-thumb { background: #d0d5dd; }
+
+.tab-btn {
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7480;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  margin-bottom: -2px;
+  transition: color 0.12s, border-color 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-btn:hover { color: #1a1d20; }
+.tab-btn.active { color: #005b66; border-bottom-color: #005b66; font-weight: 600; }
+.tab-btn.disabled { color: #c0c8d4; cursor: not-allowed; }
+.tab-btn.disabled:hover { color: #c0c8d4; }
+.tab-pill {
+  font-size: 10px; font-weight: 600; padding: 1px 6px;
+  border-radius: 10px; background: #f0f2f4; color: #9aa0a8;
+}
+.tab-btn.active .tab-pill { background: #e8f5f4; color: #005b66; }
+.tab-btn.disabled .tab-pill { background: #f5f7f9; color: #c0c8d4; }
+
+/* ── Main content area ── */
+.content-area {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px 18px;
+  gap: 12px;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.search-wrap {
+  display: flex; align-items: center; gap: 7px;
+  background: #fff; border: 1px solid #e2e5e9;
+  border-radius: 7px; padding: 6px 10px;
+  transition: border-color 0.15s; width: 260px;
+}
+.search-wrap:focus-within { border-color: #005b66; }
+.search-wrap i { color: #9aa0a8; font-size: 14px; flex-shrink: 0; }
+.search-input {
+  border: none; background: transparent; font-size: 13px;
+  color: #1a1d20; outline: none; flex: 1; font-family: inherit;
+}
+.search-input::placeholder { color: #9aa0a8; }
+.toolbar-spacer { flex: 1; }
+.record-count { font-size: 12px; color: #9aa0a8; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 7px;
+  font-size: 13px; font-weight: 500; font-family: inherit;
+  cursor: pointer; transition: all 0.12s; border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn i { font-size: 15px; }
+.btn-primary { background: #005b66; color: #fff; border-color: #005b66; }
+.btn-primary:hover { background: #004a55; }
+.btn-primary:disabled { background: #9aa0a8; border-color: #9aa0a8; cursor: not-allowed; }
+.btn-outline { background: #fff; color: #555e6b; border-color: #d8dce2; }
+.btn-outline:hover { background: #f5f7f9; border-color: #b0b8c4; color: #1a1d20; }
+.btn-outline:disabled { color: #c0c8d4; border-color: #e2e5e9; cursor: not-allowed; }
+.btn-danger { background: #fff; color: #b91c1c; border-color: #fca5a5; }
+.btn-danger:hover { background: #fee2e2; border-color: #ef4444; }
+.btn-danger:disabled { color: #c0c8d4; border-color: #e2e5e9; cursor: not-allowed; }
+
+/* ── Table ── */
+.table-wrap {
+  flex: 1; overflow: auto; background: #fff;
+  border: 1px solid #e2e5e9; border-radius: 10px;
+  min-height: 0;
+}
+table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+thead th {
+  background: #f5f7f9; padding: 9px 12px;
+  text-align: left; font-size: 11px; font-weight: 600;
+  color: #6b7480; text-transform: uppercase; letter-spacing: 0.4px;
+  border-bottom: 1px solid #e2e5e9; position: sticky; top: 0; z-index: 1;
+  white-space: nowrap; cursor: pointer; user-select: none;
+}
+thead th:hover { background: #eef0f3; color: #1a1d20; }
+thead th.sorted { color: #005b66; }
+thead th i { font-size: 12px; vertical-align: middle; margin-left: 3px; }
+
+tbody tr {
+  border-bottom: 1px solid #f0f2f4; cursor: pointer;
+  transition: background 0.08s;
+}
+tbody tr:hover { background: #f7f9fa; }
+tbody tr.selected { background: #e8f5f4; }
+tbody tr.selected:hover { background: #dff2ef; }
+tbody tr.editing { background: #fffbeb; }
+
+td {
+  padding: 8px 12px; color: #1a1d20; vertical-align: middle;
+}
+td.muted { color: #6b7480; }
+td.code { font-variant-numeric: tabular-nums; font-size: 12px; color: #555e6b; }
+
+/* Inline edit inputs */
+.inline-input {
+  width: 100%; padding: 4px 7px; border: 1px solid #005b66;
+  border-radius: 5px; font-size: 13px; font-family: inherit;
+  color: #1a1d20; background: #fff; outline: none;
+}
+.inline-input:focus { box-shadow: 0 0 0 2px rgba(0,91,102,0.15); }
+.inline-select {
+  padding: 4px 7px; border: 1px solid #005b66;
+  border-radius: 5px; font-size: 12px; font-family: inherit;
+  color: #1a1d20; background: #fff; outline: none; cursor: pointer;
+}
+
+/* Notify toggle in table */
+.notify-toggle { display: flex; align-items: center; justify-content: center; }
+.notify-pip {
+  width: 32px; height: 18px; border-radius: 18px;
+  border: none; cursor: pointer; position: relative;
+  transition: background 0.15s; flex-shrink: 0;
+}
+.notify-pip.on  { background: #22c55e; }
+.notify-pip.off { background: #d0d5dd; }
+.notify-pip::after {
+  content: ''; position: absolute;
+  width: 12px; height: 12px; top: 3px;
+  background: #fff; border-radius: 50%;
+  transition: left 0.15s;
+}
+.notify-pip.on::after  { left: 17px; }
+.notify-pip.off::after { left: 3px; }
+.notify-pip:disabled { cursor: not-allowed; opacity: 0.5; }
+
+/* Priority badge */
+.priority-badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 12px;
+  font-size: 11px; font-weight: 600;
+}
+.priority-1 { background: #fef3c7; color: #92400e; }
+.priority-2 { background: #f0f2f4; color: #6b7480; }
+
+/* Sector badge */
+.sector-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; background: #e8f5f4; color: #005b66;
+}
+
+/* Row action btns */
+.row-actions { display: flex; align-items: center; gap: 5px; }
+.row-btn {
+  padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 500;
+  font-family: inherit; cursor: pointer; border: 1px solid transparent;
+  transition: all 0.1s;
+}
+.row-btn-save { background: #005b66; color: #fff; border-color: #005b66; }
+.row-btn-save:hover { background: #004a55; }
+.row-btn-cancel { background: #fff; color: #6b7480; border-color: #d8dce2; }
+.row-btn-cancel:hover { background: #f5f7f9; }
+
+/* ── Placeholder tab panel ── */
+.placeholder-panel {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; color: #9aa0a8;
+}
+.placeholder-panel i { font-size: 40px; color: #d0d5dd; }
+.placeholder-panel h3 { font-size: 15px; font-weight: 600; color: #6b7480; }
+.placeholder-panel p { font-size: 13px; text-align: center; max-width: 320px; line-height: 1.5; }
+
+/* ── Modal ── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.3); z-index: 200;
+  align-items: center; justify-content: center;
+}
+.overlay.show { display: flex; }
+.modal {
+  background: #fff; border-radius: 12px;
+  padding: 24px; width: 480px; max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.modal-title { font-size: 16px; font-weight: 600; color: #1a1d20; }
+.modal-close {
+  background: none; border: none; cursor: pointer;
+  color: #9aa0a8; font-size: 18px; padding: 2px;
+}
+.modal-close:hover { color: #1a1d20; }
+.field-group { margin-bottom: 14px; }
+.field-label { font-size: 12px; font-weight: 600; color: #555e6b; margin-bottom: 5px; }
+.field-input {
+  width: 100%; padding: 8px 10px; border: 1px solid #d8dce2;
+  border-radius: 7px; font-size: 13px; font-family: inherit;
+  color: #1a1d20; outline: none; transition: border-color 0.15s;
+}
+.field-input:focus { border-color: #005b66; box-shadow: 0 0 0 2px rgba(0,91,102,0.12); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; background: #f5f7f9; border-radius: 7px;
+  margin-bottom: 14px;
+}
+.field-toggle-label { font-size: 13px; font-weight: 500; color: #1a1d20; }
+.field-toggle-sub { font-size: 11px; color: #9aa0a8; margin-top: 1px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid #eef0f3; }
+
+/* ── Confirm delete modal ── */
+.confirm-icon { width: 44px; height: 44px; background: #fee2e2; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.confirm-icon i { font-size: 22px; color: #ef4444; }
+.confirm-title { font-size: 15px; font-weight: 600; color: #1a1d20; margin-bottom: 6px; }
+.confirm-body { font-size: 13px; color: #555e6b; line-height: 1.5; margin-bottom: 20px; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: #1a1d20; color: #fff; font-size: 13px; font-weight: 500;
+  padding: 10px 18px; border-radius: 8px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 300;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { font-size: 15px; }
+.toast.success i { color: #22c55e; }
+.toast.error i { color: #ef4444; }
+
+/* Scrollbar */
+.table-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+.table-wrap::-webkit-scrollbar-track { background: transparent; }
+.table-wrap::-webkit-scrollbar-thumb { background: #d0d5dd; border-radius: 3px; }
+.table-wrap::-webkit-scrollbar-thumb:hover { background: #005b66; }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div>
+      <div class="topbar-logo">HONI IVCT</div>
+      <div class="topbar-title">IVR Admin Tool</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user"><i class="ti ti-user-circle"></i> SCE Admin</div>
+    <div class="edit-toggle-wrap">
+      <span class="edit-toggle-label">Editing</span>
+      <label class="edit-toggle">
+        <input type="checkbox" id="editToggle" onchange="toggleEditing()">
+        <span class="toggle-slider"></span>
+      </label>
+      <span class="edit-badge" id="editBadge">Off</span>
+    </div>
+  </div>
+</div>
+
+<!-- Tab bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('employee')" id="tab-employee">
+    <i class="ti ti-id-badge"></i> Employee Access Codes <span class="tab-pill" id="pill-employee">0</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('customer')" id="tab-customer">
+    <i class="ti ti-building-factory"></i> Customer Access Codes <span class="tab-pill" id="pill-customer">0</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('station')" id="tab-station">
+    <i class="ti ti-map-pin"></i> Stations <span class="tab-pill" id="pill-station">0</span>
+  </button>
+  <button class="tab-btn disabled" id="tab-ieso" title="Pending scope confirmation — SL-672">
+    <i class="ti ti-bolt"></i> IESO <span class="tab-pill">TBD</span>
+  </button>
+  <button class="tab-btn disabled" id="tab-radio" title="Pending scope confirmation — SL-672">
+    <i class="ti ti-antenna"></i> Radio ANI/Site Mappings <span class="tab-pill">TBD</span>
+  </button>
+  <button class="tab-btn disabled" id="tab-ivr" title="Pending scope confirmation — SL-672">
+    <i class="ti ti-settings"></i> IVR Configs <span class="tab-pill">TBD</span>
+  </button>
+  <button class="tab-btn disabled" id="tab-oncall" title="Separate CTI App — App 5">
+    <i class="ti ti-upload"></i> On-Call Upload <span class="tab-pill">App 5</span>
+  </button>
+</div>
+
+<!-- Content -->
+<div class="content-area" id="contentArea">
+  <!-- Toolbar -->
+  <div class="toolbar" id="toolbar">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input class="search-input" id="searchInput" placeholder="Search…" oninput="doSearch()">
+    </div>
+    <div class="toolbar-spacer"></div>
+    <span class="record-count" id="recordCount"></span>
+    <button class="btn btn-outline" id="btnRefresh" onclick="doRefresh()"><i class="ti ti-refresh"></i> Refresh</button>
+    <button class="btn btn-danger" id="btnDelete" disabled onclick="confirmDelete()"><i class="ti ti-trash"></i> Delete</button>
+    <button class="btn btn-primary" id="btnAdd" disabled onclick="openAddModal()"><i class="ti ti-plus"></i> Add Record</button>
+  </div>
+  <!-- Table container -->
+  <div class="table-wrap" id="tableWrap">
+    <table id="dataTable">
+      <thead id="tableHead"></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Add Record</div>
+      <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="modalFields"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveModal()"><i class="ti ti-check"></i> Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm delete modal -->
+<div class="overlay" id="deleteOverlay">
+  <div class="modal" style="width:360px">
+    <div class="confirm-icon"><i class="ti ti-trash"></i></div>
+    <div class="confirm-title">Delete record?</div>
+    <div class="confirm-body" id="deleteBody">This cannot be undone.</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeDelete()">Cancel</button>
+      <button class="btn btn-danger" onclick="doDelete()"><i class="ti ti-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toastMsg"></span></div>
+
+<script>
+// ── Data ──
+let EMPLOYEES = [
+  { id: 2,   first: 'TOPI',                last: 'Theft of Power Agent',  full: 'Theft of Power Agent TOPI',                dept: 'Hydro One Security',  notify: true  },
+  { id: 6,   first: '(Perimeter Security)', last: 'Safeguards of Canada',  full: 'Safeguards of Canada (Perimeter Security)', dept: 'Hydro One Security',  notify: false },
+  { id: 7,   first: 'Asset Protection',     last: 'InvestigativeService',  full: 'InvestigativeService Asset Protection',     dept: 'Hydro One Security',  notify: true  },
+  { id: 10,  first: 'Station Snow Removal', last: 'Contractor',            full: 'Contractor Station Snow Removal',           dept: '',                    notify: false },
+  { id: 11,  first: 'Drill',                last: 'Exercise',              full: 'Exercise Drill',                            dept: 'Stations',            notify: true  },
+  { id: 15,  first: 'Bruce X Milton',       last: 'Contractor',            full: 'Contractor Bruce X Milton',                 dept: '',                    notify: false },
+  { id: 20,  first: 'Lines',                last: 'Provincial',            full: 'Provincial Lines',                          dept: '',                    notify: true  },
+  { id: 25,  first: 'NULL',                 last: 'Forestry',              full: 'Forestry',                                  dept: '',                    notify: true  },
+  { id: 30,  first: 'NULL',                 last: 'ITMC',                  full: 'ITMC',                                      dept: '',                    notify: true  },
+  { id: 35,  first: 'Safety Authority',     last: 'Electrical',            full: 'Electrical Safety Authority',               dept: '',                    notify: false },
+  { id: 36,  first: 'One Call',             last: 'Ontario',               full: 'Ontario One Call',                          dept: '',                    notify: true  },
+  { id: 40,  first: 'Customer Service',     last: 'Inergi',                full: 'Inergi Customer Service',                   dept: '',                    notify: true  },
+  { id: 45,  first: 'CTI Services',         last: 'Inergi',                full: 'Inergi CTI Services',                       dept: '',                    notify: true  },
+  { id: 111, first: 'Colin',                last: 'Mercier',               full: 'Mercier Colin',                             dept: 'RW Electric',         notify: true  },
+  { id: 813, first: 'Usman',                last: 'Rana',                  full: 'Rana Usman',                                dept: '',                    notify: true  },
+];
+
+let CUSTOMERS = [
+  { id: 2,   name: 'Intercon (IOC)',       priority: 2, aor: 'ALL'    },
+  { id: 3,   name: 'Temporary',            priority: 2, aor: 'DETWLR'},
+  { id: 4,   name: 'Temp - Sector 2',      priority: 2, aor: 'BURLNG'},
+  { id: 9,   name: 'Terrace Bay Hospital', priority: 2, aor: 'HANMER'},
+  { id: 11,  name: 'Hydro Quebec',         priority: 2, aor: 'ALL'   },
+  { id: 31,  name: 'DX to TX North',       priority: 1, aor: 'ALL'   },
+  { id: 32,  name: 'DX to TX South',       priority: 1, aor: 'ALL'   },
+  { id: 95,  name: 'Metrics',              priority: 2, aor: 'ALL'   },
+  { id: 100, name: 'Beachville Lime',      priority: 2, aor: 'BUCHAN'},
+  { id: 101, name: 'H20 Pwr Calm Lake',    priority: 1, aor: 'MERIVL'},
+  { id: 111, name: 'DUMAS Mining',         priority: 2, aor: 'LAKEHD'},
+  { id: 132, name: 'Rothsay Concentrate',  priority: 1, aor: 'HANOVR'},
+  { id: 140, name: 'Listowel Technology',  priority: 2, aor: 'HANOVR'},
+  { id: 156, name: 'KTH Shelbourne',       priority: 2, aor: 'ORANG' },
+  { id: 172, name: 'White Wolf Properties',priority: 2, aor: 'KITCH' },
+  { id: 188, name: 'Effem Inc.',           priority: 2, aor: 'VBYR'  },
+  { id: 201, name: 'TCI Contractor',       priority: 2, aor: 'HEARN' },
+  { id: 205, name: 'Williams Electric',    priority: 1, aor: 'KENORA'},
+  { id: 207, name: 'S&P Electric',         priority: 2, aor: 'KENORA'},
+  { id: 208, name: 'Eptcon',               priority: 2, aor: 'KENORA'},
+];
+
+let STATIONS = [
+  { id: 668, name: 'A.P. Calstock CGS',       sector: 4, aor: 'KAPUSK' },
+  { id: 669, name: 'A.P. Calstock CSS',       sector: 4, aor: 'KAPUSK' },
+  { id: 671, name: 'A.P. Kapuskasing CGS',    sector: 4, aor: 'KAPUSK' },
+  { id: 672, name: 'A.P. Nipigon CGS',        sector: 4, aor: 'MRATHN' },
+  { id: 673, name: 'A.P. North Bay CGS',      sector: 4, aor: 'MARTDL' },
+  { id: 696, name: 'A.P. Tunis CGS',          sector: 4, aor: 'HUNTA'  },
+  { id: 799, name: 'Aberdeen DS',             sector: 1, aor: 'HANOVR' },
+  { id: 102, name: 'Abitibi Canyon GS',       sector: 4, aor: 'HUNTA'  },
+  { id: 883, name: 'Adelaide CGS',            sector: 1, aor: 'BRUCE'  },
+  { id: 114, name: 'Agimak DS',               sector: 4, aor: 'KENORA' },
+  { id: 115, name: 'Agincourt TS',            sector: 3, aor: 'CBYR'   },
+  { id: 116, name: 'Aguasabon CGS',           sector: 4, aor: 'MRATHN' },
+  { id: 708, name: 'Ainsworth CTS',           sector: 4, aor: 'KENORA' },
+  { id: 117, name: 'Albion TS',               sector: 4, aor: 'HAWTRN' },
+  { id: 817, name: 'Alexander DS',            sector: 4, aor: 'MERIVL' },
+  { id: 118, name: 'Alexander GS',            sector: 4, aor: 'MRATHN' },
+  { id: 119, name: 'Alexander Landing SS',    sector: 4, aor: 'MRATHN' },
+  { id: 121, name: 'Algoma TS',               sector: 4, aor: 'KAPUSK' },
+  { id: 122, name: 'Allanburg TS',            sector: 2, aor: 'ALNBRG' },
+  { id: 123, name: 'Alliston TS',             sector: 4, aor: 'BARRIE' },
+];
+
+// ── State ──
+let activeTab = 'employee';
+let editingEnabled = false;
+let selectedId = null;
+let editingRowId = null;
+let searchTerm = '';
+let sortCol = null;
+let sortDir = 1;
+
+// ── Tab switch ──
+function switchTab(tab) {
+  if (['ieso','radio','ivr','oncall'].includes(tab)) return;
+  activeTab = tab;
+  selectedId = null;
+  editingRowId = null;
+  searchTerm = '';
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  updateDeleteBtn();
+  render();
+}
+
+// ── Editing toggle ──
+function toggleEditing() {
+  editingEnabled = document.getElementById('editToggle').checked;
+  const badge = document.getElementById('editBadge');
+  badge.textContent = editingEnabled ? 'On' : 'Off';
+  badge.className = 'edit-badge' + (editingEnabled ? ' active' : '');
+  document.getElementById('btnAdd').disabled = !editingEnabled;
+  updateDeleteBtn();
+  if (!editingEnabled && editingRowId !== null) {
+    editingRowId = null;
+    render();
+  }
+}
+function updateDeleteBtn() {
+  document.getElementById('btnDelete').disabled = !(editingEnabled && selectedId !== null);
+}
+
+// ── Data getters ──
+function getData() {
+  if (activeTab === 'employee') return EMPLOYEES;
+  if (activeTab === 'customer') return CUSTOMERS;
+  return STATIONS;
+}
+function getFiltered() {
+  const t = searchTerm.toLowerCase();
+  let list = getData().filter(r => {
+    if (!t) return true;
+    const vals = Object.values(r).map(v => String(v).toLowerCase());
+    return vals.some(v => v.includes(t));
+  });
+  if (sortCol) {
+    list = [...list].sort((a,b) => {
+      const av = a[sortCol], bv = b[sortCol];
+      if (typeof av === 'number') return (av - bv) * sortDir;
+      return String(av).localeCompare(String(bv)) * sortDir;
+    });
+  }
+  return list;
+}
+
+// ── Search ──
+function doSearch() {
+  searchTerm = document.getElementById('searchInput').value;
+  selectedId = null;
+  updateDeleteBtn();
+  render();
+}
+
+// ── Refresh ──
+function doRefresh() {
+  showToast('Data refreshed', 'success');
+  render();
+}
+
+// ── Sort ──
+function setSort(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  render();
+}
+
+// ── Render ──
+function render() {
+  const data = getFiltered();
+  // Update pills
+  ['employee','customer','station'].forEach(t => {
+    const ds = t === 'employee' ? EMPLOYEES : t === 'customer' ? CUSTOMERS : STATIONS;
+    document.getElementById('pill-' + t).textContent = ds.length;
+  });
+  document.getElementById('recordCount').textContent =
+    data.length + ' of ' + getData().length + ' records';
+
+  if (activeTab === 'employee') renderEmployeeTable(data);
+  else if (activeTab === 'customer') renderCustomerTable(data);
+  else renderStationTable(data);
+}
+
+function sortIcon(col) {
+  if (sortCol !== col) return '<i class="ti ti-arrows-sort"></i>';
+  return sortDir === 1 ? '<i class="ti ti-arrow-up"></i>' : '<i class="ti ti-arrow-down"></i>';
+}
+
+// ── Employee table ──
+function renderEmployeeTable(data) {
+  document.getElementById('tableHead').innerHTML = `<tr>
+    <th onclick="setSort('id')" class="${sortCol==='id'?'sorted':''}">ID ${sortIcon('id')}</th>
+    <th onclick="setSort('full')" class="${sortCol==='full'?'sorted':''}">Full Name ${sortIcon('full')}</th>
+    <th onclick="setSort('first')" class="${sortCol==='first'?'sorted':''}">First ${sortIcon('first')}</th>
+    <th onclick="setSort('last')" class="${sortCol==='last'?'sorted':''}">Last / Company ${sortIcon('last')}</th>
+    <th onclick="setSort('dept')" class="${sortCol==='dept'?'sorted':''}">Department ${sortIcon('dept')}</th>
+    <th style="text-align:center">Wellness Notify</th>
+    ${editingEnabled ? '<th style="width:120px">Actions</th>' : ''}
+  </tr>`;
+
+  document.getElementById('tableBody').innerHTML = data.map(r => {
+    const sel = selectedId === r.id;
+    const editing = editingEnabled && editingRowId === r.id;
+    if (editing) {
+      return `<tr class="editing" id="row-${r.id}">
+        <td class="code">${r.id}</td>
+        <td><input class="inline-input" id="edit-full" value="${r.full}" style="width:100%"></td>
+        <td><input class="inline-input" id="edit-first" value="${r.first}" style="width:100%"></td>
+        <td><input class="inline-input" id="edit-last" value="${r.last}" style="width:100%"></td>
+        <td><input class="inline-input" id="edit-dept" value="${r.dept}" style="width:100%"></td>
+        <td style="text-align:center">
+          <button class="notify-pip ${r.notify?'on':'off'}" id="edit-notify" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+        </td>
+        <td><div class="row-actions">
+          <button class="row-btn row-btn-save" onclick="saveInline(${r.id})">Save</button>
+          <button class="row-btn row-btn-cancel" onclick="cancelInline()">Cancel</button>
+        </div></td>
+      </tr>`;
+    }
+    return `<tr class="${sel?'selected':''}" onclick="selectRow(${r.id})" ondblclick="${editingEnabled?`startInline(${r.id})`:''}">
+      <td class="code">${r.id}</td>
+      <td>${r.full || '—'}</td>
+      <td class="muted">${r.first || '—'}</td>
+      <td class="muted">${r.last || '—'}</td>
+      <td class="muted">${r.dept || '—'}</td>
+      <td style="text-align:center">
+        <button class="notify-pip ${r.notify?'on':'off'}" ${editingEnabled?`onclick="event.stopPropagation();toggleNotify(${r.id})"`:'disabled'}></button>
+      </td>
+      ${editingEnabled ? `<td><button class="row-btn row-btn-cancel" onclick="event.stopPropagation();startInline(${r.id})"><i class="ti ti-pencil" style="font-size:12px"></i> Edit</button></td>` : ''}
+    </tr>`;
+  }).join('');
+}
+
+// ── Customer table ──
+function renderCustomerTable(data) {
+  document.getElementById('tableHead').innerHTML = `<tr>
+    <th onclick="setSort('id')" class="${sortCol==='id'?'sorted':''}">ID ${sortIcon('id')}</th>
+    <th onclick="setSort('name')" class="${sortCol==='name'?'sorted':''}">Customer Name ${sortIcon('name')}</th>
+    <th onclick="setSort('priority')" class="${sortCol==='priority'?'sorted':''}" style="text-align:center">Priority ${sortIcon('priority')}</th>
+    <th onclick="setSort('aor')" class="${sortCol==='aor'?'sorted':''}">AOR ${sortIcon('aor')}</th>
+    ${editingEnabled ? '<th style="width:120px">Actions</th>' : ''}
+  </tr>`;
+
+  document.getElementById('tableBody').innerHTML = data.map(r => {
+    const sel = selectedId === r.id;
+    const editing = editingEnabled && editingRowId === r.id;
+    if (editing) {
+      return `<tr class="editing">
+        <td class="code">${r.id}</td>
+        <td><input class="inline-input" id="edit-name" value="${r.name}"></td>
+        <td style="text-align:center">
+          <select class="inline-select" id="edit-priority">
+            <option value="1" ${r.priority===1?'selected':''}>1 — High</option>
+            <option value="2" ${r.priority===2?'selected':''}>2 — Standard</option>
+          </select>
+        </td>
+        <td><input class="inline-input" id="edit-aor" value="${r.aor}" style="width:100px"></td>
+        <td><div class="row-actions">
+          <button class="row-btn row-btn-save" onclick="saveInline(${r.id})">Save</button>
+          <button class="row-btn row-btn-cancel" onclick="cancelInline()">Cancel</button>
+        </div></td>
+      </tr>`;
+    }
+    return `<tr class="${sel?'selected':''}" onclick="selectRow(${r.id})" ondblclick="${editingEnabled?`startInline(${r.id})`:''}">
+      <td class="code">${r.id}</td>
+      <td>${r.name}</td>
+      <td style="text-align:center"><span class="priority-badge priority-${r.priority}">P${r.priority}</span></td>
+      <td class="code">${r.aor}</td>
+      ${editingEnabled ? `<td><button class="row-btn row-btn-cancel" onclick="event.stopPropagation();startInline(${r.id})"><i class="ti ti-pencil" style="font-size:12px"></i> Edit</button></td>` : ''}
+    </tr>`;
+  }).join('');
+}
+
+// ── Station table ──
+function renderStationTable(data) {
+  document.getElementById('tableHead').innerHTML = `<tr>
+    <th onclick="setSort('id')" class="${sortCol==='id'?'sorted':''}">ID ${sortIcon('id')}</th>
+    <th onclick="setSort('name')" class="${sortCol==='name'?'sorted':''}">Station Name ${sortIcon('name')}</th>
+    <th onclick="setSort('sector')" class="${sortCol==='sector'?'sorted':''}" style="text-align:center">Sector ${sortIcon('sector')}</th>
+    <th onclick="setSort('aor')" class="${sortCol==='aor'?'sorted':''}">AOR ${sortIcon('aor')}</th>
+    ${editingEnabled ? '<th style="width:120px">Actions</th>' : ''}
+  </tr>`;
+
+  document.getElementById('tableBody').innerHTML = data.map(r => {
+    const sel = selectedId === r.id;
+    const editing = editingEnabled && editingRowId === r.id;
+    if (editing) {
+      return `<tr class="editing">
+        <td class="code">${r.id}</td>
+        <td><input class="inline-input" id="edit-name" value="${r.name}"></td>
+        <td style="text-align:center">
+          <select class="inline-select" id="edit-sector">
+            ${[1,2,3,4].map(s=>`<option value="${s}" ${r.sector===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td><input class="inline-input" id="edit-aor" value="${r.aor}" style="width:100px"></td>
+        <td><div class="row-actions">
+          <button class="row-btn row-btn-save" onclick="saveInline(${r.id})">Save</button>
+          <button class="row-btn row-btn-cancel" onclick="cancelInline()">Cancel</button>
+        </div></td>
+      </tr>`;
+    }
+    return `<tr class="${sel?'selected':''}" onclick="selectRow(${r.id})" ondblclick="${editingEnabled?`startInline(${r.id})`:''}">
+      <td class="code">${r.id}</td>
+      <td>${r.name}</td>
+      <td style="text-align:center"><span class="sector-badge">${r.sector}</span></td>
+      <td class="code">${r.aor}</td>
+      ${editingEnabled ? `<td><button class="row-btn row-btn-cancel" onclick="event.stopPropagation();startInline(${r.id})"><i class="ti ti-pencil" style="font-size:12px"></i> Edit</button></td>` : ''}
+    </tr>`;
+  }).join('');
+}
+
+// ── Row selection ──
+function selectRow(id) {
+  if (editingRowId !== null) return;
+  selectedId = (selectedId === id) ? null : id;
+  updateDeleteBtn();
+  render();
+}
+
+// ── Inline edit ──
+function startInline(id) {
+  editingRowId = id;
+  selectedId = id;
+  render();
+  // Focus first input
+  setTimeout(() => { const inp = document.querySelector('.inline-input'); if(inp) inp.focus(); }, 50);
+}
+function cancelInline() { editingRowId = null; render(); }
+
+function saveInline(id) {
+  const data = getData();
+  const idx = data.findIndex(r => r.id === id);
+  if (idx < 0) return;
+  if (activeTab === 'employee') {
+    data[idx].full  = document.getElementById('edit-full').value;
+    data[idx].first = document.getElementById('edit-first').value;
+    data[idx].last  = document.getElementById('edit-last').value;
+    data[idx].dept  = document.getElementById('edit-dept').value;
+    data[idx].notify = document.getElementById('edit-notify').classList.contains('on');
+  } else if (activeTab === 'customer') {
+    data[idx].name     = document.getElementById('edit-name').value;
+    data[idx].priority = parseInt(document.getElementById('edit-priority').value);
+    data[idx].aor      = document.getElementById('edit-aor').value.toUpperCase();
+  } else {
+    data[idx].name   = document.getElementById('edit-name').value;
+    data[idx].sector = parseInt(document.getElementById('edit-sector').value);
+    data[idx].aor    = document.getElementById('edit-aor').value.toUpperCase();
+  }
+  editingRowId = null;
+  showToast('Record updated', 'success');
+  render();
+}
+
+function toggleNotify(id) {
+  const data = getData();
+  const r = data.find(r => r.id === id);
+  if (r) { r.notify = !r.notify; render(); }
+}
+
+// ── Add modal ──
+function openAddModal() {
+  document.getElementById('modalTitle').textContent = 'Add Record — ' + tabLabel();
+  const f = document.getElementById('modalFields');
+  if (activeTab === 'employee') {
+    f.innerHTML = `
+      <div class="field-row">
+        <div class="field-group"><div class="field-label">Employee ID (5-digit)</div><input class="field-input" id="mf-id" placeholder="e.g. 00123" maxlength="5"></div>
+        <div class="field-group"><div class="field-label">Department</div><input class="field-input" id="mf-dept" placeholder="e.g. Hydro One Security"></div>
+      </div>
+      <div class="field-group"><div class="field-label">Full Name</div><input class="field-input" id="mf-full" placeholder="e.g. Smith John"></div>
+      <div class="field-row">
+        <div class="field-group"><div class="field-label">First Name</div><input class="field-input" id="mf-first" placeholder="John"></div>
+        <div class="field-group"><div class="field-label">Last / Company</div><input class="field-input" id="mf-last" placeholder="Smith"></div>
+      </div>
+      <div class="field-toggle-row">
+        <div><div class="field-toggle-label">Wellness check notify</div><div class="field-toggle-sub">Send outbound wellness check calls to this access code</div></div>
+        <button class="notify-pip on" id="mf-notify" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+      </div>`;
+  } else if (activeTab === 'customer') {
+    f.innerHTML = `
+      <div class="field-row">
+        <div class="field-group"><div class="field-label">Customer ID (6-digit)</div><input class="field-input" id="mf-id" placeholder="e.g. 000256" maxlength="6"></div>
+        <div class="field-group"><div class="field-label">Priority</div>
+          <select class="field-input" id="mf-priority">
+            <option value="1">1 — High</option>
+            <option value="2" selected>2 — Standard</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group"><div class="field-label">Customer Name</div><input class="field-input" id="mf-name" placeholder="e.g. Beachville Lime"></div>
+      <div class="field-group"><div class="field-label">AOR</div><input class="field-input" id="mf-aor" placeholder="e.g. KENORA" style="text-transform:uppercase"></div>`;
+  } else {
+    f.innerHTML = `
+      <div class="field-row">
+        <div class="field-group"><div class="field-label">Station ID</div><input class="field-input" id="mf-id" placeholder="e.g. 124"></div>
+        <div class="field-group"><div class="field-label">Sector</div>
+          <select class="field-input" id="mf-sector">
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4" selected>4</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group"><div class="field-label">Station Name</div><input class="field-input" id="mf-name" placeholder="e.g. Alliston TS"></div>
+      <div class="field-group"><div class="field-label">AOR</div><input class="field-input" id="mf-aor" placeholder="e.g. BARRIE" style="text-transform:uppercase"></div>`;
+  }
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function tabLabel() {
+  return activeTab === 'employee' ? 'Employee Access Codes' : activeTab === 'customer' ? 'Customer Access Codes' : 'Stations';
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+function saveModal() {
+  const data = getData();
+  const idInput = document.getElementById('mf-id');
+  const newId = parseInt(idInput ? idInput.value : Date.now());
+  if (!newId) { idInput.style.borderColor='#ef4444'; return; }
+  if (data.find(r => r.id === newId)) { showToast('ID already exists', 'error'); return; }
+  if (activeTab === 'employee') {
+    data.push({ id: newId, first: document.getElementById('mf-first').value, last: document.getElementById('mf-last').value,
+      full: document.getElementById('mf-full').value, dept: document.getElementById('mf-dept').value,
+      notify: document.getElementById('mf-notify').classList.contains('on') });
+  } else if (activeTab === 'customer') {
+    data.push({ id: newId, name: document.getElementById('mf-name').value,
+      priority: parseInt(document.getElementById('mf-priority').value),
+      aor: document.getElementById('mf-aor').value.toUpperCase() });
+  } else {
+    data.push({ id: newId, name: document.getElementById('mf-name').value,
+      sector: parseInt(document.getElementById('mf-sector').value),
+      aor: document.getElementById('mf-aor').value.toUpperCase() });
+  }
+  closeModal();
+  showToast('Record added', 'success');
+  render();
+}
+
+// ── Delete ──
+function confirmDelete() {
+  const data = getData();
+  const r = data.find(x => x.id === selectedId);
+  if (!r) return;
+  const label = r.full || r.name || r.id;
+  document.getElementById('deleteBody').innerHTML = `Delete <strong>${label}</strong> (ID: ${r.id})?<br>This will queue the record for removal from the CTI database on the next nightly sync.`;
+  document.getElementById('deleteOverlay').classList.add('show');
+}
+function closeDelete() { document.getElementById('deleteOverlay').classList.remove('show'); }
+function doDelete() {
+  const data = getData();
+  const idx = data.findIndex(r => r.id === selectedId);
+  if (idx > -1) data.splice(idx, 1);
+  selectedId = null;
+  closeDelete();
+  updateDeleteBtn();
+  showToast('Record deleted', 'success');
+  render();
+}
+
+// ── Toast ──
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  const icon = t.querySelector('i');
+  icon.className = type === 'success' ? 'ti ti-circle-check' : 'ti ti-alert-circle';
+  t.className = 'toast show ' + type;
+  document.getElementById('toastMsg').textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Init ──
+render();
+</script>
+</body>
+</html>

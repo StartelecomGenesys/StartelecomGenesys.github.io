@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONI IVCT — Site In/Out Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23005b66'/><circle cx='14' cy='11' r='4' fill='none' stroke='%23fff' stroke-width='2'/><path d='M6 26c0-4.4 3.6-8 8-8s8 3.6 8 8' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'/><circle cx='24' cy='10' r='5' fill='%2322c55e'/><circle cx='24' cy='10' r='2.5' fill='%23fff'/></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f4;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .app {
+    background: #ffffff;
+    border: 1px solid #e2e5e9;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 960px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* ── Topbar ── */
+  .topbar {
+    background: #005b66;
+    padding: 12px 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar-left {}
+  .topbar-logo { color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+  .topbar-title { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 1px; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .last-refresh {
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .last-refresh i { font-size: 13px; }
+  .refresh-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 7px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.12s;
+  }
+  .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+  .refresh-btn i { font-size: 14px; }
+
+  /* ── Controls bar ── */
+  .controls-bar {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eef0f3;
+    background: #fafbfc;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Sector filter group */
+  .sector-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .sector-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9aa0a8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 2px;
+  }
+  .sector-btn {
+    padding: 8px 10px;
+    border: 1px solid #d8dce2;
+    border-radius: 7px;
+    background: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555e6b;
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: inherit;
+    white-space: nowrap;
+    min-width: 52px;
+  }
+  #sec-1, #sec-2, #sec-3, #sec-4 {
+    min-width: 64px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+  }
+  .sector-btn:hover { background: #f0f2f4; border-color: #b0b8c4; color: #1a1d20; }
+  .sector-btn.active { background: #005b66; border-color: #005b66; color: #fff; }
+
+  /* Status legend — hidden; summary bar filter buttons serve this role */
+  .legend { display: none; }
+
+  /* ── Summary bar ── */
+  .summary-bar {
+    padding: 8px 14px;
+    border-bottom: 1px solid #eef0f3;
+    background: #fff;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .summary-stat-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e5e9;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    color: #6b7480;
+    transition: all 0.12s;
+    flex-shrink: 0;
+  }
+  .summary-stat-btn:hover { background: #f5f7f9; border-color: #b0b8c4; color: #1a1d20; }
+  .summary-stat-btn .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .summary-stat-btn strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1d20;
+    line-height: 1;
+  }
+  /* Active states — border tinted to match status colour */
+  .summary-stat-btn.active-in   { background: #f0fdf4; border-color: #22c55e; color: #15803d; }
+  .summary-stat-btn.active-in strong   { color: #15803d; }
+  .summary-stat-btn.active-more { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
+  .summary-stat-btn.active-more strong { color: #92400e; }
+  .summary-stat-btn.active-no  { background: #fff5f5; border-color: #ef4444; color: #b91c1c; }
+  .summary-stat-btn.active-no strong   { color: #b91c1c; }
+  .summary-divider { width: 1px; height: 20px; background: #e2e5e9; flex-shrink: 0; }
+  .summary-total { margin-left: auto; font-size: 12px; color: #9aa0a8; flex-shrink: 0; }
+
+  /* ── Card grid ── */
+  .card-scroll-wrap {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-content: start;
+  }
+
+  /* Status colour system:
+     Logged In  → green left border  (#22c55e)
+     More Time  → amber left border  (#f59e0b)
+     No Response → red left border   (#ef4444) + red card tint
+  */
+  .site-card {
+    background: #fff;
+    border: 1px solid #e2e5e9;
+    border-radius: 10px;
+    border-left-width: 4px;
+    border-left-color: #22c55e; /* default — Logged In */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: box-shadow 0.12s;
+    position: relative;
+  }
+  .site-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.09); }
+
+  .site-card.more-time  { border-left-color: #f59e0b; background: #fffbf0; }
+  .site-card.no-response { border-left-color: #ef4444; background: #fff5f5; }
+
+  /* Card body */
+  .card-body {
+    padding: 10px 12px 8px;
+    flex: 1;
+  }
+
+  .card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1d20;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .badge-logged-in  { background: #dcfce7; color: #15803d; }
+  .badge-more-time  { background: #fef3c7; color: #92400e; }
+  .badge-no-response { background: #fee2e2; color: #b91c1c; }
+
+  .card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .card-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #6b7480;
+    line-height: 1.3;
+  }
+  .card-meta-row i {
+    font-size: 12px;
+    color: #9aa0a8;
+    flex-shrink: 0;
+    width: 14px;
+    text-align: center;
+  }
+  .card-meta-val {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-meta-val.phone { font-variant-numeric: tabular-nums; letter-spacing: 0.3px; }
+
+  .card-time-row {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #f0f2f4;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .card-time-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: #9aa0a8;
+  }
+  .card-time-item i { font-size: 11px; flex-shrink: 0; width: 14px; text-align: center; }
+  .card-time-item span { font-variant-numeric: tabular-nums; }
+  .card-time-item .time-label { color: #b0b8c4; font-size: 10px; min-width: 20px; }
+
+  /* Card actions */
+  .card-actions {
+    border-top: 1px solid #eef0f3;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: center;
+  }
+  .card-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 20px;
+    border-radius: 8px;
+    border: 1px solid #005b66;
+    background: #fff;
+    color: #005b66;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    width: 100%;
+  }
+  .card-action-btn i { font-size: 15px; }
+  .card-action-btn.dial:hover { background: #005b66; color: #fff; }
+
+  /* ── Empty state ── */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 60px 20px;
+    color: #9aa0a8;
+    font-size: 13px;
+    grid-column: 1 / -1;
+  }
+  .empty i { font-size: 32px; color: #d0d5dd; }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: #1a1d20;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+  /* Scrollbar */
+  .card-scroll-wrap::-webkit-scrollbar { width: 6px; }
+  .card-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+  .card-scroll-wrap::-webkit-scrollbar-thumb { background: #d0d5dd; border-radius: 3px; }
+  .card-scroll-wrap::-webkit-scrollbar-thumb:hover { background: #005b66; }
+
+  /* Responsive: 2-col below 640px */
+  @media (max-width: 640px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .legend { display: none; }
+  }
+  /* 1-col below 400px */
+  @media (max-width: 400px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">HONI IVCT</div>
+      <div class="topbar-title">Site In/Out — active monitoring</div>
+    </div>
+    <div class="topbar-right">
+      <div class="last-refresh"><i class="ti ti-clock"></i><span id="lastRefresh">Updated just now</span></div>
+      <button class="refresh-btn" onclick="doRefresh()"><i class="ti ti-refresh"></i> Refresh</button>
+    </div>
+  </div>
+
+  <!-- Controls bar -->
+  <div class="controls-bar">
+    <div class="sector-group">
+      <span class="sector-label">Sector</span>
+      <button class="sector-btn active" id="sec-all" onclick="setSector('all')">All</button>
+      <button class="sector-btn" id="sec-1" onclick="setSector('1')">1</button>
+      <button class="sector-btn" id="sec-2" onclick="setSector('2')">2</button>
+      <button class="sector-btn" id="sec-3" onclick="setSector('3')">3</button>
+      <button class="sector-btn" id="sec-4" onclick="setSector('4')">4</button>
+    </div>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="summary-bar">
+    <button class="summary-stat-btn" id="stat-in" onclick="setStatus('logged-in')">
+      <div class="dot" style="background:#22c55e"></div>
+      <strong id="count-in">0</strong> Logged In
+    </button>
+    <div class="summary-divider"></div>
+    <button class="summary-stat-btn" id="stat-more" onclick="setStatus('more-time')">
+      <div class="dot" style="background:#f59e0b"></div>
+      <strong id="count-more">0</strong> More Time
+    </button>
+    <div class="summary-divider"></div>
+    <button class="summary-stat-btn" id="stat-no" onclick="setStatus('no-response')">
+      <div class="dot" style="background:#ef4444"></div>
+      <strong id="count-no">0</strong> No Response
+    </button>
+    <span class="summary-total" id="summary-total"></span>
+  </div>
+
+  <!-- Card grid -->
+  <div class="card-scroll-wrap">
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Sample data ──
+// Fields: [id, name, sector, siteName, siteCode, callbackNum, signInTime, status]
+// status: 'logged-in' | 'more-time' | 'no-response'
+const RAW = [
+  [1,  'J. Hermansson', 1, 'Hanover DS',          'HNV',  '5195521234', '2026-06-01T06:02', 'logged-in'],
+  [2,  'T. Pelletier',  2, 'Burlington TS',        'BRL',  '9059881234', '2026-06-01T06:15', 'logged-in'],
+  [3,  'M. Okafor',     1, 'Kitchener North DS',   'KTNB', '5192201234', '2026-06-01T06:03', 'more-time'],
+  [4,  'R. Szymański',  3, 'Sudbury TS',           'SBY',  '7055221234', '2026-06-01T06:08', 'logged-in'],
+  [5,  'A. Tremblay',   4, 'North Bay DS',         'NBY',  '7053601234', '2026-06-01T06:01', 'no-response'],
+  [6,  'C. MacDougall', 2, 'Mississauga East DS',  'MSE',  '9056441234', '2026-06-01T06:20', 'logged-in'],
+  [7,  'P. Nakashima',  1, 'Cambridge DS',         'CBR',  '5196231234', '2026-06-01T06:11', 'logged-in'],
+  [8,  'L. Fournier',   3, 'Sault Ste. Marie TS',  'SSM',  '7057591234', '2026-06-01T06:05', 'more-time'],
+  [9,  'D. Krishnaswamy',4,'Cochrane DS',          'CCH',  '7053001234', '2026-06-01T06:17', 'logged-in'],
+  [10, 'B. Kowalczyk',  2, 'Oakville DS',          'OAK',  '9058441234', '2026-06-01T06:09', 'no-response'],
+  [11, 'F. Leclerc',    1, 'Guelph TS',            'GLP',  '5198211234', '2026-06-01T06:14', 'logged-in'],
+  [12, 'S. Vasquez',    4, 'Timmins DS',           'TMN',  '7052671234', '2026-06-01T06:06', 'more-time'],
+  [13, 'H. Bergqvist',  3, 'Greater Sudbury DS',   'GSDS', '7056721234', '2026-06-01T06:22', 'logged-in'],
+  [14, 'O. Nwosu',      2, 'Brampton North TS',    'BPTN', '9054311234', '2026-06-01T06:13', 'logged-in'],
+  [15, 'K. Lundgren',   1, 'Brantford DS',         'BRN',  '5197561234', '2026-06-01T06:18', 'no-response'],
+  [16, 'W. Arsenault',  4, 'Kirkland Lake DS',     'KKL',  '7056401234', '2026-06-01T06:04', 'logged-in'],
+  [17, 'I. Patel',      3, 'Sudbury North DS',     'SBYN', '7054881234', '2026-06-01T06:21', 'logged-in'],
+  [18, 'N. Bouchard',   2, 'Etobicoke DS',         'ETO',  '4168811234', '2026-06-01T06:10', 'more-time'],
+];
+
+let activeSector = 'all';
+let activeStatus = null; // 'logged-in' | 'more-time' | 'no-response' | null
+
+function getStatusClass(status){
+  if(status === 'more-time')   return 'more-time';
+  if(status === 'no-response') return 'no-response';
+  return '';
+}
+function getBadgeClass(status){
+  if(status === 'more-time')   return 'badge-more-time';
+  if(status === 'no-response') return 'badge-no-response';
+  return 'badge-logged-in';
+}
+function getBadgeLabel(status){
+  if(status === 'more-time')   return 'More Time';
+  if(status === 'no-response') return 'No Response';
+  return 'Logged In';
+}
+function getBadgeIcon(status){
+  if(status === 'more-time')   return 'ti-clock-pause';
+  if(status === 'no-response') return 'ti-phone-off';
+  return 'ti-circle-check';
+}
+
+function fmtTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleTimeString('en-CA', {hour:'2-digit', minute:'2-digit', hour12:true});
+}
+function fmtPhone(num){
+  return num.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+}
+
+function getFiltered(){
+  return RAW.filter(r => {
+    if(activeSector !== 'all' && String(r[2]) !== activeSector) return false;
+    if(activeStatus && r[7] !== activeStatus) return false;
+    return true;
+  });
+}
+
+function setSector(s){
+  activeSector = s;
+  document.querySelectorAll('.sector-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + s).classList.add('active');
+  render();
+}
+
+function setStatus(s){
+  // Toggle — tap again to clear
+  activeStatus = (activeStatus === s) ? null : s;
+  render();
+}
+
+function updateSummary(list){
+  // Counts are always from the full sector-filtered set (not status-filtered)
+  // so the numbers don't disappear when a status filter is active
+  const sectorList = RAW.filter(r => activeSector === 'all' || String(r[2]) === activeSector);
+  const inCount   = sectorList.filter(r => r[7] === 'logged-in').length;
+  const moreCount = sectorList.filter(r => r[7] === 'more-time').length;
+  const noCount   = sectorList.filter(r => r[7] === 'no-response').length;
+  document.getElementById('count-in').textContent   = inCount;
+  document.getElementById('count-more').textContent = moreCount;
+  document.getElementById('count-no').textContent   = noCount;
+
+  // Active state on status buttons
+  const btnIn   = document.getElementById('stat-in');
+  const btnMore = document.getElementById('stat-more');
+  const btnNo   = document.getElementById('stat-no');
+  btnIn.className   = 'summary-stat-btn' + (activeStatus === 'logged-in'   ? ' active-in'   : '');
+  btnMore.className = 'summary-stat-btn' + (activeStatus === 'more-time'   ? ' active-more' : '');
+  btnNo.className   = 'summary-stat-btn' + (activeStatus === 'no-response' ? ' active-no'   : '');
+
+  const total = list.length;
+  let totalLabel = '';
+  if(activeStatus === 'logged-in')   totalLabel = total + ' logged in';
+  else if(activeStatus === 'more-time')   totalLabel = total + ' more time';
+  else if(activeStatus === 'no-response') totalLabel = total + ' no response';
+  else totalLabel = (activeSector === 'all'
+    ? total + ' active sign-in' + (total !== 1 ? 's' : '')
+    : total + ' in sector ' + activeSector);
+  document.getElementById('summary-total').textContent = totalLabel;
+}
+
+// Sort: no-response first, then more-time, then logged-in; alpha within each
+function sortRecords(list){
+  const order = {'no-response':0,'more-time':1,'logged-in':2};
+  return [...list].sort((a,b) => {
+    const od = order[a[7]] - order[b[7]];
+    return od !== 0 ? od : a[1].localeCompare(b[1]);
+  });
+}
+
+function render(){
+  const filtered = sortRecords(getFiltered());
+  updateSummary(filtered);
+  const grid = document.getElementById('cardGrid');
+  if(filtered.length === 0){
+    grid.innerHTML = '<div class="empty"><i class="ti ti-users-group"></i>No active sign-ins match your filter</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(r => {
+    const [id, name, sector, siteName, siteCode, phone, signIn, status] = r;
+    return `
+    <div class="site-card ${getStatusClass(status)}" id="card-${id}">
+      <div class="card-body">
+        <div class="card-name">${name}</div>
+        <div class="card-status-badge ${getBadgeClass(status)}">
+          <i class="ti ${getBadgeIcon(status)}"></i>${getBadgeLabel(status)}
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-row">
+            <i class="ti ti-map-pin"></i>
+            <span class="card-meta-val">${siteName} <span style="color:#9aa0a8">(${siteCode})</span></span>
+          </div>
+          <div class="card-meta-row">
+            <i class="ti ti-layout-grid"></i>
+            <span class="card-meta-val">Sector ${sector}</span>
+          </div>
+          <div class="card-meta-row">
+            <i class="ti ti-phone"></i>
+            <span class="card-meta-val phone">${fmtPhone(phone)}</span>
+          </div>
+        </div>
+        <div class="card-time-row">
+          <div class="card-time-item">
+            <i class="ti ti-login"></i>
+            <span class="time-label">In</span>
+            <span>${fmtTime(signIn)}</span>
+          </div>
+          <div class="card-time-item">
+            <i class="ti ti-logout"></i>
+            <span class="time-label">Out</span>
+            <span style="color:#d0d5dd">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="card-action-btn dial" onclick="doDial(${id})">
+          <i class="ti ti-phone-call"></i> Dial
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Dial ──
+function doDial(id){
+  const r = RAW.find(x => x[0] === id);
+  if(!r) return;
+  showToast('Dialling ' + fmtPhone(r[5]) + ' — ' + r[1]);
+}
+
+// ── Refresh ──
+function doRefresh(){
+  const btn = document.querySelector('.refresh-btn i');
+  btn.style.transition = 'transform 0.5s';
+  btn.style.transform = 'rotate(360deg)';
+  setTimeout(() => { btn.style.transition=''; btn.style.transform=''; }, 500);
+  document.getElementById('lastRefresh').textContent = 'Updated just now';
+  render();
+  showToast('Dashboard refreshed');
+}
+
+// ── Toast ──
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+render();
+</script>
+</body>
+</html>

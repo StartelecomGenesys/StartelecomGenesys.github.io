@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONI IVCT — Caller Reservation</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23005b66'/><circle cx='16' cy='12' r='4' fill='none' stroke='%23fff' stroke-width='2'/><path d='M9 26c0-3.9 3.1-7 7-7s7 3.1 7 7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'/><circle cx='24' cy='9' r='4' fill='%23005b66' stroke='%23fff' stroke-width='1.5'/><line x1='22' y1='9' x2='26' y2='9' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><line x1='24' y1='7' x2='24' y2='11' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f2f4;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+}
+
+.app {
+  background: #ffffff;
+  border: 1px solid #e2e5e9;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Topbar ── */
+.topbar {
+  background: #005b66;
+  padding: 12px 16px;
+  flex-shrink: 0;
+}
+.topbar-logo { color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+.topbar-title { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 1px; }
+
+/* ── Summary bar ── */
+.summary-bar {
+  padding: 9px 14px;
+  background: #fafbfc;
+  border-bottom: 1px solid #eef0f3;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #6b7480;
+}
+.summary-count {
+  font-size: 15px;
+  font-weight: 700;
+  color: #005b66;
+}
+.summary-label { font-size: 12px; color: #6b7480; }
+.auto-clear-note {
+  font-size: 11px;
+  color: #9aa0a8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.auto-clear-note i { font-size: 13px; }
+
+/* ── Table header ── */
+.tbl-header {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 72px;
+  padding: 7px 14px;
+  background: #f5f7f9;
+  border-bottom: 1px solid #eef0f3;
+  flex-shrink: 0;
+}
+.tbl-header span {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9aa0a8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tbl-header span:last-child { text-align: center; }
+
+/* ── Scrollable list ── */
+.list-scroll-wrap {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.list-scroll-wrap::-webkit-scrollbar { width: 5px; }
+.list-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+.list-scroll-wrap::-webkit-scrollbar-thumb { background: #d0d5dd; border-radius: 3px; }
+.list-scroll-wrap::-webkit-scrollbar-thumb:hover { background: #005b66; }
+
+/* ── Reservation rows ── */
+.reservation-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 72px;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 14px;
+  border-bottom: 1px solid #f0f2f4;
+  transition: background 0.08s;
+  cursor: default;
+}
+.reservation-row:hover { background: #f7f9fa; }
+
+/* Name + number block */
+.row-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1d20;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-number {
+  font-size: 11px;
+  color: #6b7480;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+/* Queue badge */
+.queue-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #e8f5f4;
+  color: #005b66;
+  white-space: nowrap;
+}
+.queue-badge i { font-size: 12px; }
+
+/* Last called */
+.row-timestamp {
+  font-size: 11px;
+  color: #6b7480;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.row-time { color: #1a1d20; font-weight: 500; font-size: 12px; }
+.row-ago  { color: #9aa0a8; font-size: 10px; }
+
+/* Unreserve toggle */
+.unreserve-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.unreserve-btn {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  border: 1.5px solid #fca5a5;
+  background: #fff5f5;
+  color: #b91c1c;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+.unreserve-btn:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+/* ── Empty state ── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 20px;
+  color: #9aa0a8;
+  font-size: 13px;
+  text-align: center;
+}
+.empty i { font-size: 32px; color: #d0d5dd; }
+.empty-title { font-size: 14px; font-weight: 600; color: #6b7480; margin-top: 2px; }
+.empty-sub { font-size: 12px; color: #9aa0a8; line-height: 1.5; max-width: 220px; }
+
+/* ── Info footer ── */
+.info-footer {
+  padding: 10px 14px;
+  border-top: 1px solid #eef0f3;
+  background: #fafbfc;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #9aa0a8;
+}
+.info-footer i { font-size: 14px; flex-shrink: 0; }
+
+/* ── Confirm overlay ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.overlay.show { display: flex; }
+.confirm-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 22px;
+  width: 300px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.confirm-icon {
+  width: 42px; height: 42px;
+  background: #fee2e2;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.confirm-icon i { font-size: 20px; color: #ef4444; }
+.confirm-title { font-size: 14px; font-weight: 700; color: #1a1d20; margin-bottom: 5px; }
+.confirm-body  { font-size: 12px; color: #555e6b; line-height: 1.5; margin-bottom: 18px; }
+.confirm-name  { font-weight: 600; color: #1a1d20; }
+.confirm-note  { font-size: 11px; color: #9aa0a8; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+.confirm-note i { font-size: 12px; }
+.confirm-btns  { display: flex; gap: 8px; }
+.confirm-cancel {
+  flex: 1; padding: 9px; border: 1px solid #e2e5e9;
+  border-radius: 8px; background: #fff; font-size: 13px; font-weight: 500;
+  color: #555e6b; cursor: pointer; font-family: inherit; transition: background 0.1s;
+}
+.confirm-cancel:hover { background: #f5f7f9; }
+.confirm-ok {
+  flex: 1; padding: 9px; border: none;
+  border-radius: 8px; background: #ef4444; font-size: 13px; font-weight: 600;
+  color: #fff; cursor: pointer; font-family: inherit; transition: background 0.1s;
+}
+.confirm-ok:hover { background: #dc2626; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: #1a1d20; color: #fff;
+  font-size: 13px; font-weight: 500;
+  padding: 10px 16px; border-radius: 8px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 300;
+  display: flex; align-items: center; gap: 7px; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { font-size: 15px; color: #22c55e; }
+
+/* Responsive: hide queue col below 340px */
+@media (max-width: 340px) {
+  .tbl-header,
+  .reservation-row { grid-template-columns: 1fr 80px 72px; }
+  .col-queue { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-logo">HONI IVCT</div>
+    <div class="topbar-title">Caller reservations — active shift</div>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="summary-bar">
+    <div class="summary-left">
+      <i class="ti ti-user-check" style="font-size:16px;color:#005b66"></i>
+      <span><span class="summary-count" id="reserveCount">3</span> <span class="summary-label">reserved callers</span></span>
+    </div>
+    <div class="auto-clear-note">
+      <i class="ti ti-logout"></i> Clears at logout
+    </div>
+  </div>
+
+  <!-- Table header -->
+  <div class="tbl-header">
+    <span>Caller</span>
+    <span class="col-queue">Queue</span>
+    <span>Last Called</span>
+    <span style="text-align:center">Release</span>
+  </div>
+
+  <!-- Scrollable list -->
+  <div class="list-scroll-wrap">
+    <div id="reservationList"></div>
+  </div>
+
+  <!-- Info footer -->
+  <div class="info-footer">
+    <i class="ti ti-info-circle"></i>
+    Releasing a reservation writes to GC DT-CallerReservation. The caller's next inbound will route to the general queue.
+  </div>
+
+</div>
+
+<!-- Confirm overlay -->
+<div class="overlay" id="overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="ti ti-user-x"></i></div>
+    <div class="confirm-title">Release reservation?</div>
+    <div class="confirm-body">
+      Release <span class="confirm-name" id="confirmName">—</span>?<br>
+      Their next call will route to the general queue instead of directly to you.
+      <div class="confirm-note"><i class="ti ti-database"></i> Writes to GC DT-CallerReservation</div>
+    </div>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" onclick="closeOverlay()">Cancel</button>
+      <button class="confirm-ok" id="confirmOk">Release</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toastMsg"></span></div>
+
+<script>
+// ── Sample data ──
+// Fields: id, name, number, queue, queueType (tx|dx|dispatch), lastCalledIso
+let RESERVATIONS = [
+  {
+    id: 1,
+    name: 'J. Kowalski',
+    number: '(519) 552-1284',
+    queue: 'TX North',
+    queueType: 'tx',
+    lastCalledIso: '2026-06-02T07:42:00',
+  },
+  {
+    id: 2,
+    name: 'R. Marchand',
+    number: '(705) 360-9931',
+    queue: 'DX Central',
+    queueType: 'dx',
+    lastCalledIso: '2026-06-02T08:05:00',
+  },
+  {
+    id: 3,
+    name: 'T. Okonkwo',
+    number: '(807) 474-2208',
+    queue: 'Dispatch Z4',
+    queueType: 'dispatch',
+    lastCalledIso: '2026-06-02T08:31:00',
+  },
+];
+
+let pendingReleaseId = null;
+
+// ── Queue badge colour by type ──
+function queueBadge(queue, type) {
+  const styles = {
+    tx:       'background:#e8f5f4;color:#005b66',
+    dx:       'background:#eff6ff;color:#1d4ed8',
+    dispatch: 'background:#fef3c7;color:#92400e',
+  };
+  const icons = { tx: 'ti-bolt', dx: 'ti-antenna', dispatch: 'ti-steering-wheel' };
+  const s = styles[type] || styles.tx;
+  const i = icons[type]  || 'ti-bolt';
+  return `<span class="queue-badge" style="${s}"><i class="ti ${i}"></i>${queue}</span>`;
+}
+
+// ── Time helpers ──
+function fmtTime(iso) {
+  return new Date(iso).toLocaleTimeString('en-CA', { hour: '2-digit', minute: '2-digit', hour12: true });
+}
+function fmtAgo(iso) {
+  const diff = Math.floor((Date.now() - new Date(iso)) / 60000);
+  if (diff < 1)  return 'just now';
+  if (diff < 60) return diff + 'm ago';
+  const h = Math.floor(diff / 60);
+  return h + 'h ' + (diff % 60) + 'm ago';
+}
+
+// ── Render ──
+function render() {
+  document.getElementById('reserveCount').textContent = RESERVATIONS.length;
+  const list = document.getElementById('reservationList');
+
+  if (RESERVATIONS.length === 0) {
+    list.innerHTML = `
+      <div class="empty">
+        <i class="ti ti-user-check"></i>
+        <div class="empty-title">No active reservations</div>
+        <div class="empty-sub">Reserve a caller from the agent script during an active call. They will route directly to you next time they call in.</div>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = RESERVATIONS.map(r => `
+    <div class="reservation-row" id="row-${r.id}">
+      <div>
+        <div class="row-name">${r.name}</div>
+        <div class="row-number">${r.number}</div>
+      </div>
+      <div class="col-queue">${queueBadge(r.queue, r.queueType)}</div>
+      <div class="row-timestamp">
+        <span class="row-time">${fmtTime(r.lastCalledIso)}</span>
+        <span class="row-ago">${fmtAgo(r.lastCalledIso)}</span>
+      </div>
+      <div class="unreserve-col">
+        <button class="unreserve-btn" onclick="confirmRelease(${r.id})" title="Release reservation">
+          <i class="ti ti-user-minus"></i>
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+// ── Release flow ──
+function confirmRelease(id) {
+  const r = RESERVATIONS.find(x => x.id === id);
+  if (!r) return;
+  pendingReleaseId = id;
+  document.getElementById('confirmName').textContent = r.name + ' (' + r.number + ')';
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeOverlay() {
+  document.getElementById('overlay').classList.remove('show');
+  pendingReleaseId = null;
+}
+
+document.getElementById('confirmOk').addEventListener('click', () => {
+  if (pendingReleaseId === null) return;
+  const r = RESERVATIONS.find(x => x.id === pendingReleaseId);
+  const name = r ? r.name : '';
+  RESERVATIONS = RESERVATIONS.filter(x => x.id !== pendingReleaseId);
+  closeOverlay();
+  showToast(name + ' — reservation released');
+  render();
+});
+
+// ── Toast ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Refresh ago times every 30s
+setInterval(() => render(), 30000);
+
+render();
+</script>
+</body>
+</html>

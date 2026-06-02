@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONI IVCT — Workplan Shift Selection</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23005b66'/><rect x='6' y='10' width='20' height='16' rx='2' fill='none' stroke='%23fff' stroke-width='2'/><line x1='6' y1='15' x2='26' y2='15' stroke='%23fff' stroke-width='2'/><line x1='11' y1='7' x2='11' y2='13' stroke='%23fff' stroke-width='2' stroke-linecap='round'/><line x1='21' y1='7' x2='21' y2='13' stroke='%23fff' stroke-width='2' stroke-linecap='round'/><circle cx='20' cy='22' r='4' fill='%23005b66' stroke='%23fff' stroke-width='1.5'/><line x1='20' y1='20' x2='20' y2='22' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><line x1='20' y1='22' x2='22' y2='22' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f4;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .app {
+    background: #ffffff;
+    border: 1px solid #e2e5e9;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .topbar {
+    background: #005b66;
+    padding: 12px 16px;
+    flex-shrink: 0;
+  }
+  .topbar-logo { color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
+  .topbar-title { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 1px; }
+
+  .search-row {
+    padding: 12px 14px 8px;
+    border-bottom: 1px solid #eef0f3;
+    flex-shrink: 0;
+  }
+  .search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f7f9;
+    border: 1px solid #e2e5e9;
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: border-color 0.15s;
+  }
+  .search-wrap:focus-within { border-color: #005b66; background: #fff; }
+  .search-wrap i { color: #9aa0a8; font-size: 16px; }
+  .search-input {
+    border: none; background: transparent; font-size: 14px;
+    color: #1a1d20; outline: none; flex: 1; font-family: inherit;
+  }
+  .search-input::placeholder { color: #9aa0a8; }
+  .clear-x {
+    background: none; border: none; cursor: pointer;
+    color: #9aa0a8; font-size: 16px; display: none; padding: 0; line-height: 1;
+  }
+  .clear-x:hover { color: #1a1d20; }
+
+  .filter-section {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eef0f3;
+    background: #fafbfc;
+    flex-shrink: 0;
+  }
+
+  /* Assigned button — full width row on its own */
+  .assigned-filter-row { margin-bottom: 6px; }
+  .assigned-btn {
+    width: 100%;
+    padding: 9px 14px;
+    border: 1px solid #d8dce2;
+    border-radius: 7px;
+    background: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555e6b;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: left;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .assigned-btn:hover { background: #f0f2f4; border-color: #b0b8c4; color: #1a1d20; }
+  .assigned-btn.active { background: #005b66; border-color: #005b66; color: #fff; }
+  .assigned-btn .btn-left { display: flex; align-items: center; gap: 7px; }
+  .assigned-btn .btn-left i { font-size: 15px; }
+  .assigned-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #e8f5f4;
+    color: #005b66;
+    min-width: 24px;
+    text-align: center;
+    transition: all 0.12s;
+  }
+  .assigned-btn.active .assigned-badge { background: rgba(255,255,255,0.25); color: #fff; }
+
+  /* Letter group rows */
+  .filter-row { display: flex; gap: 6px; margin-bottom: 6px; }
+  .filter-row:last-of-type { margin-bottom: 0; }
+  .filter-btn {
+    flex: 1;
+    padding: 8px 4px;
+    border: 1px solid #d8dce2;
+    border-radius: 7px;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555e6b;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .filter-btn:hover { background: #f0f2f4; border-color: #b0b8c4; color: #1a1d20; }
+  .filter-btn.active { background: #005b66; border-color: #005b66; color: #fff; }
+
+  .filter-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .filter-count { font-size: 12px; color: #9aa0a8; }
+  .clear-filter-btn {
+    font-size: 12px; color: #005b66; background: none; border: none;
+    cursor: pointer; padding: 2px 0; font-family: inherit; font-weight: 500;
+  }
+  .clear-filter-btn:hover { text-decoration: underline; }
+
+  .tbl-header {
+    display: grid;
+    grid-template-columns: 1fr 68px 58px 58px;
+    padding: 7px 14px;
+    background: #f5f7f9;
+    border-bottom: 1px solid #eef0f3;
+    flex-shrink: 0;
+  }
+  .list-scroll-wrap {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .tbl-header span {
+    font-size: 10px; font-weight: 600; color: #9aa0a8;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .tbl-header span:last-child { text-align: center; }
+
+  .station-row {
+    display: grid;
+    grid-template-columns: 1fr 68px 58px 58px;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f2f4;
+    cursor: pointer;
+    transition: background 0.1s;
+    align-items: center;
+    user-select: none;
+  }
+  .station-row:hover { background: #f7f9fa; }
+  .station-row.assigned { background: #edf7f5; }
+  .station-row.assigned:hover { background: #e3f4f1; }
+
+  .stn-name { font-size: 13px; color: #1a1d20; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .station-row.assigned .stn-name { color: #005b66; font-weight: 500; }
+  .stn-code { font-size: 12px; color: #9aa0a8; font-variant-numeric: tabular-nums; }
+  .stn-sector { font-size: 12px; color: #6b7480; text-align: center; }
+
+  .assign-col { display: flex; align-items: center; justify-content: center; }
+  .assign-icon {
+    width: 26px; height: 26px; border-radius: 7px;
+    border: 1.5px solid #d0d5dd;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s; background: #fff;
+  }
+  .assign-icon i { font-size: 14px; color: #c0c8d4; }
+  .assign-icon.checked { background: #005b66; border-color: #005b66; }
+  .assign-icon.checked i { color: #fff; }
+
+  .empty {
+    padding: 32px 14px; text-align: center;
+    color: #9aa0a8; font-size: 13px;
+  }
+  .empty i { font-size: 28px; display: block; margin-bottom: 8px; color: #d0d5dd; }
+
+  .pagination {
+    display: flex; align-items: center; justify-content: center;
+    gap: 5px; padding: 10px 14px;
+    border-top: 1px solid #eef0f3; min-height: 52px;
+    flex-shrink: 0;
+  }
+  .page-btn {
+    min-width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid #e2e5e9; background: #f5f7f9;
+    font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #555e6b; padding: 0 6px; font-family: inherit;
+    font-weight: 400; transition: all 0.1s;
+  }
+  .page-btn:hover:not(.active) { background: #eef0f3; border-color: #c8cdd5; }
+  .page-btn.active { background: #005b66; border-color: #005b66; color: #fff; font-weight: 600; }
+  .page-btn i { font-size: 15px; }
+
+  .save-row {
+    padding: 12px 14px;
+    background: #f5f7f9;
+    border-top: 1px solid #e2e5e9;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .assigned-summary { font-size: 12px; color: #6b7480; }
+  .assigned-summary strong { color: #005b66; font-weight: 600; }
+  .save-btn {
+    background: #005b66; color: #fff; border: none;
+    border-radius: 8px; padding: 10px 24px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: background 0.15s, transform 0.1s;
+  }
+  .save-btn:hover { background: #004a55; }
+  .save-btn:active { transform: scale(0.97); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1a1d20; color: #fff;
+    padding: 10px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 350px) {
+    .tbl-header { grid-template-columns: 1fr 64px 52px; }
+    .tbl-header span:nth-child(3) { display: none; }
+    .station-row { grid-template-columns: 1fr 64px 52px; }
+    .stn-sector { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-logo">HONI IVCT</div>
+    <div class="topbar-title">Shift workplan — station selection</div>
+  </div>
+
+  <div class="search-row">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input class="search-input" type="text" placeholder="Type station name..." id="searchInput" autocomplete="off">
+      <button class="clear-x" id="clearSearch" aria-label="Clear search"><i class="ti ti-x"></i></button>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <div class="assigned-filter-row">
+      <button class="assigned-btn" id="assignedBtn" onclick="toggleAssignedFilter()">
+        <span class="btn-left">
+          <i class="ti ti-user-check"></i>
+          My assigned stations
+        </span>
+        <span class="assigned-badge" id="assignedBadge">0</span>
+      </button>
+    </div>
+    <div class="filter-row" id="filterRow1"></div>
+    <div class="filter-row" id="filterRow2"></div>
+    <div class="filter-meta">
+      <span class="filter-count" id="filterCount"></span>
+      <button class="clear-filter-btn" id="clearFilter">Clear filter</button>
+    </div>
+  </div>
+
+  <div class="tbl-header">
+    <span>Name</span>
+    <span>Code</span>
+    <span>Sector</span>
+    <span>Assigned</span>
+  </div>
+  <div class="list-scroll-wrap">
+    <div id="stationList"></div>
+  </div>
+  <div class="pagination" id="pagination"></div>
+
+  <div class="save-row">
+    <div class="assigned-summary">Assigned: <strong id="assignedCount">0</strong> station(s)</div>
+    <button class="save-btn" id="saveBtn">Save workplan</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const GROUPS = [
+  {label:'A–B', letters:['A','B']},
+  {label:'C',   letters:['C']},
+  {label:'D–F', letters:['D','E','F']},
+  {label:'G–H', letters:['G','H']},
+  {label:'I–L', letters:['I','J','K','L']},
+  {label:'M',   letters:['M']},
+  {label:'N–O', letters:['N','O']},
+  {label:'P',   letters:['P']},
+  {label:'R–S', letters:['R','S']},
+  {label:'T–Z', letters:['T','U','V','W','X','Y','Z']},
+];
+
+const RAW = [
+  [102,"Abitibi Canyon GS",4],[103,"H2O Power Iroquois Falls CTS",4],[104,"H2O Pwr Ft Frances",4],[105,"Nakina DS",4],[106,"Iroquois Falls CGS",4],[107,"H2O Pwr Kenora CGS",4],[108,"OGCC",1],[109,"H2O Pwr Norman CGS",4],[110,"Arnprior Airport",4],[111,"Arnprior Elgin DS",4],[112,"Arnprior GS",4],[113,"Arnprior Madawaska DS",4],[114,"Arnprior McNab DS",4],[115,"Arnprior White Lake DS",4],[116,"Aurora DS",1],[117,"Aurora TS",1],[118,"Barrie Bayfield DS",1],[119,"Barrie Bayfield TS",1],[120,"Barrie Essa DS",1],[121,"Barrie Essa TS",1],[122,"Barrie Holly DS",1],[123,"Barrie Mapleview DS",1],[124,"Barrie Painswick DS",1],[125,"Barrie Tiffin DS",1],[126,"Bath DS",3],[127,"Bath TS",3],[128,"Battersea DS",3],[129,"Battersea TS",3],[130,"Bayview Junction TS",1],[131,"Belleville DS",3],[132,"Belleville TS",3],[133,"Bolton DS",1],[134,"Bolton TS",1],[135,"Bracebridge DS",1],[136,"Bracebridge TS",1],[137,"Bradford DS",1],[138,"Bradford TS",1],[139,"Brantford DS",2],[140,"Brantford TS",2],[141,"Brighton DS",3],[142,"Brighton TS",3],[143,"Brockville DS",3],[144,"Brockville TS",3],[145,"Burlington DS",2],[146,"Burlington TS",2],[147,"Caledonia DS",2],[148,"Caledonia TS",2],[149,"Cambridge DS",2],[150,"Cambridge TS",2],[151,"Campbell TS",1],[152,"Campbellford DS",3],[153,"Campbellford TS",3],[154,"Cardiff DS",1],[155,"Cardiff TS",1],[156,"Cardinal DS",3],[157,"Cardinal TS",3],[158,"Carlaw DS",1],[159,"Carlaw TS",1],[160,"Carling DS",1],[161,"Carling TS",1],[162,"Carlisle DS",2],[163,"Carlisle TS",2],[164,"Chesterville DS",3],[165,"Chesterville TS",3],[166,"Cobourg DS",3],[167,"Cobourg TS",3],[168,"Cockburn Island DS",1],[169,"Colborne DS",3],[170,"Colborne TS",3],[171,"Coldwater DS",1],[172,"Coldwater TS",1],[173,"Collingwood DS",1],[174,"Collingwood TS",1],[175,"Cornwall DS",3],[176,"Cornwall TS",3],[177,"Courtland DS",2],[178,"Courtland TS",2],[179,"Darlington DS",3],[180,"Darlington TS",3],[181,"Delhi DS",2],[182,"Delhi TS",2],[183,"Delta DS",3],[184,"Delta TS",3],[185,"Dresden DS",2],[186,"Dresden TS",2],[187,"Dryden DS",4],[188,"Dryden TS",4],[189,"Dundas DS",2],[190,"Dundas TS",2],[191,"Dunnville DS",2],[192,"Dunnville TS",2],[193,"Elgin DS",3],[194,"Elgin TS",3],[195,"Elmira DS",2],[196,"Elmira TS",2],[197,"Embro DS",2],[198,"Embro TS",2],[199,"Englehart DS",4],[200,"Englehart TS",4],[201,"Espanola DS",1],[202,"Espanola TS",1],[203,"Essex DS",2],[204,"Essex TS",2],[205,"Exeter DS",2],[206,"Exeter TS",2],[207,"Fergus DS",2],[208,"Fergus TS",2],[209,"Fingal DS",2],[210,"Fingal TS",2],[211,"Flesherton DS",1],[212,"Flesherton TS",1],[213,"Forest DS",2],[214,"Forest TS",2],[215,"Fort Erie DS",2],[216,"Fort Erie TS",2],[217,"Gananoque DS",3],[218,"Gananoque TS",3],[219,"Georgetown DS",1],[220,"Georgetown TS",1],[221,"Geraldton DS",4],[222,"Geraldton TS",4],[223,"Gloucester DS",3],[224,"Gloucester TS",3],[225,"Goderich DS",2],[226,"Goderich TS",2],[227,"Gravenhurst DS",1],[228,"Gravenhurst TS",1],[229,"Grimsby DS",2],[230,"Grimsby TS",2],[231,"Guelph DS",2],[232,"Guelph TS",2],[233,"Hagersville DS",2],[234,"Hagersville TS",2],[235,"Haileybury DS",4],[236,"Haileybury TS",4],[237,"Haliburton DS",3],[238,"Haliburton TS",3],[239,"Hamilton DS",2],[240,"Hamilton TS",2],[241,"Hanover DS",1],[242,"Hanover TS",1],[243,"Harrow DS",2],[244,"Harrow TS",2],[245,"Hawkesbury DS",3],[246,"Hawkesbury TS",3],[247,"Hearst DS",4],[248,"Hearst TS",4],[249,"Hornepayne DS",4],[250,"Hornepayne TS",4],[251,"Huntsville DS",1],[252,"Huntsville TS",1],[253,"Ignace DS",4],[254,"Ignace TS",4],[255,"Ingersoll DS",2],[256,"Ingersoll TS",2],[257,"Innisfil DS",1],[258,"Innisfil TS",1],[259,"Iroquois DS",3],[260,"Iroquois TS",3],[261,"Jarvis DS",2],[262,"Jarvis TS",2],[263,"Kapuskasing DS",4],[264,"Kapuskasing TS",4],[265,"Kemptville DS",3],[266,"Kemptville TS",3],[267,"Kenora DS",4],[268,"Kenora TS",4],[269,"Killarney DS",1],[270,"Killarney TS",1],[271,"Kincardine DS",1],[272,"Kincardine TS",1],[273,"Kingston DS",3],[274,"Kingston TS",3],[275,"Kirkland Lake DS",4],[276,"Kirkland Lake TS",4],[277,"Kitchener DS",2],[278,"Kitchener TS",2],[279,"Lakefield DS",3],[280,"Lakefield TS",3],[281,"Lancaster DS",3],[282,"Lancaster TS",3],[283,"Leamington DS",2],[284,"Leamington TS",2],[285,"Lindsay DS",3],[286,"Lindsay TS",3],[287,"Listowel DS",2],[288,"Listowel TS",2],[289,"Lively DS",1],[290,"Lively TS",1],[291,"London DS",2],[292,"London TS",2],[293,"MacKay TS",4],[294,"Madoc DS",3],[295,"Madoc TS",3],[296,"Magnetawan DS",1],[297,"Magnetawan TS",1],[298,"Malton DS",1],[299,"Malton TS",1],[300,"Manitoulin DS",1],[301,"Manitoulin TS",1],[302,"Marathon DS",4],[303,"Marathon TS",4],[304,"Markham DS",1],[305,"Markham TS",1],[306,"Matheson DS",4],[307,"Matheson TS",4],[308,"Mattawa DS",4],[309,"Mattawa TS",4],[310,"Meaford DS",1],[311,"Meaford TS",1],[312,"Merlin DS",2],[313,"Merlin TS",2],[314,"Midland DS",1],[315,"Midland TS",1],[316,"Millhaven DS",3],[317,"Millhaven TS",3],[318,"Milton DS",1],[319,"Milton TS",1],[320,"Milverton DS",2],[321,"Milverton TS",2],[322,"Minden DS",3],[323,"Minden TS",3],[324,"Mississauga DS",1],[325,"Mississauga TS",1],[326,"Mitchell DS",2],[327,"Mitchell TS",2],[328,"Moosonee DS",4],[329,"Moosonee TS",4],[330,"Morrisburg DS",3],[331,"Morrisburg TS",3],[332,"Mount Forest DS",2],[333,"Mount Forest TS",2],[334,"Napanee DS",3],[335,"Napanee TS",3],[336,"Neustadt DS",1],[337,"Neustadt TS",1],[338,"New Liskeard DS",4],[339,"New Liskeard TS",4],[340,"Newmarket DS",1],[341,"Newmarket TS",1],[342,"Niagara DS",2],[343,"Niagara TS",2],[344,"Norfolk DS",2],[345,"Norfolk TS",2],[346,"North Bay DS",4],[347,"North Bay TS",4],[348,"Norwich DS",2],[349,"Norwich TS",2],[350,"Oakville DS",1],[351,"Oakville TS",1],[352,"Orangeville DS",1],[353,"Orangeville TS",1],[354,"Orillia DS",1],[355,"Orillia TS",1],[356,"Oshawa DS",3],[357,"Oshawa TS",3],[358,"Ottawa DS",3],[359,"Ottawa TS",3],[360,"Owen Sound DS",1],[361,"Owen Sound TS",1],[362,"Palmerston DS",2],[363,"Palmerston TS",2],[364,"Paris DS",2],[365,"Paris TS",2],[366,"Parry Sound DS",1],[367,"Parry Sound TS",1],[368,"Pembroke DS",3],[369,"Pembroke TS",3],[370,"Perth DS",3],[371,"Perth TS",3],[372,"Peterborough DS",3],[373,"Peterborough TS",3],[374,"Petrolia DS",2],[375,"Petrolia TS",2],[376,"Picton DS",3],[377,"Picton TS",3],[378,"Port Hope DS",3],[379,"Port Hope TS",3],[380,"Port Stanley DS",2],[381,"Port Stanley TS",2],[382,"Prescott DS",3],[383,"Prescott TS",3],[384,"Renfrew DS",3],[385,"Renfrew TS",3],[386,"Richmond Hill DS",1],[387,"Richmond Hill TS",1],[388,"Rockland DS",3],[389,"Rockland TS",3],[390,"Sarnia DS",2],[391,"Sarnia TS",2],[392,"Sault Ste Marie DS",1],[393,"Sault Ste Marie TS",1],[394,"Seaforth DS",2],[395,"Seaforth TS",2],[396,"Shelburne DS",1],[397,"Shelburne TS",1],[398,"Simcoe DS",2],[399,"Simcoe TS",2],[400,"Sioux Lookout DS",4],[401,"Sioux Lookout TS",4],[402,"Smiths Falls DS",3],[403,"Smiths Falls TS",3],[404,"Southampton DS",1],[405,"Southampton TS",1],[406,"St Catharines DS",2],[407,"St Catharines TS",2],[408,"St Marys DS",2],[409,"St Marys TS",2],[410,"St Thomas DS",2],[411,"St Thomas TS",2],[412,"Strathroy DS",2],[413,"Strathroy TS",2],[414,"Sturgeon Falls DS",4],[415,"Sturgeon Falls TS",4],[416,"Sudbury DS",1],[417,"Sudbury TS",1],[418,"Tavistock DS",2],[419,"Tavistock TS",2],[420,"Temagami DS",4],[421,"Temagami TS",4],[422,"Thessalon DS",1],[423,"Thessalon TS",1],[424,"Thornbury DS",1],[425,"Thornbury TS",1],[426,"Thunder Bay DS",4],[427,"Thunder Bay TS",4],[428,"Tillsonburg DS",2],[429,"Tillsonburg TS",2],[430,"Timmins DS",4],[431,"Timmins TS",4],[432,"Toronto DS",1],[433,"Toronto TS",1],[434,"Trenton DS",3],[435,"Trenton TS",3],[436,"Uxbridge DS",3],[437,"Uxbridge TS",3],[438,"Vankleek Hill DS",3],[439,"Vankleek Hill TS",3],[440,"Vineland DS",2],[441,"Vineland TS",2],[442,"Walkerton DS",1],[443,"Walkerton TS",1],[444,"Wallaceburg DS",2],[445,"Wallaceburg TS",2],[446,"Wasaga Beach DS",1],[447,"Wasaga Beach TS",1],[448,"Waterford DS",2],[449,"Waterford TS",2],[450,"Waterloo DS",2],[451,"Waterloo TS",2],[452,"Wawa DS",1],[453,"Wawa TS",1],[454,"Welland DS",2],[455,"Welland TS",2],[456,"Whitby DS",3],[457,"Whitby TS",3],[458,"Wiarton DS",1],[459,"Wiarton TS",1],[460,"Windsor DS",2],[461,"Windsor TS",2],[462,"Wingham DS",2],[463,"Wingham TS",2],[464,"Woodstock DS",2],[465,"Woodstock TS",2],[466,"Wyoming DS",2],[467,"Wyoming TS",2],[468,"Yonge DS",1],[469,"Yonge TS",1]
+];
+
+const PER_PAGE = 25;
+let activeGroup = null;
+let showAssignedOnly = false;
+let searchTerm = '';
+let assigned = new Set([293, 301, 416]);
+let currentPage = 1;
+
+function firstLetter(name){ return name.trim().toUpperCase()[0]; }
+
+function getFiltered(){
+  let list = RAW;
+  if(searchTerm){
+    const t = searchTerm.toLowerCase();
+    list = list.filter(s => s[1].toLowerCase().includes(t));
+  } else if(showAssignedOnly){
+    list = list.filter(s => assigned.has(s[0]));
+  } else if(activeGroup){
+    const g = GROUPS.find(g => g.label === activeGroup);
+    if(g) list = list.filter(s => g.letters.includes(firstLetter(s[1])));
+  }
+  return list.sort((a,b) => a[1].localeCompare(b[1]));
+}
+
+function updateBadge(){
+  document.getElementById('assignedBadge').textContent = assigned.size;
+  document.getElementById('assignedCount').textContent = assigned.size;
+}
+
+function toggleAssignedFilter(){
+  showAssignedOnly = !showAssignedOnly;
+  if(showAssignedOnly){ activeGroup = null; searchTerm = ''; document.getElementById('searchInput').value=''; document.getElementById('clearSearch').style.display='none'; }
+  currentPage = 1;
+  render();
+}
+
+function renderFilters(){
+  const btn = document.getElementById('assignedBtn');
+  btn.className = 'assigned-btn' + (showAssignedOnly ? ' active' : '');
+
+  const row1 = document.getElementById('filterRow1');
+  const row2 = document.getElementById('filterRow2');
+  row1.innerHTML = '';
+  row2.innerHTML = '';
+  GROUPS.forEach((g, i) => {
+    const el = document.createElement('button');
+    el.className = 'filter-btn' + (activeGroup === g.label ? ' active' : '');
+    el.textContent = g.label;
+    el.onclick = () => {
+      activeGroup = activeGroup === g.label ? null : g.label;
+      showAssignedOnly = false;
+      searchTerm = '';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearch').style.display = 'none';
+      currentPage = 1;
+      render();
+    };
+    (i < 6 ? row1 : row2).appendChild(el);
+  });
+}
+
+function renderList(){
+  const filtered = getFiltered();
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  if(currentPage > totalPages) currentPage = 1;
+  const page = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+
+  const countEl = document.getElementById('filterCount');
+  if(searchTerm) countEl.textContent = total + ' result' + (total !== 1 ? 's' : '');
+  else if(showAssignedOnly) countEl.textContent = total + ' assigned station' + (total !== 1 ? 's' : '');
+  else if(activeGroup) countEl.textContent = total + ' stations in ' + activeGroup;
+  else countEl.textContent = total + ' stations total';
+
+  const list = document.getElementById('stationList');
+  if(page.length === 0){
+    list.innerHTML = '<div class="empty"><i class="ti ti-map-pin-off"></i>No stations found</div>';
+  } else {
+    list.innerHTML = page.map(s => {
+      const isAssigned = assigned.has(s[0]);
+      return `<div class="station-row${isAssigned ? ' assigned' : ''}" onclick="toggleAssign(${s[0]})">
+        <div class="stn-name">${s[1]}</div>
+        <div class="stn-code">${s[0]}</div>
+        <div class="stn-sector">${s[2]}</div>
+        <div class="assign-col">
+          <div class="assign-icon${isAssigned ? ' checked' : ''}">
+            <i class="ti ti-check"></i>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages){
+  const pg = document.getElementById('pagination');
+  if(totalPages <= 1){ pg.innerHTML = ''; return; }
+  let html = '';
+  const start = Math.max(1, currentPage - 2);
+  const end = Math.min(totalPages, start + 4);
+  if(currentPage > 1)
+    html += `<button class="page-btn" onclick="goPage(${currentPage-1})"><i class="ti ti-chevron-left"></i></button>`;
+  for(let p = start; p <= end; p++)
+    html += `<button class="page-btn${p === currentPage ? ' active' : ''}" onclick="goPage(${p})">${p}</button>`;
+  if(currentPage < totalPages)
+    html += `<button class="page-btn" onclick="goPage(${currentPage+1})"><i class="ti ti-chevron-right"></i></button>`;
+  pg.innerHTML = html;
+}
+
+function goPage(p){ currentPage = p; renderList(); }
+
+function toggleAssign(id){
+  if(assigned.has(id)) assigned.delete(id); else assigned.add(id);
+  updateBadge();
+  if(showAssignedOnly && !assigned.has(id)) { currentPage = 1; }
+  renderList();
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function render(){ renderFilters(); renderList(); }
+
+document.getElementById('searchInput').addEventListener('input', function(){
+  searchTerm = this.value;
+  activeGroup = null;
+  showAssignedOnly = false;
+  currentPage = 1;
+  document.getElementById('clearSearch').style.display = searchTerm ? 'flex' : 'none';
+  render();
+});
+
+document.getElementById('clearSearch').addEventListener('click', function(){
+  document.getElementById('searchInput').value = '';
+  searchTerm = '';
+  this.style.display = 'none';
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('clearFilter').addEventListener('click', () => {
+  activeGroup = null;
+  showAssignedOnly = false;
+  searchTerm = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearSearch').style.display = 'none';
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  showToast('Workplan saved — ' + assigned.size + ' station(s) assigned');
+});
+
+updateBadge();
+render();
+</script>
+</body>
+</html>
