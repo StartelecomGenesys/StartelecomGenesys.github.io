@@ -21,11 +21,11 @@
 
  
 			
-				  Genesys("subscribe", "Messenger.ready", function() {
+	Genesys("subscribe", "Messenger.ready", function() {
 		  document.getElementById("custom-launcher").style.display = "block";
 		}); 
 			
-	  function openMessenger() {
+	 function openMessenger() {
       Genesys("command", "Messenger.open");
     }
 			
@@ -38,5 +38,14 @@
 </a>
 	
 	</body>
-	
+	<style>
+			#custom-launcher {
+				display: none;
+				cursor: pointer;
+				color: #0066cc;
+				font-family: sans-serif;
+				font-weight: bold;
+				text-decoration: underline;
+			}
+		</style>
 </html>
