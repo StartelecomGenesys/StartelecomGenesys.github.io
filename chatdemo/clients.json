@@ -209,6 +209,12 @@
 			"environment": "use1",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"7e7427ed-f20c-4c0d-b639-e92d88653389"
+		},
+		"ECI": {
+			"title":"ECI",
+			"environment": "prod",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"0e589b8e-0a75-4b51-9e44-7f7d09b08cb4"
 		}
 	}
 }
