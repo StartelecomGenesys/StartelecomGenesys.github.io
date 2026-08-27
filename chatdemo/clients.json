@@ -215,6 +215,12 @@
 			"environment": "prod",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"0e589b8e-0a75-4b51-9e44-7f7d09b08cb4"
+		},
+		"ECIslots": {
+			"title":"ECI slots",
+			"environment": "prod",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"76cf0b5d-4d19-4392-8120-4c3f9fa74311"
 		}
 	}
 }
