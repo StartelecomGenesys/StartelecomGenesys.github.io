@@ -7,7 +7,7 @@
 			"deploymentID":"d02d1769-9cd7-4e1e-aefe-572c96247c19"
 		},
 		"CAA_DEMO_S6": {
-			"title":"Demo web messaging",
+			"title":"Demo  messaging",
 			"environment": "use1",
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"c799e5ba-ff2e-49e3-9a55-f71b8fdcf400"
