@@ -12,6 +12,12 @@
 			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
 			"deploymentID":"c799e5ba-ff2e-49e3-9a55-f71b8fdcf400"
 		},
+		"CDLSI": {
+			"title":"Demo  messaging",
+			"environment": "use1",
+			"link":"https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js",
+			"deploymentID":"91f9ebef-2cbe-4694-a1b7-fa3dca95bd52"
+		},
 		"UASMSScriptTest": {
 			"title":"Demo ",
 			"environment": "cac1",
